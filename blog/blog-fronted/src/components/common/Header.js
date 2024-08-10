@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Responsive from './Responsive';
 import Button from './Button';
+import { GiHamburgerMenu } from "react-icons/gi";
+import Sidebar from './Sidebar';
 
 const HeaderBlock = styled.div`
   position: fixed;
   width: 100%;
   background: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
+  z-index: 1001;
+`;
+
+const LogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  .search_icon {
+    margin-right: 0.5rem;
+    font-size: 1.5rem; /* 햄버거 메뉴 크기를 약간 키움 */
+    cursor: pointer;
+  }
 `;
 
 /**
@@ -42,14 +56,32 @@ const UserInfo = styled.div`
   margin-right: 1rem;
 `;
 
-const Header = ({ user, onLogout, goLogin }) => {
+const SidebarWrapper = styled.div`
+  position: fixed;
+  top: 4rem;
+  left: ${({ isOpen }) => (isOpen ? '0' : '-220px')}; /* 사이드바의 가시성을 조절 */
+  transition: left 0.3s ease;
+  z-index: 1000; /* 헤더 아래에 위치하도록 설정 */
+`;
+
+const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse }) => {
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <>
       <HeaderBlock>
         <Wrapper>
-          <Link to="/" className="logo">
-            REACTERS
-          </Link>
+          <LogoWrapper>
+            <GiHamburgerMenu className="search_icon" onClick={toggleSidebar} />
+            <Link to="/" className="logo">
+              KTC
+            </Link>
+          </LogoWrapper>
+          
           {user ? (
             <div className="right">
               <UserInfo>{user.user.username}</UserInfo>
@@ -63,6 +95,9 @@ const Header = ({ user, onLogout, goLogin }) => {
         </Wrapper>
       </HeaderBlock>
       <Spacer />
+      <SidebarWrapper isOpen={isSidebarOpen}>
+        <Sidebar onGoHome={onGoHome} onGoCourse={onGoCourse} />
+      </SidebarWrapper>
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Header from '../../components/common/Header';
 import { logout } from '../../modules/user';
@@ -16,9 +16,22 @@ const HeaderContainer = () => {
 
   const onLogout = () => {
     dispatch(logout());
-  };
+  }
 
-  return <Header user={user} onLogout={onLogout} goLogin={goLogin} />;
+  const onGoHome = useCallback(() => {
+    navigate('/');
+  }, [navigate]);
+
+  const onGoCourse = useCallback(() => {
+    navigate('/course');
+  }, [navigate]);
+
+  return <Header user={user} 
+  onLogout={onLogout} 
+  goLogin={goLogin}
+  onGoHome={onGoHome}
+  onGoCourse={onGoCourse}
+  />;
 };
 
 export default HeaderContainer;

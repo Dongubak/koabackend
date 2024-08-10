@@ -12,7 +12,7 @@ const WritePage = () => {
   return (
     <Responsive>
       <Helmet>
-        <title>글 작성하기 - 언제볼까</title>
+        <title>글 작성하기 - KTC</title>
       </Helmet>
       <EditorContainer></EditorContainer>
       {/* <EditorContainer />

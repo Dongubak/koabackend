@@ -42,7 +42,7 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
   return (
     <PostViewerBlock>
       <Helmet>
-        <title>{title} - 언제볼까</title>
+        <title>{title} - KTC</title>
       </Helmet>
       <PostHead>
         <h1>{title}</h1>

@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage';
 import PostPage from './pages/PostPage';
 import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
+import CourseRegPage from './pages/CourseRegPage';
 
 const App = () => {
   // const {user} = useSelector(({user}) => user.user);
@@ -14,7 +15,7 @@ const App = () => {
   return(
     <>
       <Helmet>
-        <title>언제볼까</title>
+        <title>KTC</title>
       </Helmet>
       <Routes>
         <Route path='/' element={<PostListPage />} />
@@ -25,6 +26,7 @@ const App = () => {
           <Route index element={<PostListPage /> } />
           <Route path=':postId' element={<PostPage /> } />
         </Route>
+        <Route path='/course' element={<CourseRegPage />}></Route>
       </Routes>
     </>
   )
