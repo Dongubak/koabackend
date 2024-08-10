@@ -45,7 +45,6 @@ const WriteActionButtonsContainer = ({ history }) => {
   // 성공 혹은 실패시 할 작업
   useEffect(() => {
     if (post) {
-      console.log(post)
       const { id } = post;
       navigator(`/${username}/${id}`);
     }

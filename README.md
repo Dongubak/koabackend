@@ -1,3 +1,24 @@
+## 서버 호스팅 과정
+
+1. 방화벽이 외부에서 들어오는 요청을 허용해야함
+    예시) 4000번 포트 사용시 방화벽에서 이 포트를 허용해야함
+
+2. 네트워크 라우터가 외부에서 들어오는 요청을 허용해야 함
+   -> 포트 포워딩 설정
+    외부에서 들어오는 특정포트를 서버의 로컬 IP주소와 해당 포트로 포워딩해야함
+
+3. 서버가 실행중인 컴퓨터의 로컬 IP주소를 확인해야함
+   다른 기기가 이 컴퓨터로 접속할 때 사용하는 주소가 서버가 실행중인 로컬 IP주소이다.
+
+즉 외부에서 들어오는 특정 포트를 서버의 로컬 IP주소와 해당 포트로 포워딩 해야하한다.
+
+```javascript
+app.listen(4000, '0.0.0.0', () => {})
+```
+
+모든 IP주소에서 오는 요청을 받아들일 수 있는 설정으로 (0.0.0.0)
+
+
 mysql 설치 부분 : https://deep-jin.tistory.com/entry/mac-MySQL-설치
 mysql과 dbeaver 연동 : https://velog.io/@black_han26/DBeaver-MySQL-연동
 
@@ -176,3 +197,5 @@ response : {
     "username": "john_doe1",
     "password": "$2b$10$dnwqiggWPevJu1PDtmVb5.mcTJvxVtFurYdOZ1VwKWKXjX1RnhAiC"
 }
+
+

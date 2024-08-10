@@ -24,8 +24,6 @@ const PaginationContainer = () => {
   const page = searchParams.get('page') || 1;
   const lastPage = all.posts.pagination.totalPages || 1;
 
-  console.log(`lastPage : ${lastPage}, username : ${username}, page : ${page}`);
-
   return (
     <Pagination
       username={username}

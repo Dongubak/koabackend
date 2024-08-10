@@ -42,11 +42,9 @@ const LoginForm = ({ history }) => {
 
   useEffect(() => {
     if (authError) {
-      setError('로그인 실패');
       return;
     }
     if (auth) {
-      console.log('로그인 성공');
       dispatch(check());
     }
     

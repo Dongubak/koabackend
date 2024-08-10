@@ -2,7 +2,6 @@ const { User } = require('../../models');
 
 const authMiddleware = async (ctx, next) => {
     const token = ctx.headers.authorization && ctx.headers.authorization.split(' ')[1];
-    console.log(token);
     if (!token) {
         ctx.status = 401; // Unauthorized
         ctx.body = { message: 'No token provided' };
