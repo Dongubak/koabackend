@@ -37,26 +37,32 @@ const StyledButton = styled(Button)`
   cursor: pointer;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
+  display: inline-block;
+  text-align: center;
+  line-height: 1.5;
+  white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 설정 */
+  min-width: 80px; /* 버튼의 최소 너비를 설정하여 텍스트가 줄바꿈되지 않도록 함 */
 
   &:hover {
-    background-color: #868e96; /* hover 시 조금 더 어두운 빨간색 */
+    background-color: #868e96;
   }
 
   &:active {
-    background-color: #868e96; /* active 시 더 어두운 빨간색 */
+    background-color: #868e96;
   }
 
   & + & {
-   margin-left: 1rem;
+    margin-left: 1rem;
   }
 `;
 
-const CourseForm = ({ keyword, onChange, onSearch }) => {
-   const handleKeyPress = (e) => {
-      if (e.key === 'Enter') {
-        onSearch();
-      }
-   };
+const CourseForm = ({ keyword, onChange, onSearch, onSave }) => {
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      onSearch();
+    }
+  };
+
   return (
     <Wrapper>
       <Input
@@ -67,7 +73,7 @@ const CourseForm = ({ keyword, onChange, onSearch }) => {
         onKeyPress={handleKeyPress}
       />
       <StyledButton onClick={onSearch}>검색</StyledButton>
-      <StyledButton>저장</StyledButton>
+      <StyledButton onClick={onSave}>저장</StyledButton>
     </Wrapper>
   );
 };

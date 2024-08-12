@@ -10,12 +10,16 @@ const RegisterForm = ({ history }) => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
-    form: auth.register,
-    auth: auth.auth,
-    authError: auth.authError,
-    user: user.user,
-  }));
+  // const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
+  //   form: auth.register,
+  //   auth: auth.auth,
+  //   authError: auth.authError,
+  //   user: user.user,
+  // }));
+  const form = useSelector((state) => state.auth.register);
+  const auth = useSelector((state) => state.auth.auth);
+  const authError = useSelector((state) => state.auth.authError);
+  const user = useSelector((state) => state.user.user);
   // 인풋 변경 이벤트 핸들러
   const onChange = e => {
     const { value, name } = e.target;
@@ -66,8 +70,8 @@ const RegisterForm = ({ history }) => {
     }
 
     if (auth) {
-      console.log('회원가입 성공');
-      console.log(auth);
+      // console.log('회원가입 성공');
+      // console.log(auth);
       dispatch(check());
     }
   }, [auth, authError, dispatch]);

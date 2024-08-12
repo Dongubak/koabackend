@@ -1,22 +1,19 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CourseList from '../../components/courses/CourseList';
-import { deleteCourse, insertCourse } from '../../modules/cart';
+import { insertCourse } from '../../modules/cart';
 
 
 const CourseListContainer = () => {
-   const dispatch = useDispatch();
-  const { courses, error, loading } = useSelector(
-    ({ courses, loading }) => ({
-      courses: courses.courses,
-      error: courses.error,
-      loading: loading['courses/LIST_COURSES'],
-    }),
-  );
+  const dispatch = useDispatch();
 
-  if(!loading && courses) {
-      console.log(courses);
-  }
+  const courses = useSelector(state => state.courses.courses);
+  const error = useSelector(state => state.courses.error);
+  const loading = useSelector(state => state.loading['courses/LIST_COURSES']);
+
+  // if(!loading && courses) {
+  //     console.log(courses);
+  // }
 
   const onInsertCourse = (course) => {
    dispatch(insertCourse(course));

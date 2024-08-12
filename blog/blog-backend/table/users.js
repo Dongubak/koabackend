@@ -44,6 +44,7 @@ module.exports = class User extends Sequelize.Model {
     static associate(db) {
         db.User.hasMany(db.Post, { foreignKey: 'user_id', sourceKey: 'id' });
         db.User.hasMany(db.Comment, { foreignKey: 'user_id', sourceKey: 'id' });
+        db.User.hasMany(db.UserCourses, { foreignKey: 'user_id', sourceKey: 'id' }); // user_courses와의 1:N 관계 정의
     }
 
     static async comparePassword(inputPassword, hashedPassword) {

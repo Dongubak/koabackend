@@ -26,11 +26,11 @@ const Pagination = ({ page, lastPage }) => {
 
   const onGoNextPage = useCallback(() => {
     navigator(buildLink({page: page + 1}));
-  }, [page]);
+  }, [page, navigator]);
 
   const onGoPreviousPage = useCallback(() => {
     navigator(buildLink({page: page - 1}));
-  }, [page]);
+  }, [page, navigator]);
 
   return (
     <PaginationBlock>

@@ -19,9 +19,9 @@ export const logout = createAction(LOGOUT);
 
 const checkSaga = createRequestSaga(CHECK, authAPI.check);
 
-function checkFailureSaga() {
+function* checkFailureSaga() {
   try {
-    localStorage.removeItem('user'); // localStorage 에서 user 제거하고
+    yield localStorage.removeItem('user'); // localStorage 에서 user 제거하고
   } catch (e) {
     console.log('localStorage is not working');
   }

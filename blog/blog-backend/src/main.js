@@ -50,8 +50,8 @@ app.use(router.routes()).use(router.allowedMethods());
 // });
 
 ///외부 접속 차단 경우
-app.listen(48889, () => {
-   console.log('Listening to port 48889');
+app.listen(4000, () => {
+   console.log('Listening to port 4000');
 });
 
 // const Koa = require('koa');

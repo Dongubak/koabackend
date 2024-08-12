@@ -5,7 +5,9 @@ import { logout } from '../../modules/user';
 import { useNavigate } from 'react-router';
 
 const HeaderContainer = () => {
-  const { user } = useSelector(({ user }) => ({ user: user.user }));
+  const user = useSelector((state) => state.user.user);
+
+  // console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

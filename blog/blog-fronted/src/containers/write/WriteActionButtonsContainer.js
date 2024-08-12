@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import WriteActionButtons from '../../components/write/WriteActionButtons';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { updatePost, writePost } from '../../modules/write';
 
-const WriteActionButtonsContainer = ({ history }) => {
+const WriteActionButtonsContainer = () => {
   const dispatch = useDispatch();
   const {user} = useSelector(({user}) => user.user);
 
@@ -12,13 +12,19 @@ const WriteActionButtonsContainer = ({ history }) => {
 
   const {id : user_id, username} = user;
 
-  const { title, body, post, postError, originalPostId } = useSelector(({ write }) => ({
-    title: write.title,
-    body: write.body,
-    post: write.post,
-    postError: write.postError,
-    originalPostId: write.originalPostId,
-  }));
+  // const { title, body, post, postError, originalPostId } = useSelector(({ write }) => ({
+  //   title: write.title,
+  //   body: write.body,
+  //   post: write.post,
+  //   postError: write.postError,
+  //   originalPostId: write.originalPostId,
+  // }));
+
+  const title = useSelector((state) => state.write.title);
+  const body = useSelector((state) => state.write.body);
+  const post = useSelector((state) => state.write.post);
+  const postError = useSelector((state) => state.write.postError);
+  const originalPostId = useSelector((state) => state.write.originalPostId);
 
   // 포스트 등록
   const onPublish = () => {

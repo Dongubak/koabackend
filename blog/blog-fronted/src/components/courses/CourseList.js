@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
-import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 
 const CourseListBlock = styled(Responsive)`
@@ -34,7 +33,7 @@ const CourseItemBlock = styled.div`
 
 const CourseItem = ({course, onInsertCourse, onDeleteCourse}) => {
 
-   console.log(course);
+  //  console.log(course);
 
   return (
     <CourseItemBlock>

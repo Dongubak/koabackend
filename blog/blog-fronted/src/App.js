@@ -1,11 +1,10 @@
 import React from 'react';
-import { Route, Routes, useSearchParams } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import PostListPage from './pages/PostListPage';
 import LoginPage from './pages/LoginPage';
 import WritePage from './pages/WritePage';
 import RegisterPage from './pages/RegisterPage';
 import PostPage from './pages/PostPage';
-import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
 import CourseRegPage from './pages/CourseRegPage';
 

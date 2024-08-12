@@ -59,7 +59,7 @@ const UserInfo = styled.div`
 const SidebarWrapper = styled.div`
   position: fixed;
   top: 4rem;
-  left: ${({ isOpen }) => (isOpen ? '0' : '-220px')}; /* 사이드바의 가시성을 조절 */
+  left: ${({ $isOpen }) => ($isOpen ? '0' : '-220px')}; /* 사이드바의 가시성을 조절 */
   transition: left 0.3s ease;
   z-index: 1000; /* 헤더 아래에 위치하도록 설정 */
 `;
@@ -95,7 +95,7 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse }) => {
         </Wrapper>
       </HeaderBlock>
       <Spacer />
-      <SidebarWrapper isOpen={isSidebarOpen}>
+      <SidebarWrapper $isOpen={isSidebarOpen}>
         <Sidebar onGoHome={onGoHome} onGoCourse={onGoCourse} />
       </SidebarWrapper>
     </>

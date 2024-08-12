@@ -90,8 +90,8 @@ module.exports = class Courses extends Sequelize.Model {
     }
 
     static associate(db) {
-        // Courses 모델에 대한 외래 키 관계가 존재한다면 여기에 정의하세요.
-        // 예: db.Course.belongsTo(db.SomeModel, { foreignKey: 'some_field', targetKey: 'id' });
+        // 강의가 여러 사용자가 선택할 수 있도록 user_courses와의 관계를 정의
+        db.Courses.hasMany(db.UserCourses, { foreignKey: 'course_id', sourceKey: 'id' });
     }
 
     // 교수 이름에서 키워드로 검색
