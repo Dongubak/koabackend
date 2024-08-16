@@ -16,7 +16,8 @@ const TimetableWrapper = styled(Responsive)`
 `;
 
 const Cell = styled.div`
-  color: ${({ isHovered }) => (isHovered ? 'red' : 'black')};
+  color: ${({ isHovered }) => (isHovered ? 'pink' : 'black')};
+  font-weight: ${({ isHovered }) => (isHovered ? 'bold' : 'normal')};
   padding: 0.25rem; /* 패딩을 줄여서 텍스트가 더 많이 차지할 수 있도록 */
   text-align: center;
   border: 1px solid #ececec;
@@ -40,6 +41,8 @@ const TimeCell = styled(Cell)`
   font-weight: bold;
   cursor: default; /* 시간 셀에는 커서를 포인터로 변경하지 않음 */
 `;
+
+
 
 const Timetable = ({ schedule, onDeleteCourseFromCart }) => {
   /// 내부 디자인에 관한 로직이므로 상태관리를 한다고 해서 container에 분리하지 않았음

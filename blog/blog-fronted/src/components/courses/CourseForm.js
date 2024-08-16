@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import Button from '../common/Button';
@@ -40,8 +40,8 @@ const StyledButton = styled(Button)`
   display: inline-block;
   text-align: center;
   line-height: 1.5;
-  white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 설정 */
-  min-width: 80px; /* 버튼의 최소 너비를 설정하여 텍스트가 줄바꿈되지 않도록 함 */
+  white-space: nowrap;
+  min-width: 80px;
 
   &:hover {
     background-color: #868e96;
@@ -56,20 +56,57 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const CourseForm = ({ keyword, onChange, onSearch, onSave }) => {
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      onSearch();
-    }
-  };
+const ToggleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+`;
+
+const ToggleLabel = styled.label`
+  font-size: 1rem;
+  margin-right: 0.5rem;
+`;
+
+const ToggleSwitch = styled.div`
+  position: relative;
+  width: 50px;
+  height: 24px;
+  background-color: ${props => (props.isActive ? '#343a40' : '#ccc')};
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+`;
+
+const ToggleThumb = styled.div`
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  border-radius: 50%;
+  top: 1px;
+  left: ${props => (props.isActive ? '26px' : '2px')};
+  transition: left 0.3s ease;
+`;
+
+const CourseForm = ({ keyword, onChange, onSearch, 
+  onSave, setSearchByCourse, searchByCourse,
+  handleToggle, handleKeyPress
+}) => {
+  
 
   return (
     <Wrapper>
+      <ToggleWrapper>
+        <ToggleLabel>{searchByCourse ? '강의명' : '교수명'}</ToggleLabel>
+        <ToggleSwitch isActive={searchByCourse} onClick={handleToggle}>
+          <ToggleThumb isActive={searchByCourse} />
+        </ToggleSwitch>
+      </ToggleWrapper>
       <Input
         type='text'
         value={keyword}
         onChange={onChange}
-        placeholder="검색어를 입력하세요..."
+        placeholder={searchByCourse ? "강의명을 입력하시오..." : "교수명을 입력하시오..."}
         onKeyPress={handleKeyPress}
       />
       <StyledButton onClick={onSearch}>검색</StyledButton>

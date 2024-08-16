@@ -12,6 +12,18 @@ const CourseFormContainer = () => {
    const dispatch = useDispatch();
    const navigator = useNavigate();
    const [searchParams, setSearchParams] = useSearchParams();
+   const [searchByCourse, setSearchByCourse] = useState(false);
+
+   const handleToggle = () => {
+      setSearchByCourse(!searchByCourse);
+   };
+
+   const handleKeyPress = (e) => {
+   if (e.key === 'Enter') {
+      onSearch();
+   }
+   };
+
    const isFirstRun = useRef(true);  // 마운트 시 최초 실행을 막기 위한 useRef
 
    const page = searchParams.get('page') || 1;
@@ -53,8 +65,8 @@ const CourseFormContainer = () => {
       }
 
       dispatch(listCourses({
-         professor: keyword,
-         course_name: '',
+         professor: searchByCourse ? '' : keyword,
+         course_name: searchByCourse ? keyword : '',
          page
       }));
    }, [page]);
@@ -63,7 +75,6 @@ const CourseFormContainer = () => {
       // dispatch(loadCart());
       if(!user.user) {
          dispatch(unloadCart());
-         alert('저장기능은 로그인 후 이용 가능합니다.');
       } else {
          const {id} = user.user.user;
          dispatch(loadCart({user_id : id}));   
@@ -80,6 +91,9 @@ const CourseFormContainer = () => {
       onChange={onChange}
       onSearch={onSearch}
       onSave={onSave}
+      searchByCourse={searchByCourse}
+      handleToggle={handleToggle}
+      handleKeyPress={handleKeyPress}
       />
    )
 }

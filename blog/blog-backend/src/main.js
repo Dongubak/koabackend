@@ -32,80 +32,24 @@ app.use(router.routes()).use(router.allowedMethods());
 
 // 프론트 빌드 서브할 경우
 
-// const buildDirectory = path.resolve(__dirname, '../../blog-fronted/build');
-// app.use(serve(buildDirectory));
-// app.use(async ctx => {
-//   // Not Found 이고, 주소가 /api 로 시작하지 않는 경우
-//   if (ctx.status === 404 && ctx.path.indexOf('/api') !== 0) {
-//     // index.html 내용을 반환
-//     await send(ctx, 'index.html', { root: buildDirectory });
-//   }
-// });
+const buildDirectory = path.resolve(__dirname, '../../blog-fronted/build');
+app.use(serve(buildDirectory));
+app.use(async ctx => {
+  // Not Found 이고, 주소가 /api 로 시작하지 않는 경우
+  if (ctx.status === 404 && ctx.path.indexOf('/api') !== 0) {
+    // index.html 내용을 반환
+    await send(ctx, 'index.html', { root: buildDirectory });
+  }
+});
 
 /// package.json의 start:dev는 main.js 서브
 
 // 외부 접속을 허용할 경우
-// app.listen(48889, '0.0.0.0', () => {
-//    console.log('Listening to port 48889');
-// });
-
-///외부 접속 차단 경우
-app.listen(4000, () => {
-   console.log('Listening to port 4000');
+app.listen(48889, '0.0.0.0', () => {
+   console.log('Listening to port 48889');
 });
 
-// const Koa = require('koa');
-// const Router = require('koa-router');
-
-// const app = new Koa();
-// const router = new Router();
-
-// /// 라우터 설정
-// router.get('/', ctx => {
-//    ctx.body = 'home';
-// });
-
-// router.get('/about/:who', ctx => {
-//    //// http://localhost:4000/about/fdfsdf
-//    const {who} = ctx.params;
-//    ctx.body = who ? `${who}의 소개` : '소개';
-// });
-
-// router.get('/posts', ctx => {
-//    const { id } = ctx.query;
-//    //// http://localhost:4000/posts?id=10
-
-//    ctx.body = id ? `post #${id}` : 'there\'s no post id';
-// })
-
-// app.use(router.routes()).use(router.allowedMethods());
-// /// app instance 에 router를 적용함
-
+///외부 접속 차단 경우
 // app.listen(4000, () => {
 //    console.log('Listening to port 4000');
 // });
-
-
-// app.use(async (ctx, next) => {
-//    console.log(ctx.url);
-//    console.log(1);
-
-//    if(ctx.query.authorized !== '1') {
-//       ctx.status = 401;
-//       return;
-//    }
-
-//    await next();
-//    console.log('END');
-// });
-
-// app.use(async (ctx, next) => {
-//    console.log(2);
-//    next();
-// });
-
-// app.use(async (ctx) => {
-//    ctx.body = 'hello world';
-// });
-
-
