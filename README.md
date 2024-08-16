@@ -1,4 +1,199 @@
-## 서버 호스팅 과정
+# 군산대학교 컴퓨터공학부 커뮤니티앱개발 프로젝트
+
+# kuna community app v1.0
+> **군산대학교 인공지능융합과 KTC 동아리** <br/> **개발기간: 2024.08.01 ~**
+
+## 배포주소
+> **dev version** : <br />
+> **server** : <br />
+
+## 소개
+|      김혁중       |                   |                |                                                                                                               
+| :------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | 
+|   이미지    |                      이미지    |                   이미지   |
+|   [@Dongubak](https://github.com/Dongubak)   |    [@user](https://github.com/user)  | [@user](https://github.com/user)  |
+| 군산대학교 인공지능융합과 3학년 | 군산대학교 인공지능융합과 3학년 | 군산대학교 인공지능융합과 3학년 |
+
+## 프로젝트 소개
+> kuna community app은 군산대학교 컴퓨터공학부 학생들이 시간표 등록 및 일정 조율등을 할 수 있으며, 커뮤니티 게시판을 통해 여러 질의와 응답을 할 수 있습니다.
+
+
+## 시작 가이드
+> dev version은 공개하지 않으며 완성시 서버에 호스팅할 예정입니다.
+
+## Stack
+
+### Backend
+- **Framework**: Koa
+- **Database**: MySQL with Sequelize ORM
+- **Authentication**: JSON Web Token (JWT)
+- **Validation**: Joi
+- **Security**: Bcrypt, Sanitize-HTML
+- **Environment Variables**: dotenv
+
+### Frontend
+- **Library**: React
+- **State Management**: Redux, Redux-Saga
+- **Routing**: React Router
+- **Styling**: Styled-Components
+- **Rich Text Editor**: Quill
+- **Syntax Highlighting**: Prism.js, Highlight.js
+
+### Development Tools
+- **Backend**: Nodemon for development server
+- **Frontend**: React Scripts for build and development
+- **Testing**: React Testing Library, Jest
+- **Linting**: ESLint with Prettier Configuration
+
+## 주요 기능
+
+### Authentication
+> 토큰기반 로그인 기능, 페이지 이동시 마다 token을 이용한 auth check
+### Set timetable
+> 군산대학교 수강편람 데이터를 기반으로 timetable 구축 가능
+### Arrange meeting
+> 다른 user의 학번을 통해 미팅 시간 조율 가능
+### Community(CRUID)
+> 게시판 CRUID기능을 통해 다른 user와 커뮤니케이션 가능
+
+
+## 디렉토리 구조
+
+### Frontend
+```bash
+src                                      
+├─ components                            
+│  ├─ auth                               
+│  │  ├─ AuthForm.js                     
+│  │  └─ AuthTemplate.js                 
+│  ├─ common                             
+│  │  ├─ AskModal.js                     
+│  │  ├─ Button.js                       
+│  │  ├─ Header.js                       
+│  │  ├─ Responsive.js                   
+│  │  ├─ Sidebar.js                      
+│  │  └─ SubInfo.js                      
+│  ├─ course                             
+│  │  └─ Course.js                       
+│  ├─ courses                            
+│  │  ├─ CourseForm.js                   
+│  │  ├─ CourseList.js                   
+│  │  ├─ Pagination.js                   
+│  │  └─ TimeTable.js                    
+│  ├─ post                               
+│  │  ├─ AskRemoveModal.js               
+│  │  ├─ PostActionButtons.js            
+│  │  └─ PostViewer.js                   
+│  ├─ posts                              
+│  │  ├─ Pagination.js                   
+│  │  └─ PostList.js                     
+│  └─ write                              
+│     ├─ Editor.js                       
+│     └─ WriteActionButtons.js           
+├─ containers                            
+│  ├─ auth                               
+│  │  ├─ LoginForm.js                    
+│  │  └─ RegisterForm.js                 
+│  ├─ common                             
+│  │  └─ HeaderContainer.js              
+│  ├─ courses                            
+│  │  ├─ CourseFormContainer.js          
+│  │  ├─ CourseListContainer.js          
+│  │  ├─ PagenationContainer.js          
+│  │  └─ TimeTableContainer.js           
+│  ├─ post                               
+│  │  └─ PostViewerContainer.js          
+│  ├─ posts                              
+│  │  ├─ PaginationContainer.js          
+│  │  └─ PostListContainer.js            
+│  └─ write                              
+│     ├─ EditorContainer.js              
+│     └─ WriteActionButtonsContainer.js  
+├─ lib                                   
+│  ├─ api                                
+│  │  ├─ auth.js                         
+│  │  ├─ cart.js                         
+│  │  ├─ client.js                       
+│  │  ├─ courses.js                      
+│  │  └─ posts.js                        
+│  ├─ styles                             
+│  │  └─ palette.js                      
+│  └─ createRequestSaga.js               
+├─ modules                               
+│  ├─ auth.js                            
+│  ├─ blog-fronted.code-workspace        
+│  ├─ cart.js                            
+│  ├─ courses.js                         
+│  ├─ index.js                           
+│  ├─ loading.js                         
+│  ├─ post.js                            
+│  ├─ posts.js                           
+│  ├─ user.js                            
+│  └─ write.js                           
+├─ pages                                 
+│  ├─ CourseRegPage.js                   
+│  ├─ LoginPage.js                       
+│  ├─ PostListPage.js                    
+│  ├─ PostPage.js                        
+│  ├─ RegisterPage.js                    
+│  └─ WritePage.js                       
+├─ App.css                               
+├─ App.js                                
+├─ App.test.js                           
+├─ index.css                             
+├─ index.js                              
+├─ logo.svg                              
+├─ reportWebVitals.js                    
+└─ setupTests.js   
+```
+
+### Backend               
+```bash
+backend
+├── data                           
+│   ├── major.json                  
+│   ├── updated_major_circled.csv   
+│   └── updated_major_circled.json  
+│
+├── models       
+│   └── index.js  
+│
+├── src                       
+│   ├── api                    
+│   │   ├── auths               
+│   │   │   ├── auths.ctrl.js    
+│   │   │   └── index.js         
+│   │   ├── cart                
+│   │   │   ├── cart.ctrl.js     
+│   │   │   └── index.js         
+│   │   ├── courses             
+│   │   │   ├── courses.ctrl.js  
+│   │   │   └── index.js         
+│   │   ├── posts               
+│   │   │   ├── index.js         
+│   │   │   └── posts.ctrl.js    
+│   │   └── index.js            
+│   │
+│   ├── lib                    
+│   │   └── jwtMiddleware.js    
+│   │
+│   ├── generateFakeData.js    
+│   ├── index.js               
+│   ├── main.js                
+│   └── nonasync.js            
+│
+└── table               
+    ├── comments.js      
+    ├── courses.js       
+    ├── posts.js         
+    ├── user_courses.js  
+    └── users.js         
+
+```
+<br />
+
+# 개발진행
+
 
 1. 방화벽이 외부에서 들어오는 요청을 허용해야함
     예시) 4000번 포트 사용시 방화벽에서 이 포트를 허용해야함
