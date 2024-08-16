@@ -1,16 +1,21 @@
 import React from 'react';
 import Pagination from '../../components/posts/Pagination';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 const PaginationContainer = () => {
-  const { all, posts, loading } = useSelector(({ posts, loading }) => ({
-    all: posts,
-    posts: posts.posts,
-    loading: loading['posts/LIST_POSTS'],
-  }));
+  // const { all, posts, loading } = useSelector(({ posts, loading }) => ({
+  //   all: posts,
+  //   posts: posts.posts,
+  //   loading: loading['posts/LIST_POSTS'],
+  // }));
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const all = useSelector((state) => state.posts);
+  const posts = useSelector((state) => state.posts.posts);
+  const loading = useSelector((state) => state.loading['posts/LIST_POSTS']);
+
+  const [searchParams] = useSearchParams()
+  const {username} = useParams();
 
   // 포스트 데이터가 없거나 로딩 중이면 아무것도 보여주지 않음
   if (!posts || loading) return null;
@@ -20,11 +25,8 @@ const PaginationContainer = () => {
 //     ignoreQueryPrefix: true,
 //   });
 
-  const username = searchParams.get('username') || '';
   const page = searchParams.get('page') || 1;
   const lastPage = all.posts.pagination.totalPages || 1;
-
-  console.log(`lastPage : ${lastPage}, username : ${username}, page : ${page}`);
 
   return (
     <Pagination

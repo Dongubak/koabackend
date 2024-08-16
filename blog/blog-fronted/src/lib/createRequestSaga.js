@@ -19,9 +19,6 @@ export default function createRequestSaga(type, request) {
       if(type === 'auth/LOGIN' || type === 'auth/REGISTER' || type === 'user/CHECK') {
          localStorage.setItem('user', JSON.stringify(response.data));
       }
-      
-      console.log(response.data);
-
 
       yield put({
         type: SUCCESS,

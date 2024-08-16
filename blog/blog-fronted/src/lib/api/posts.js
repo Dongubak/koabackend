@@ -1,12 +1,14 @@
 import client from './client';
 
-export const writePost = ({ title, body, user_id }) =>
-  client.post('http://localhost:4000/api/posts', { title, body, user_id });
+const apiURL = process.env.REACT_APP_API_URL;
 
-export const readPost = id => client.get(`http://localhost:4000/api/posts/${id}`);
+export const writePost = ({ title, body, user_id }) =>
+  client.post(`${apiURL}/api/posts`, { title, body, user_id });
+
+export const readPost = id => client.get(`${apiURL}/api/posts/${id}`);
 
 export const listPosts = ({page, username}) => {
-  return client.get(`http://localhost:4000/api/posts?page=${page}`, {
+  return client.get(`${apiURL}/api/posts?page=${page}`, {
     params: { username },
   })
 }
@@ -14,7 +16,7 @@ export const listPosts = ({page, username}) => {
 export const updatePost = ({id, title, body}) => {
   const {token} = JSON.parse(localStorage.getItem('user')).user; // localStorage에서 토큰 가져오기
   console.log(token);
-  return client.patch(`http://localhost:4000/api/posts/${id}`, 
+  return client.patch(`${apiURL}/api/posts/${id}`, 
     { title, body },
     {
       headers: {
@@ -26,8 +28,7 @@ export const updatePost = ({id, title, body}) => {
 
 export const removePost = id => {
   const {token} = JSON.parse(localStorage.getItem('user')).user; // localStorage에서 토큰 가져오기
-  console.log(token);
-  return client.delete(`http://localhost:4000/api/posts/${id}`,
+  return client.delete(`${apiURL}/posts/${id}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

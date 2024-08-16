@@ -13,12 +13,17 @@ const PostViewerContainer = () => {
   const { postId } = useParams();
 
   const dispatch = useDispatch();
-  const { post, error, loading, user } = useSelector(({ post, loading, user }) => ({
-    post: post.post,
-    error: post.error,
-    loading: loading['post/READ_POST'],
-    user: user.user
-  }));
+  // const { post, error, loading, user } = useSelector(({ post, loading, user }) => ({
+  //   post: post.post,
+  //   error: post.error,
+  //   loading: loading['post/READ_POST'],
+  //   user: user.user
+  // }));
+
+  const post = useSelector((state) => state.post.post);
+  const error = useSelector((state) => state.post.error);
+  const loading = useSelector((state) => state.loading['post/READ_POST']);
+  const user = useSelector((state) => state.user.user);
 
   const onEdit = () => {
     dispatch(setOriginalPost(post));

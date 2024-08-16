@@ -1,6 +1,8 @@
 const Router = require('koa-router');
 const posts = require('./posts');
-const auths = require('./auths')
+const auths = require('./auths');
+const courses = require('./courses');
+const cart = require('./cart');
 
 const api = new Router();
 
@@ -10,6 +12,8 @@ const api = new Router();
 
 api.use('/posts', posts.routes());
 api.use('/auths', auths.routes());
+api.use('/courses', courses.routes());
+api.use('/cart', cart.routes());
 
 module.exports = api;
 

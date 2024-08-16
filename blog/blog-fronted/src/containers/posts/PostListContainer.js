@@ -9,22 +9,19 @@ const PostListContainer = () => {
   const navigator = useNavigate();
 
   const {username} = useParams();
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
 
   const page = searchParams.get('page') || 1;
 
-  const { posts, error, loading, user} = useSelector(
-    ({ posts, loading, user }) => ({
-      posts: posts.posts,
-      error: posts.error,
-      loading: loading['posts/LIST_POSTS'],
-      user: user.user
-    }),
-  );
+  const posts = useSelector((state) => state.posts.posts);
+  const error = useSelector((state) => state.posts.error);
+  const loading = useSelector((state) => state.loading['posts/LIST_POSTS']);
+  const user = useSelector((state) => state.user.user);
+
 
   const onGoWritePage = useCallback(() => {
    navigator('/write');
-  }, []);
+  }, [navigator]);
 
   useEffect(() => {
     dispatch(listPosts({ username, page }));

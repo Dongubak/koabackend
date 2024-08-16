@@ -157,8 +157,6 @@ exports.list = async (ctx) => {
    // 쿼리 파라미터로 페이지 번호와 페이지당 레코드 수, 사용자 이름을 받아옵니다.
    const { page: qpage, limit: qlimit, username } = ctx.query;
 
-   console.log(`qpage : ${qpage}, qlimit : ${qlimit}, username : ${username}`);
-
    const page = parseInt(qpage, 10) || 1; // 기본값은 1
    const limit = parseInt(qlimit, 10) || 5; // 기본값은 5
    const offset = (page - 1) * limit;
@@ -309,9 +307,7 @@ exports.update = async (ctx) => {
 
    const { title, body } = value;
    const { id } = ctx.params; // URL 파라미터에서 포스트 ID를 가져옴
-
-   console.log(title, body,id);
-
+   
    try {
       const post = await checkOwnership(ctx, id);
       if (!post) return; // 권한이 없거나 포스트가 없으면 함수 종료

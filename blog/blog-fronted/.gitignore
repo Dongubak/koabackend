@@ -21,3 +21,52 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+# Dependency directories
+node_modules/
+
+# Production build directory
+build/
+dist/
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE or editor directories and files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Test coverage directory
+coverage/
+
+# Jest and other test related files
+*.log
+.jest/
+
+# ESLint and Prettier
+.eslintcache
+
+# Webpack output
+*.bundle.js
+*.bundle.js.map
+
+# Temporary files
+tmp/
+temp/
+
+# Generated files by Quill or other editors
+*.quill

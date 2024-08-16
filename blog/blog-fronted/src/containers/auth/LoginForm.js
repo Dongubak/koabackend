@@ -8,14 +8,18 @@ import { useNavigate } from 'react-router';
 const LoginForm = ({ history }) => {
   const navigate = useNavigate();
 
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
   const dispatch = useDispatch();
-  const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
-    form: auth.login,
-    auth: auth.auth,
-    authError: auth.authError,
-    user: user.user,
-  }));
+  // const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
+  //   form: auth.login,
+  //   auth: auth.auth,
+  //   authError: auth.authError,
+  //   user: user.user,
+  // }));
+  const form = useSelector((state) => state.auth.login);
+  const auth = useSelector((state) => state.auth.auth);
+  const authError = useSelector((state) => state.auth.authError);
+  const user = useSelector((state) => state.user.user);
   // 인풋 변경 이벤트 핸들러
   const onChange = e => {
     const { value, name } = e.target;
@@ -42,11 +46,9 @@ const LoginForm = ({ history }) => {
 
   useEffect(() => {
     if (authError) {
-      setError('로그인 실패');
       return;
     }
     if (auth) {
-      console.log('로그인 성공');
       dispatch(check());
     }
     
