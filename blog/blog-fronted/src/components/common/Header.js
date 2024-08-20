@@ -7,11 +7,9 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import Sidebar from './Sidebar';
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
 
-
 const HeaderBlock = styled.div`
   position: fixed;
   width: 100%;
-  background: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
   z-index: 1001;
 `;
@@ -22,19 +20,17 @@ const LogoWrapper = styled.div`
 
   .search_icon {
     margin-right: 0.5rem;
-    font-size: 1.5rem; /* 햄버거 메뉴 크기를 약간 키움 */
+    font-size: 1.5rem; 
     cursor: pointer;
+    margin: 10px; 
   }
 `;
 
-/**
- * Responsive 컴포넌트의 속성에 스타일을 추가해서 새로운 컴포넌트 생성
- */
 const Wrapper = styled(Responsive)`
   height: 4rem;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* 자식 엘리먼트 사이에 여백을 최대로 설정 */
+  justify-content: space-between;
   .logo {
     font-size: 1.125rem;
     font-weight: 800;
@@ -46,9 +42,6 @@ const Wrapper = styled(Responsive)`
   }
 `;
 
-/**
- * 헤더가 fixed로 되어 있기 때문에 페이지의 컨텐츠가 4rem 아래 나타나도록 해주는 컴포넌트
- */
 const Spacer = styled.div`
   height: 4rem;
 `;
@@ -60,10 +53,25 @@ const UserInfo = styled.div`
 
 const SidebarWrapper = styled.div`
   position: fixed;
+  top: 0rem;
+  left: 0;
+  transform: ${props => props.$isOpen ? 'translateX(-10%)' : 'translateX(-120%)'};
+  transition: transform 0.3s ease-in-out;
+  width: 200px;
+  height: 100%;
+  background-color: transparent;
+  z-index: 1000;
+`;
+
+const Overlay = styled.div`
+  position: fixed;
   top: 4rem;
-  left: ${({ isOpen }) => (isOpen ? '0' : '-220px')}; /* 사이드바의 가시성을 조절 */
-  transition: left 0.3s ease;
-  z-index: 1000; /* 헤더 아래에 위치하도록 설정 */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  display: ${props => (props.$isOpen ? 'block' : 'none')};
 `;
 
 const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip }) => {
@@ -71,6 +79,12 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip }) => {
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
+    setTimeout(() => setSidebarOpen(state => state), 0); // 강제 리렌더링 유도
+  };
+
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+    setTimeout(() => setSidebarOpen(state => state), 0); // 강제 리렌더링 유도
   };
 
   return (
@@ -82,7 +96,6 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip }) => {
             <Link to="/" className="logo">
               KTC
             </Link>
-
           </LogoWrapper>
           
           {user ? (
@@ -103,7 +116,8 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip }) => {
         </Wrapper>
       </HeaderBlock>
       <Spacer />
-      <SidebarWrapper isOpen={isSidebarOpen}>
+      <Overlay $isOpen={isSidebarOpen} onClick={closeSidebar} />
+      <SidebarWrapper $isOpen={isSidebarOpen}>
         <Sidebar onGoHome={onGoHome} onGoCourse={onGoCourse} />
       </SidebarWrapper>
     </>
@@ -115,7 +129,6 @@ export default Header;
 const Wrap = styled.div`
   padding: 0.5rem;
   text-align: center;
-  /* background: #e0e0e0; */
 `;
 
 const TooltipSpan = styled.span`
@@ -139,7 +152,7 @@ const TooltipSpan = styled.span`
     content: attr(data-tooltip);
     height: 13px;
     position: absolute;
-    bottom: -20px; /* Tooltip text appears below the element */
+    bottom: -20px;
     padding: 5px 10px;
     border-radius: 5px;
     color: #fff;
@@ -151,21 +164,22 @@ const TooltipSpan = styled.span`
     content: '';
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-bottom: 5px solid #025272; /* Triangle pointing upwards */
-    bottom: -8px; /* Position triangle below the tooltip text */
+    border-bottom: 5px solid #025272;
+    bottom: -8px;
   }
 
   &:hover:before {
     visibility: visible;
     opacity: 1;
-    bottom: -30px; /* Adjust to move tooltip text further down */
+    bottom: -30px;
   }
 
   &:hover:after {
     visibility: visible;
     opacity: 1;
-    bottom: -2px; /* Adjust to align the triangle correctly */
+    bottom: -2px;
   }
+
   .tip_icon {
     font-size: 1.5rem;
   }

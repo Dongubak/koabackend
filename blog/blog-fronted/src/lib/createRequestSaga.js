@@ -15,7 +15,7 @@ export default function createRequestSaga(type, request) {
     yield put(startLoading(type)); // 로딩 시작
     try {
       const response = yield call(request, action.payload);
-      
+
       if(type === 'auth/LOGIN' || type === 'auth/REGISTER' || type === 'user/CHECK') {
          localStorage.setItem('user', JSON.stringify(response.data));
       }
