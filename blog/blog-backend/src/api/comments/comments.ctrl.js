@@ -75,6 +75,7 @@ exports.list = async (ctx) => {
       where,
       limit: per_page,
       offset,
+      order: [['created_date', 'DESC']], // 최신 작성일 기준으로 정렬
     });
 
     ctx.body = {
@@ -83,6 +84,7 @@ exports.list = async (ctx) => {
       per_page,
       total: count,
       total_pages: Math.ceil(count / per_page),
+      postId: post_id
     };
   } catch (e) {
     ctx.throw(500, e);
@@ -102,7 +104,9 @@ exports.remove = async (ctx) => {
     }
 
     await comment.destroy();
-    ctx.status = 204; // No Content
+    ctx.body = {
+      comment_id: id
+    };
   } catch (e) {
     ctx.throw(500, e);
   }

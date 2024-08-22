@@ -3,7 +3,8 @@ import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/createRequestSaga';
 import * as commentsAPI from '../lib/api/comments';
-import { takeLatest } from 'redux-saga/effects';
+import { takeLatest, put, select } from 'redux-saga/effects';
+import history from '../lib/util/history';
 
 // 액션 타입 생성
 const [
@@ -54,11 +55,26 @@ const writeCommentSaga = createRequestSaga(WRITE_COMMENT, commentsAPI.writeComme
 const updateCommentSaga = createRequestSaga(UPDATE_COMMENT, commentsAPI.updateComments);
 const removeCommentSaga = createRequestSaga(REMOVE_COMMENT, commentsAPI.removeComment);
 
+function* handleCommentSuccess(action) {
+  console.log('handleRemoveCommentsSuccess');
+  const postId = yield select((state) => state.comments.postId);
+  yield put(listComments({ post_id: postId, page: 1, per_page: 10 }));
+  // const comments = yield select((state) => state.comments.comments);
+  // // 페이지를 강제로 1로 설정
+  // if(comments.length === 1 && page > 1) {
+  //   put(history.push(`?page=${page - 1}`));
+  // } else {
+  //   put(history.push(`?page=${page + 1}`));
+  // }
+}
 export function* commentsSaga() {
   yield takeLatest(LIST_COMMENTS, listCommentsSaga);
   yield takeLatest(WRITE_COMMENT, writeCommentSaga);
+  yield takeLatest(WRITE_COMMENT_SUCCESS, handleCommentSuccess);
   yield takeLatest(UPDATE_COMMENT, updateCommentSaga);
+  yield takeLatest(UPDATE_COMMENT_SUCCESS, handleCommentSuccess); // 삭제 성공 후 처리
   yield takeLatest(REMOVE_COMMENT, removeCommentSaga);
+  yield takeLatest(REMOVE_COMMENT_SUCCESS, handleCommentSuccess); // 삭제 성공 후 처리
 }
 
 // 초기 상태 설정
@@ -66,17 +82,20 @@ const initialState = {
   comments: null,
   error: null,
   lastPage: 1,
+  postId: null,
+  page: 1,
 };
 
 // 리듀서 설정
 const comments = handleActions(
   {
     [LIST_COMMENTS_SUCCESS]: (state, action) => {
-      const { comments, total_pages } = action.payload; // payload에서 필요한 데이터를 꺼냄
+      const { comments, total_pages, postId } = action.payload;
       return {
         ...state,
-        comments,  // comments 배열을 상태에 저장
-        lastPage: total_pages,  // total_pages를 lastPage에 저장
+        comments,
+        lastPage: total_pages,
+        postId
       };
     },
     [LIST_COMMENTS_FAILURE]: (state, { payload: error }) => ({
@@ -85,17 +104,13 @@ const comments = handleActions(
     }),
     [WRITE_COMMENT_SUCCESS]: (state, { payload: comment }) => ({
       ...state,
-      comments: state.comments ? state.comments.concat(comment) : [comment],
     }),
     [WRITE_COMMENT_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
     }),
-    [UPDATE_COMMENT_SUCCESS]: (state, { payload: updatedComment }) => ({
-      ...state,
-      comments: state.comments.map(comment =>
-        comment.id === updatedComment.id ? updatedComment : comment,
-      ),
+    [UPDATE_COMMENT_SUCCESS]: (state) => ({
+      ...state
     }),
     [UPDATE_COMMENT_FAILURE]: (state, { payload: error }) => ({
       ...state,
@@ -103,7 +118,7 @@ const comments = handleActions(
     }),
     [REMOVE_COMMENT_SUCCESS]: (state, { payload: comment_id }) => ({
       ...state,
-      comments: state.comments.filter(comment => comment.id !== comment_id),
+        comments: state.comments.filter(comment => comment.id !== parseInt(comment_id)),
     }),
     [REMOVE_COMMENT_FAILURE]: (state, { payload: error }) => ({
       ...state,

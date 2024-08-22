@@ -25,7 +25,7 @@ const PostListContainer = () => {
 
   useEffect(() => {
     dispatch(listPosts({ username, page }));
-  }, [dispatch, username, page]);
+  }, [dispatch, username, page, searchParams]);
 
   return (
     <PostList

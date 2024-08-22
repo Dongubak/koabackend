@@ -20,6 +20,11 @@ module.exports = class Post extends Sequelize.Model {
                 },
                 onDelete: 'CASCADE',
             },
+            subject: {
+                type: Sequelize.STRING(50),  // 주제를 저장할 필드
+                allowNull: false,
+                defaultValue: 'community', // 기본값을 'community'로 설정
+            },
             created_date: {
                 type: Sequelize.DATE,
                 allowNull: false,

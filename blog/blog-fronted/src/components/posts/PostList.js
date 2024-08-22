@@ -29,7 +29,7 @@ const PostItemBlock = styled.div`
 
   h2 {
     font-size: 2rem;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
     margin-top: 0;
     &:hover {
       color: ${palette.gray[6]};
@@ -41,15 +41,16 @@ const PostItemBlock = styled.div`
 `;
 
 const PostItem = ({ post }) => {
-  const { created_date, title, body, id } = post;
+  const { created_date, title, body, id, subject, username } = post;
   return (
     <PostItemBlock>
       <h2>
-        <Link to={`/${post.username}/${id}`}>{title}</Link>
+        <Link to={`/${username}/${id}`}>{title}</Link>
       </h2>
       <SubInfo
-        username={post.username}
+        username={username}
         publishedDate={new Date(created_date)}
+        subject={subject}
       />
       <p>{body}</p>
     </PostItemBlock>

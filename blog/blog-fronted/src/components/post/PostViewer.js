@@ -38,7 +38,7 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
     return null;
   }
 
-  const { title, body, username, created_date } = post;
+  const { title, body, username, created_date, subject } = post;
   return (
     <PostViewerBlock>
       <Helmet>
@@ -50,6 +50,7 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
         <SubInfo
           username={username}
           publishedDate={created_date}
+          subject={subject}
           hasMarginTop
         />
         {/* <Tags tags={tags} /> */}

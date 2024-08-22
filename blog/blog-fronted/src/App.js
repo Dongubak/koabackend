@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage';
 import PostPage from './pages/PostPage';
 import { Helmet } from 'react-helmet-async';
 import CourseRegPage from './pages/CourseRegPage';
+import Test from './Test/Test';
 
 const App = () => {
   // const {user} = useSelector(({user}) => user.user);
@@ -26,6 +27,7 @@ const App = () => {
           <Route path=':postId' element={<PostPage /> } />
         </Route>
         <Route path='/course' element={<CourseRegPage />}></Route>
+        <Route path='/test' element={<Test></Test>}></Route>
       </Routes>
     </>
   )

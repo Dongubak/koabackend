@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
+import { formatDistanceToNow } from 'date-fns';
 
 const SubInfoBlock = styled.div`
   ${props =>
@@ -19,16 +20,25 @@ const SubInfoBlock = styled.div`
     content: '\\B7'; /* 가운뎃점 문자 */
   }
 `;
-
-const SubInfo = ({ username, publishedDate, hasMarginTop }) => {
+const options = {
+  community: '커뮤니티',
+  knowledge: '지식',
+  qna: '질문',
+  announcement: '공지',
+};
+const SubInfo = ({ username, publishedDate, hasMarginTop, subject }) => {
   return (
     <SubInfoBlock hasMarginTop={hasMarginTop}>
       <span>
         <b>
-          <Link to={`/${username}`}>{username}</Link>
+          {subject ? <Link to={`/${username}`}>{username}</Link> : <span>{username}</span>}
+          
         </b>
       </span>
-      <span>{new Date(publishedDate).toLocaleDateString()}</span>
+      {
+        subject ? <span>{options[subject]}</span> : null
+      }
+      <span>{formatDistanceToNow(new Date(publishedDate))} ago</span>
     </SubInfoBlock>
   );
 };

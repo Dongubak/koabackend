@@ -1,23 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import Button from '../common/Button';
 import palette from '../../lib/styles/palette';
 import SubInfo from '../common/SubInfo';
-import { Link } from 'react-router-dom';
+import CommentActionButtons from './CommentActionButtons';
 
 const CommentsListBlock = styled(Responsive)`
-  margin-top: 3rem;
+  /* margin-top: 1rem; */
 `;
 
-
 const CommentItemBlock = styled.div`
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-  /* 맨 위 포스트는 padding-top 없음 */
-  &:first-child {
-    padding-top: 0;
-  }
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
   & + & {
     border-top: 1px solid ${palette.gray[2]};
   }
@@ -33,36 +29,99 @@ const CommentItemBlock = styled.div`
   p {
     margin-top: 2rem;
   }
+
+  textarea {
+    width: 100%;
+    height: 100px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border: 1px solid ${palette.gray[4]};
+    border-radius: 4px;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
 `;
 
-const CommentItem = ({ comment }) => {
-  const { id, post_id, user_id, text, created_date } = comment;
+const CommentItem = ({ comment, onRemove, onEdit, user }) => {
+  const { id, user_id, text, created_date } = comment;
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedText, setEditedText] = useState(text);
+
+  const onEditComment = () => {
+    setIsEditing(true);
+  }
+
+  const onSaveComment = () => {
+    onEdit(id, editedText);
+    setIsEditing(false);
+  }
+
+  const onCancelEdit = () => {
+    setIsEditing(false);
+    setEditedText(text);
+  }
+
+  const onRemoveComment = () => {
+    onRemove(id);
+  }
+
   return (
     <CommentItemBlock>
-      {/* <h2>
-        <Link to={`/${post.username}/${id}`}>{title}</Link>
-      </h2> */}
       <SubInfo
         username={user_id}
         publishedDate={new Date(created_date)}
       />
-      <p>{text}</p>
+      {
+        isEditing ? (
+          <>
+            <textarea 
+              value={editedText} 
+              onChange={(e) => setEditedText(e.target.value)}
+            />
+            <div className="button-group">
+              <Button onClick={onSaveComment} cyan>저장</Button>
+              <Button onClick={onCancelEdit}>닫기</Button>
+            </div>
+          </>
+        ) : (
+          <p>{text}</p>
+        )
+      }
+      {
+        (user && user.user.id === user_id) && !isEditing && (
+          <CommentActionButtons 
+            onEditComment={onEditComment} 
+            onRemoveComment={onRemoveComment}
+          />
+        )
+      }
     </CommentItemBlock>
   );
 };
 
-const CommentsList = ({comments, loading, error}) => {
-   // 에러 발생 시
-   if (error) {
-      return <CommentsListBlock>에러가 발생했습니다.</CommentsListBlock>;
-   }
+const CommentsList = ({ comments, loading, error, onRemove, onEdit, user }) => {
+  if (error) {
+    return <CommentsListBlock>에러가 발생했습니다.</CommentsListBlock>;
+  }
 
   return (
     <CommentsListBlock>
       {!loading && comments && (
         <div>
           {comments.map(comment => (
-            <CommentItem comment={comment} key={comment.id} />
+            <CommentItem 
+              comment={comment} 
+              key={comment.id} 
+              onRemove={onRemove} 
+              onEdit={onEdit} 
+              user={user}
+            />
           ))}
         </div>
       )}
