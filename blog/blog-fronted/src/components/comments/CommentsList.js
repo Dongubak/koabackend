@@ -49,7 +49,7 @@ const CommentItemBlock = styled.div`
 `;
 
 const CommentItem = ({ comment, onRemove, onEdit, user }) => {
-  const { id, user_id, text, created_date } = comment;
+  const { id, user_id, text, created_date, username } = comment;
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
 
@@ -74,7 +74,7 @@ const CommentItem = ({ comment, onRemove, onEdit, user }) => {
   return (
     <CommentItemBlock>
       <SubInfo
-        username={user_id}
+        username={username}
         publishedDate={new Date(created_date)}
       />
       {

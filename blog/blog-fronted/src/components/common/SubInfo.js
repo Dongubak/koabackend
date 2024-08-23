@@ -2,7 +2,8 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
-import { formatDistanceToNow } from 'date-fns';
+import { ko } from 'date-fns/locale';
+import {formatDistanceToNow} from 'date-fns';
 
 const SubInfoBlock = styled.div`
   ${props =>
@@ -38,7 +39,7 @@ const SubInfo = ({ username, publishedDate, hasMarginTop, subject }) => {
       {
         subject ? <span>{options[subject]}</span> : null
       }
-      <span>{formatDistanceToNow(new Date(publishedDate))} ago</span>
+      <span>{formatDistanceToNow(new Date(publishedDate), { addSuffix: true, locale: ko })}</span>
     </SubInfoBlock>
   );
 };

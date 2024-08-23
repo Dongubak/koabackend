@@ -1,4 +1,4 @@
-const { Comment } = require('../../../models');
+const { Comment, User } = require('../../../models');
 const Joi = require('joi');
 
 // 댓글 생성
@@ -70,27 +70,39 @@ exports.list = async (ctx) => {
   const offset = (page - 1) * per_page;
 
   try {
-    const where = post_id ? { post_id } : {}; // post_id가 있으면 해당 게시물의 댓글만 필터링
+    const where = post_id ? { post_id } : {};
     const { count, rows } = await Comment.findAndCountAll({
       where,
       limit: per_page,
       offset,
-      order: [['created_date', 'DESC']], // 최신 작성일 기준으로 정렬
+      order: [['created_date', 'DESC']],
+      include: [
+        {
+          model: User,
+          attributes: ['username'], // username만 포함하여 조회
+        },
+      ],
     });
 
     ctx.body = {
-      comments: rows,
+      comments: rows.map(comment => ({
+        id: comment.id,
+        text: comment.text,
+        created_date: comment.created_date,
+        user_id: comment.user_id,
+        username: comment.User.username, // username을 포함
+        post_id: comment.post_id,
+      })),
       page,
       per_page,
       total: count,
       total_pages: Math.ceil(count / per_page),
-      postId: post_id
+      postId: post_id,
     };
   } catch (e) {
     ctx.throw(500, e);
   }
 };
-
 // 댓글 삭제
 exports.remove = async (ctx) => {
   const { id } = ctx.params;
