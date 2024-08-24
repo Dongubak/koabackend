@@ -40,6 +40,22 @@ const StyledButton = styled.button`
     color: ${palette.gray[5]};
     cursor: not-allowed;
     }
+
+    ${props =>
+    props.grey &&
+    css`
+      background: ${palette.gray[1]};
+      color: ${palette.gray[12]};
+      &:hover {
+        background: ${palette.gray[2]};
+      }
+    `}
+
+    &:disabled {
+    background: ${palette.gray[3]};
+    color: ${palette.gray[5]};
+    cursor: not-allowed;
+    }
 `;
 
 const Button = props => <StyledButton {...props} />;

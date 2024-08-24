@@ -17,6 +17,11 @@ const HeaderBlock = styled.div`
 const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
+
+  ._link {
+    margin: 1rem;
+  }
 
   .search_icon {
     margin-right: 0.5rem;
@@ -74,7 +79,7 @@ const Overlay = styled.div`
   display: ${props => (props.$isOpen ? 'block' : 'none')};
 `;
 
-const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip }) => {
+const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -82,6 +87,10 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip }) => {
     setTimeout(() => setSidebarOpen(state => state), 0); // 강제 리렌더링 유도
   };
 
+  if(location.pathname === '/') {
+    console.log(location.pathname);
+  }
+  
   const closeSidebar = () => {
     setSidebarOpen(false);
     setTimeout(() => setSidebarOpen(state => state), 0); // 강제 리렌더링 유도
@@ -96,13 +105,31 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip }) => {
             <Link to="/" className="logo">
               KTC
             </Link>
+            {
+              location.pathname === '/' ? <>
+                <Button className="_link" grey={true}>전체</Button>
+                <Button className='_link' grey={true}>커뮤니티</Button>
+                <Button className='_link' grey={true}>지식</Button>
+                <Button className='_link' grey={true}>질문</Button>
+                <Button className='_link' grey={true}>공지</Button>
+
+                {/* <Link className="_link">전체</Link>
+                <Link className="_link">커뮤니티</Link>
+                <Link className="_link">지식</Link>
+                <Link className="_link">질문</Link>
+                <Link className="_link">공지</Link> */}
+              </> : null
+            }
           </LogoWrapper>
           
           {user ? (
             <div className="right">
               <Wrap>
                 <div>
-                  <TooltipSpan data-tooltip={tip}><MdOutlineTipsAndUpdates className='tip_icon'/></TooltipSpan>
+                  {
+                    tip ? <TooltipSpan data-tooltip={tip}><MdOutlineTipsAndUpdates className='tip_icon'/></TooltipSpan> : null
+                  }
+                  
                 </div>
               </Wrap>
               <UserInfo>{user.user.username}</UserInfo>
