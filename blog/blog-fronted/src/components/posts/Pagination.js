@@ -16,21 +16,21 @@ const PaginationBlock = styled.div`
 
 const PageNumber = styled.div``;
 
-const buildLink = ({ username, page }) => {
-  const query = qs.stringify({ page });
+const buildLink = ({ username, page, subject }) => {
+  const query = qs.stringify({ page, subject });
   return username ? `/${username}?${query}` : `/?${query}`;
 };
 
-const Pagination = ({ page, lastPage, username }) => {
+const Pagination = ({ page, lastPage, username, subject }) => {
   const navigator = useNavigate();
 
   const onGoNextPage = useCallback(() => {
-    navigator(buildLink({username, page: page + 1}));
-  }, [page, username, navigator]);
+    navigator(buildLink({username, page: page + 1, subject}));
+  }, [page, username, navigator, subject]);
 
   const onGoPreviousPage = useCallback(() => {
-    navigator(buildLink({username, page: page - 1}));
-  }, [page, username, navigator]);
+    navigator(buildLink({username, page: page - 1, subject}));
+  }, [page, username, navigator, subject]);
 
   return (
     <PaginationBlock>
