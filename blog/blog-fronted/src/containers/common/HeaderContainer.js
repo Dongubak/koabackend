@@ -26,11 +26,11 @@ const HeaderContainer = () => {
   }
   
   const navigators = {
-    viewAll : () => navigator('/'),
-    viewQna : () => navigate('/?subject=qna'),
-    viewAnnouncement : () => navigate('/subject=announcement'),
-    viewKnowledge: () => navigate('/?subject=knowledge'),
-    viewCommunity: () => navigate('/?subject=community')
+    viewAll : () => navigate('/'),
+    viewQna : () => navigate('?subject=qna'),
+    viewAnnouncement : () => navigate('?subject=announcement'),
+    viewKnowledge: () => navigate('?subject=knowledge'),
+    viewCommunity: () => navigate('?subject=community')
   }
 
   // const viewAll = 

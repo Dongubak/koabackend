@@ -7,8 +7,8 @@ export const writePost = ({ title, body, user_id, subject }) =>
 
 export const readPost = id => client.get(`${apiURL}/api/posts/${id}`);
 
-export const listPosts = ({page, username}) => {
-  return client.get(`${apiURL}/api/posts?page=${page}`, {
+export const listPosts = ({page, username, subject}) => {
+  return client.get(`${apiURL}/api/posts?page=${page}&subject=${subject}`, {
     params: { username },
   })
 }

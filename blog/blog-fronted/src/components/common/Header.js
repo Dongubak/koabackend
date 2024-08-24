@@ -109,9 +109,9 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location, 
               location.pathname === '/' ? <>
                 <Button className="_link" grey={true} onClick={navigators.viewAll}>전체</Button>
                 <Button className='_link' grey={true} onClick={navigators.viewCommunity}>커뮤니티</Button>
-                <Button className='_link' grey={true} onClick={navigators.knowledge}>지식</Button>
-                <Button className='_link' grey={true} onClick={navigators.qna}>질문</Button>
-                <Button className='_link' grey={true} onClick={navigators.announcement}>공지</Button>
+                <Button className='_link' grey={true} onClick={navigators.viewKnowledge}>지식</Button>
+                <Button className='_link' grey={true} onClick={navigators.viewQna}>질문</Button>
+                <Button className='_link' grey={true} onClick={navigators.viewAnnouncement}>공지</Button>
 
                 {/* <Link className="_link">전체</Link>
                 <Link className="_link">커뮤니티</Link>
