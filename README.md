@@ -194,8 +194,67 @@ backend
 
 # 개발진행
 
-## 테이블 구조
-![alt text](blog.png)
+## Branch 종류
+
+### Main branch
+중앙 저장소에는 수명이 무한한 두 가지 메인 브랜치가 있음
+1. master branch
+2. develop branch
+
+<br />
+
+`master branch`는 사용자에게 배포 가능한 상태만을 관리함, 배포 이력을 관리하기 위해 사용한다<br />
+함부로 master branch 에 merge 히지 말아야 함.<br /><br />
+![alt text](/img/image-1.png) <br/>
+<br /><br />
+
+`develop branch`는 기능 개발을 위한 branch들을 병합하기 위해 사용함<br />
+모든 기능이 추가되고 버그가 수정되어 배포 가능한 안정적인 상태라면 develop branch를 master에 merge한다.
+
+### supporting branches
+supporting branch를 사용하여 팀 구성원 간에 평행 개발을 할 수 있다.
+
+1. feature branch
+2. release branch
+3. hotfix branch
+
+`feature branch`는 새로운 기능 개발 및 버그 수정이 필요할 때 마다 develop branch로부터 분기한다. 이때 더 이상 필요하지 않은 branch는 삭제한다.<br />
+
+`release branch`는 한 팀이 배포를 준비하는 동안 다른 팀은 다음 배포를 위한 기능 개발을 계속하게 해주는 브랜치이다. <br />
+
+`hotfix branch`는 출시 버전에서 발생한 버그를 수정하는 브랜치 이다. 즉 master branch에서 분기하는 브랜치이다.
+
+
+### branch naming convention
+
+1. master branch
+<br />
+`master`와 `develop` 그대로 사용하는 것이 일반적이다.<br />
+
+2. feature branch
+<br />
+어떤 이름도 가능하지만 `master`, `develop`, `release-...` 같은 이름은 사용할 수 없다.<br />
+`feature/기능요약`형식이 일반적이다.
+
+3. release branch
+<br />
+`release-RB_...` 또는 `release-...` 또는 `release/...` 같은 이름이 일반적이다.
+
+4. hotfix branch
+<br />
+`fotfix-...`이 일반적이다.
+
+
+
+
+![alt text](/img/image.png)
+
+<hr />
+<hr />
+<hr />
+# 테이블 구조
+
+![alt text](/img/blog.png)
 
 
 
