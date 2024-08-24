@@ -43,11 +43,6 @@ const Pagination = ({ page, lastPage, username }) => {
       <PageNumber>{page}</PageNumber>
       <Button
         disabled={page === lastPage}
-        // to={
-        //   page === lastPage
-        //     ? undefined
-        //     : buildLink({ username, page: page + 1 })
-        // }
         onClick={onGoNextPage}
       >
         다음
