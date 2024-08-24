@@ -40,7 +40,6 @@ const PostContent = styled.div`
 
 const PostViewer = ({ post, error, loading, actionButtons }) => {
   useEffect(() => {
-    console.log(post.body);
     document.querySelectorAll('code').forEach((block) => {
       hljs.highlightBlock(block);
     });
