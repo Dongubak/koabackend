@@ -12,7 +12,7 @@ const PostListContainer = () => {
   const [searchParams] = useSearchParams()
 
   const page = searchParams.get('page') || 1;
-
+  const subject = searchParams.get('subject') || '';
   const posts = useSelector((state) => state.posts.posts);
   const error = useSelector((state) => state.posts.error);
   const loading = useSelector((state) => state.loading['posts/LIST_POSTS']);
@@ -24,8 +24,8 @@ const PostListContainer = () => {
   }, [navigator]);
 
   useEffect(() => {
-    dispatch(listPosts({ username, page }));
-  }, [dispatch, username, page, searchParams]);
+    dispatch(listPosts({ username, page, subject }));
+  }, [dispatch, username, page, searchParams, subject]);
 
   return (
     <PostList
