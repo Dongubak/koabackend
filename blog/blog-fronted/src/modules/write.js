@@ -114,7 +114,8 @@ const write = handleActions(
       ...state,
       title: post.title,
       body: post.body,
-      originalPostId: post.id
+      originalPostId: post.id,
+      subject: post.subject
     }),
     [UPDATE_POST_SUCCESS]: (state, { payload: post }) => ({
       ...state,

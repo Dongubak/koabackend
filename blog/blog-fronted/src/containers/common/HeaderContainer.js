@@ -43,6 +43,7 @@ const HeaderContainer = () => {
   onGoHome={onGoHome}
   onGoCourse={onGoCourse}
   tip={tip[location.pathname]}
+  location={location}
   />;
 };
 

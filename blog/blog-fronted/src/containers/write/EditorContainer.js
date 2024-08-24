@@ -11,6 +11,8 @@ const EditorContainer = () => {
   // }));
   const title = useSelector((state) => state.write.title);
   const body = useSelector((state) => state.write.body);
+  const subject = useSelector((state) => state.write.subject);
+
   const invalidField = useSelector((state) => state.write.invalidField);
 
   console.log(invalidField);
@@ -24,7 +26,7 @@ const EditorContainer = () => {
       dispatch(initialize());
     };
   }, [dispatch]);
-  return <Editor onChangeField={onChangeField} title={title} body={body} invalidField={invalidField}/>;
+  return <Editor onChangeField={onChangeField} title={title} body={body} subject={subject} invalidField={invalidField}/>;
 };
 
 export default EditorContainer;

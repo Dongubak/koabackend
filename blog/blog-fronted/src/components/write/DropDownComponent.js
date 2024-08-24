@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const DropdownWrapper = styled.div`
   position: relative;
-  width: 150px; // Slightly wider for better spacing
-  margin-bottom: 20px; // Adds some space below the dropdown
+  width: 150px;
+  margin-bottom: 20px;
+  font-family: 'Noto Sans', 'Roboto', sans-serif; // 기본 글꼴 설정
 `;
 
 const DropdownHeader = styled.div`
   padding: 12px 15px;
   font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 8px; // Rounded corners for a softer look
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -55,7 +56,13 @@ const Arrow = styled.span`
   transition: transform 0.2s ease;
 `;
 
-const Dropdown = ({ options, selected, onSelectedChange }) => {
+const Dropdown = ({ options, selected, onSelectedChange, prevSubject }) => {
+  const notice = {
+    community: '커뮤니티',
+    knowledge: '지식',
+    qna: '질문',
+    announcement: '공지',
+  }
   const [isOpen, setIsOpen] = useState(false);
 
   const handleDropdownToggle = () => {
@@ -67,10 +74,13 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
     setIsOpen(false);
   };
 
+
   return (
     <DropdownWrapper>
       <DropdownHeader onClick={handleDropdownToggle}>
-        {selected ? selected.label : '주제 선택'}
+        {selected ? selected.label : ( /// 주제 선택 필드 조건
+          prevSubject ? notice[prevSubject] : '주제 선택'
+        )}
         <Arrow isOpen={isOpen}>▼</Arrow>
       </DropdownHeader>
       {isOpen && (
@@ -89,7 +99,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
   );
 };
 
-const Test = ({ onChangeField }) => {
+const DropDownComponent = ({ onChangeField, subject }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
@@ -99,6 +109,7 @@ const Test = ({ onChangeField }) => {
     { label: '공지', value: 'announcement' },
   ];
 
+
   const handleSelectedChange = (option) => {
     setSelectedOption(option);
     onChangeField({ key: 'subject', value: option.value });
@@ -106,7 +117,8 @@ const Test = ({ onChangeField }) => {
 
   return (
     <div>
-      <Dropdown
+      <Dropdown 
+        prevSubject={subject}
         options={options}
         selected={selectedOption}
         onSelectedChange={handleSelectedChange}
@@ -115,4 +127,4 @@ const Test = ({ onChangeField }) => {
   );
 };
 
-export default Test;
+export default DropDownComponent;

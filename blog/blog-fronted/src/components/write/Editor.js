@@ -1,10 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
+import 'quill/dist/quill.snow.css';
 import styled, { css, keyframes } from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
-import Test from '../../Test/Test';
+import DropDownComponent from './DropDownComponent';
+
 
 const shake = keyframes`
   0%, 100% {
@@ -40,8 +42,12 @@ const TitleInput = styled.input`
 
 
 const QuillWrapper = styled.div`
+  .ql-container.ql-snow {
+    border: none;
+  }
   .ql-editor {
-    padding: 0;
+    padding: 0px;
+    padding-top: 1rem;
     min-height: 320px;
     font-size: 1.125rem;
     line-height: 1.5;
@@ -55,24 +61,25 @@ const QuillWrapper = styled.div`
   .ql-editor.ql-blank::before {
     left: 0px;
   }
+  .ql-toolbar {
+    border: none;
+    left: 0px;
+    box-shadow: 0 0px 1px rgba(0, 0, 0, 0.1);
+    /* border-bottom: 1px solid ${palette.gray[4]}; */
+  }
+  
 `;
 
-const Editor = ({ title, body, onChangeField, invalidField }) => {
+const Editor = ({ title, body, subject, onChangeField, invalidField }) => {
   const quillElement = useRef(null);
   const quillInstance = useRef(null);
 
   useEffect(() => {
     quillInstance.current = new Quill(quillElement.current, {
-      theme: 'bubble',
+      theme: 'snow',
       placeholder: '내용을 작성하세요...',
-      modules: {
-        toolbar: [
-          [{ header: '1' }, { header: '2' }],
-          ['bold', 'italic', 'underline', 'strike'],
-          [{ list: 'ordered' }, { list: 'bullet' }],
-          ['blockquote', 'code-block', 'link', 'image'],
-        ],
-      },
+      modules: Editor.modules,
+      formats: Editor.formats,
     });
 
     const quill = quillInstance.current;
@@ -96,7 +103,7 @@ const Editor = ({ title, body, onChangeField, invalidField }) => {
 
   return (
     <EditorBlock>
-      <Test onChangeField={onChangeField} />
+      <DropDownComponent onChangeField={onChangeField} subject={subject}/>
       <TitleInput
         placeholder="제목을 입력하세요"
         onChange={onChangeTitle}
@@ -109,5 +116,23 @@ const Editor = ({ title, body, onChangeField, invalidField }) => {
     </EditorBlock>
   );
 };
+Editor.modules = {
+  toolbar: [
+    [{ header: '1' }, { header: '2' }],
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    ['blockquote', 'code-block', 'link', 'image'],
+  ],
+  clipboard: {
+    matchVisual: false,
+  }
+}
+
+Editor.formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'indent',
+  'link', 'image', 'video', 'code-block'
+];
 
 export default Editor;
