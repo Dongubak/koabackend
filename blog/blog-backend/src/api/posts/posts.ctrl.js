@@ -74,8 +74,8 @@ exports.write = async (ctx) => {
 };
 
 exports.list = async (ctx) => {
-   // 쿼리 파라미터로 페이지 번호와 페이지당 레코드 수, 사용자 이름을 받아옵니다.
-   const { page: qpage, limit: qlimit, username } = ctx.query;
+   // 쿼리 파라미터로 페이지 번호와 페이지당 레코드 수, 사용자 이름, subject를 받아옵니다.
+   const { page: qpage, limit: qlimit, username, subject } = ctx.query;
 
    const page = parseInt(qpage, 10) || 1; // 기본값은 1
    const limit = parseInt(qlimit, 10) || 5; // 기본값은 5
@@ -83,15 +83,17 @@ exports.list = async (ctx) => {
 
    try {
        // 조건에 따라 쿼리 옵션을 설정합니다.
-       const where = username ? { username } : {};
+       const userWhere = username ? { username } : {};
+       const postWhere = subject ? { subject } : {};
 
        // 페이지네이션과 조인을 적용하여 레코드를 조회합니다.
        const posts = await Post.findAll({
            include: [{
                model: User,
-               where, // username이 주어진 경우 필터링
+               where: userWhere, // username이 주어진 경우 필터링
                attributes: ['username'] // 결과에 포함할 User 테이블의 컬럼들
            }],
+           where: postWhere, // subject가 주어진 경우 필터링
            order: [['created_date', 'DESC']], // 날짜 순으로
            limit, // 페이지당 레코드 수
            offset // 시작점
@@ -101,8 +103,9 @@ exports.list = async (ctx) => {
        const totalPosts = await Post.count({
            include: [{
                model: User,
-               where
-           }]
+               where: userWhere
+           }],
+           where: postWhere // subject가 주어진 경우 필터링
        });
        const totalPages = Math.ceil(totalPosts / limit);
 
