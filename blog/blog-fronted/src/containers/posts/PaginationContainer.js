@@ -26,6 +26,7 @@ const PaginationContainer = () => {
 //   });
 
   const page = searchParams.get('page') || 1;
+  const subject = searchParams.get('subject') || '';
   const lastPage = all.posts.pagination.totalPages || 1;
 
   return (
@@ -33,6 +34,7 @@ const PaginationContainer = () => {
       username={username}
       page={parseInt(page, 10)}
       lastPage={lastPage}
+      subject={subject}
     />
   );
 };
