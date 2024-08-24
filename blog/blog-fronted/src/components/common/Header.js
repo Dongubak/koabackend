@@ -79,7 +79,7 @@ const Overlay = styled.div`
   display: ${props => (props.$isOpen ? 'block' : 'none')};
 `;
 
-const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location }) => {
+const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location, navigators }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -107,11 +107,11 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location }
             </Link>
             {
               location.pathname === '/' ? <>
-                <Button className="_link" grey={true}>전체</Button>
-                <Button className='_link' grey={true}>커뮤니티</Button>
-                <Button className='_link' grey={true}>지식</Button>
-                <Button className='_link' grey={true}>질문</Button>
-                <Button className='_link' grey={true}>공지</Button>
+                <Button className="_link" grey={true} onClick={navigators.viewAll}>전체</Button>
+                <Button className='_link' grey={true} onClick={navigators.viewCommunity}>커뮤니티</Button>
+                <Button className='_link' grey={true} onClick={navigators.viewKnowledge}>지식</Button>
+                <Button className='_link' grey={true} onClick={navigators.viewQna}>질문</Button>
+                <Button className='_link' grey={true} onClick={navigators.viewAnnouncement}>공지</Button>
 
                 {/* <Link className="_link">전체</Link>
                 <Link className="_link">커뮤니티</Link>
