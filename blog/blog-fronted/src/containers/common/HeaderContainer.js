@@ -24,6 +24,19 @@ const HeaderContainer = () => {
   const goLogin = () => {
     navigate('/login');
   }
+  
+  const navigators = {
+    viewAll : () => navigator('/'),
+    viewQna : () => navigate('/?subject=qna'),
+    viewAnnouncement : () => navigate('/subject=announcement'),
+    viewKnowledge: () => navigate('/?subject=knowledge'),
+    viewCommunity: () => navigate('/?subject=community')
+  }
+
+  // const viewAll = 
+  // const viewCommunity = () => navigate('/?subject=community');
+  // const viewQna = () => navigate('/?subject=qna');
+  // const viewAnnouncement = () => navigate('/subject=announcement');
 
   const onLogout = () => {
     dispatch(logout());
@@ -44,6 +57,7 @@ const HeaderContainer = () => {
   onGoCourse={onGoCourse}
   tip={tip[location.pathname]}
   location={location}
+  navigators={navigators}
   />;
 };
 
