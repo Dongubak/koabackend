@@ -33,14 +33,18 @@ const PostContent = styled.div`
     background-color: #23241f; /* 기본 배경색 */
     code {
       font-family: 'Courier New', Courier, monospace;
-      font-size: 1rem;
       color: inherit; /* 기본 색상 유지 */
       white-space: pre; /* white-space 속성 추가 */
     }
   }
   .ql-syntax {
+    @media (max-width: 1024px) {
+      font-size: 1rem; 
+    }
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+    }
     font-weight: 600;
-    font-size: 1rem;
     .hljs-comment {
       color: #5C6339;
     }

@@ -37,7 +37,7 @@ const LogoWrapper = styled.div`
   .search_icon {
     margin-right: 0.5rem;
     @media (max-width: 1024px) {
-      font-size: 1.5rem; 
+      font-size: 1rem; 
     }
     @media (max-width: 768px) {
       font-size: 1rem;
@@ -72,7 +72,7 @@ const Wrapper = styled(Responsive)`
 
   .button_logout {
     @media (max-width: 1024px) {
-      font-size: 1.5rem; 
+      font-size: 1rem; 
     }
     @media (max-width: 768px) {
       font-size: 0.8rem;
