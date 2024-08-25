@@ -55,13 +55,9 @@ const initialState = {
 const post = handleActions(
   {
     [READ_POST_SUCCESS]: (state, { payload: post }) => {
-      console.log(post);
       return {
       ...state,
-      post : {
-        ...post,
-        body: transformBody(post.body)
-      }
+      post,
     }},
     [READ_POST_FAILURE]: (state, { payload: error }) => ({
       ...state,

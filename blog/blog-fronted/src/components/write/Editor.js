@@ -3,16 +3,15 @@ import Quill from 'quill';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.core.css';
 import 'react-quill/dist/quill.snow.css';
-import 'highlight.js/styles/monokai-sublime.css';
+import 'highlight.js/styles/atom-one-dark.css'; // 원하는 하이라이트 테마를 선택하세요
+// import 'highlight.js/styles/default.css';
 import styled, { css, keyframes } from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import DropDownComponent from './DropDownComponent';
 import hljs from 'highlight.js';
 
-hljs.configure({
-  languages: ["javascript", "python", "c", "cpp", "java", "html", "css", "matlab"],
-});
+// 모든 언어를 자동으로 감지하도록 설정
 
 const toolbarOptions = [
   [{ header: '1' }, { header: '2' }],
@@ -26,7 +25,7 @@ const toolbarOptions = [
 
 const modules = {
   syntax: {
-    highlight: (text) => hljs.highlightAuto(text).value,
+    highlight: (text) => hljs.highlightAuto(text).value, // 자동 감지를 사용하여 모든 언어에 대해 구문 강조를 수행합니다.
   },
   toolbar: toolbarOptions,
   clipboard: {
@@ -74,6 +73,20 @@ const TitleInput = styled.input`
 `;
 
 const QuillWrapper = styled.div`
+.ql-snow .ql-editor pre.ql-syntax {
+  /* background: #666A73; */
+  /* background: #B0B183; */
+  background: #23241f;
+  font-weight: 600;
+
+}
+.ql-snow .ql-editor pre.ql-syntax {
+  .hljs-comment {
+    color: #5C6339;
+  }
+
+}
+hljs-comment
   .ql-container.ql-snow {
     border: none;
   }
