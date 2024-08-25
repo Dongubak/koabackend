@@ -1,12 +1,45 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Quill from 'quill';
-import 'quill/dist/quill.bubble.css';
-import 'quill/dist/quill.snow.css';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.core.css';
+import 'react-quill/dist/quill.snow.css';
+import 'highlight.js/styles/monokai-sublime.css';
 import styled, { css, keyframes } from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import DropDownComponent from './DropDownComponent';
+import hljs from 'highlight.js';
 
+hljs.configure({
+  languages: ["javascript", "python", "c", "cpp", "java", "html", "css", "matlab"],
+});
+
+const toolbarOptions = [
+  [{ header: '1' }, { header: '2' }],
+  ['bold', 'italic', 'underline', 'strike'],
+  [{ list: 'ordered' }, { list: 'bullet' }],
+  ['blockquote', 'code-block', 'link', 'image'],
+  [{ indent: '-1' }, { indent: '+1' }],
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  [{ align: [] }],
+];
+
+const modules = {
+  syntax: {
+    highlight: (text) => hljs.highlightAuto(text).value,
+  },
+  toolbar: toolbarOptions,
+  clipboard: {
+    matchVisual: false,
+  },
+};
+
+const formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'indent',
+  'link', 'image', 'video', 'code-block'
+];
 
 const shake = keyframes`
   0%, 100% {
@@ -31,7 +64,7 @@ const TitleInput = styled.input`
   padding-bottom: 0.5rem;
   border: none;
   border-bottom: 1px solid ${palette.gray[4]};
-  margin-bottom: 0.5rem; /* Adjusted for space between the input and error message */
+  margin-bottom: 0.5rem;
   width: 100%;
   ${(props) =>
     props.invalid &&
@@ -39,7 +72,6 @@ const TitleInput = styled.input`
       animation: ${shake} 0.3s ease;
     `}
 `;
-
 
 const QuillWrapper = styled.div`
   .ql-container.ql-snow {
@@ -65,37 +97,14 @@ const QuillWrapper = styled.div`
     border: none;
     left: 0px;
     box-shadow: 0 0px 1px rgba(0, 0, 0, 0.1);
-    /* border-bottom: 1px solid ${palette.gray[4]}; */
   }
-  
 `;
 
 const Editor = ({ title, body, subject, onChangeField, invalidField }) => {
-  const quillElement = useRef(null);
-  const quillInstance = useRef(null);
 
-  useEffect(() => {
-    quillInstance.current = new Quill(quillElement.current, {
-      theme: 'snow',
-      placeholder: '내용을 작성하세요...',
-      modules: Editor.modules,
-      formats: Editor.formats,
-    });
-
-    const quill = quillInstance.current;
-    quill.on('text-change', (delta, oldDelta, source) => {
-      if (source === 'user') {
-        onChangeField({ key: 'body', value: quill.root.innerHTML });
-      }
-    });
-  }, [onChangeField]);
-
-  const mounted = useRef(false);
-  useEffect(() => {
-    if (mounted.current) return;
-    mounted.current = true;
-    quillInstance.current.root.innerHTML = body;
-  }, [body]);
+  const handleQuillChange = (value) => {
+    onChangeField({ key: 'body', value });
+  };
 
   const onChangeTitle = (e) => {
     onChangeField({ key: 'title', value: e.target.value });
@@ -103,7 +112,7 @@ const Editor = ({ title, body, subject, onChangeField, invalidField }) => {
 
   return (
     <EditorBlock>
-      <DropDownComponent onChangeField={onChangeField} subject={subject}/>
+      <DropDownComponent onChangeField={onChangeField} subject={subject} />
       <TitleInput
         placeholder="제목을 입력하세요"
         onChange={onChangeTitle}
@@ -111,28 +120,17 @@ const Editor = ({ title, body, subject, onChangeField, invalidField }) => {
         invalid={invalidField.includes('title')}
       />
       <QuillWrapper invalid={invalidField.includes('body')}>
-        <div ref={quillElement} />
+        <ReactQuill
+          value={body}
+          onChange={handleQuillChange}
+          theme="snow"
+          modules={modules}
+          formats={formats}
+          placeholder="내용을 작성하세요..."
+        />
       </QuillWrapper>
     </EditorBlock>
   );
 };
-Editor.modules = {
-  toolbar: [
-    [{ header: '1' }, { header: '2' }],
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ list: 'ordered' }, { list: 'bullet' }],
-    ['blockquote', 'code-block', 'link', 'image'],
-  ],
-  clipboard: {
-    matchVisual: false,
-  }
-}
-
-Editor.formats = [
-  'header', 'font', 'size',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'indent',
-  'link', 'image', 'video', 'code-block'
-];
 
 export default Editor;
