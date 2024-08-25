@@ -31,12 +31,16 @@ const removehtmlAndShorten = body => {
 
 const sanitizeOption = {
    allowedTags: [
-      'h1', 'h2', 'b', 'i', 'u', 's', 'p', 'ul', 'ol', 'li', 'blockquote', 'a', 'img'
+      'h1', 'h2', 'b', 'i', 'u', 's', 'p', 'ul', 'ol', 'li', 'blockquote', 'a', 'img',
+      'pre', 'code', 'br', 'div', 'span'
    ],
    allowedAttributes: {
       a: ['href', 'name', 'target'],
       img: ['src'],
       li: ['class'],
+      pre: ['class', 'spellcheck'], // Quill's code block uses <pre> with 'class' and 'spellcheck' attributes
+      div: ['class'], // Quill wraps content in <div> elements with classes like 'ql-editor'
+      span: ['class'], // Quill uses <span> for various inline styles, so class attribute is necessary
    },
    allowedSchemes: ['data', 'http'],
 };

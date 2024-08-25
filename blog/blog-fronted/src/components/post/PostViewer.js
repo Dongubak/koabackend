@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import { Helmet } from 'react-helmet-async';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/default.css';
 
 const PostViewerBlock = styled(Responsive)`
   margin-top: 4rem;
 `;
+
 const PostHead = styled.div`
   border-bottom: 1px solid ${palette.gray[2]};
   padding-bottom: 3rem;
@@ -22,10 +25,26 @@ const PostHead = styled.div`
 const PostContent = styled.div`
   font-size: 1.3125rem;
   color: ${palette.gray[8]};
+  pre {
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-x: auto;
+    background-color: #f5f5f5; /* 기본 배경색 */
+    code {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1rem;
+      color: inherit; /* 기본 색상 유지 */
+    }
+  }
 `;
 
 const PostViewer = ({ post, error, loading, actionButtons }) => {
-  // 에러 발생 시
+  useEffect(() => {
+    document.querySelectorAll('code').forEach((block) => {
+      hljs.highlightBlock(block);
+    });
+  }, [post]);
+
   if (error) {
     if (error.response && error.response.status === 404) {
       return <PostViewerBlock>존재하지 않는 포스트입니다.</PostViewerBlock>;
@@ -33,12 +52,12 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
     return <PostViewerBlock>오류 발생!</PostViewerBlock>;
   }
 
-  // 로딩중이거나, 아직 포스트 데이터가 없을 시
   if (loading || !post) {
     return null;
   }
 
   const { title, body, username, created_date, subject } = post;
+
   return (
     <PostViewerBlock>
       <Helmet>
@@ -46,14 +65,12 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
       </Helmet>
       <PostHead>
         <h1>{title}</h1>
-        
         <SubInfo
           username={username}
           publishedDate={created_date}
           subject={subject}
           hasMarginTop
         />
-        {/* <Tags tags={tags} /> */}
       </PostHead>
       {actionButtons}
       <PostContent dangerouslySetInnerHTML={{ __html: body }} />
