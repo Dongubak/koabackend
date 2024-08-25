@@ -6,13 +6,20 @@ import { useNavigate } from 'react-router';
 
 const PaginationBlock = styled.div`
   width: 320px;
+  height: 4rem;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 3rem;
   padding-bottom: 8px;
 `;
 
+const ButtonsWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 5rem;
+  justify-content: space-between;
+  align-items: center;
+`
 
 const PageNumber = styled.div``;
 
@@ -34,20 +41,21 @@ const Pagination = ({ page, lastPage, username, subject }) => {
 
   return (
     <PaginationBlock>
-      <Button
-        disabled={page === 1}
-        onClick={onGoPreviousPage}
-      >
-        이전
-      </Button>
-      <PageNumber>{page}</PageNumber>
-      <Button
-        disabled={page === lastPage}
-        onClick={onGoNextPage}
-      >
-        다음
-      </Button>
-
+      <ButtonsWrapper>
+        <Button
+          disabled={page === 1}
+          onClick={onGoPreviousPage}
+        >
+          이전
+        </Button>
+        <PageNumber>{page}</PageNumber>
+        <Button
+          disabled={page === lastPage}
+          onClick={onGoNextPage}
+        >
+          다음
+        </Button>
+      </ButtonsWrapper>
     </PaginationBlock>
   );
 };

@@ -8,6 +8,7 @@ import CommentActionButtons from './CommentActionButtons';
 
 const CommentsListBlock = styled(Responsive)`
   /* margin-top: 1rem; */
+  margin-bottom: 2rem;
 `;
 
 const CommentItemBlock = styled.div`
