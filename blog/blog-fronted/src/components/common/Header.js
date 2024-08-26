@@ -5,7 +5,7 @@ import Responsive from './Responsive';
 import Button from './Button';
 import { GiHamburgerMenu } from "react-icons/gi";
 import Sidebar from './Sidebar';
-import { MdOutlineTipsAndUpdates } from "react-icons/md";
+// import { MdOutlineTipsAndUpdates } from "react-icons/md";
 
 const HeaderBlock = styled.div`
   @media (max-width: 768px) {
@@ -77,6 +77,13 @@ const Wrapper = styled(Responsive)`
     @media (max-width: 768px) {
       font-size: 0.8rem;
     }
+    @media (max-width: 578px) {
+      font-size: 0.8rem;
+    }
+  }
+  @media (max-width: 578px) {
+      padding: 0.3rem;
+      font-size: 0.8rem;
   }
 `;
 
@@ -119,6 +126,10 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location, 
     setSidebarOpen(!isSidebarOpen);
     setTimeout(() => setSidebarOpen(state => state), 0);
   }
+
+  // if(location.pathname === '/') {
+  //   console.log(location.pathname);
+  // }
   
   const closeSidebar = () => {
     setSidebarOpen(false);
@@ -153,14 +164,6 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location, 
           
           {user ? (
             <div className="right">
-              <Wrap>
-                <div>
-                  {
-                    tip ? <TooltipSpan data-tooltip={tip}><MdOutlineTipsAndUpdates className='tip_icon'/></TooltipSpan> : null
-                  }
-                  
-                </div>
-              </Wrap>
               <UserInfo>{user.user.username}</UserInfo>
               <Button className="button_logout" onClick={onLogout}>로그아웃</Button>
             </div>
