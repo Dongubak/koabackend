@@ -32,7 +32,8 @@ const removehtmlAndShorten = body => {
 const sanitizeOption = {
    allowedTags: [
       'h1', 'h2', 'b', 'i', 'u', 's', 'p', 'ul', 'ol', 'li', 'blockquote', 'a', 'img',
-      'pre', 'code', 'br', 'div', 'span'
+      'pre', 'code', 'br', 'div', 'span', 'html', 'body', 'script',
+      'button', 
    ],
    allowedAttributes: {
       a: ['href', 'name', 'target'],
@@ -41,6 +42,9 @@ const sanitizeOption = {
       pre: ['class', 'spellcheck'], // Quill's code block uses <pre> with 'class' and 'spellcheck' attributes
       div: ['class'], // Quill wraps content in <div> elements with classes like 'ql-editor'
       span: ['class'], // Quill uses <span> for various inline styles, so class attribute is necessary
+      html: ['lang', 'class'], // html 태그의 속성 (예: lang 속성)
+      body: ['class', 'style'], // body 태그의 속성 (예: class, style 속성)
+      script: ['src', 'type'], // script 태그의 속성 (예: src, type 속성)
    },
    allowedSchemes: ['data', 'http'],
 };
