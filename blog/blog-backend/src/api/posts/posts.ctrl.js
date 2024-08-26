@@ -82,7 +82,7 @@ exports.list = async (ctx) => {
    const { page: qpage, limit: qlimit, username, subject } = ctx.query;
 
    const page = parseInt(qpage, 10) || 1; // 기본값은 1
-   const limit = parseInt(qlimit, 10) || 5; // 기본값은 5
+   const limit = parseInt(qlimit, 10) || 10; // 기본값은 5
    const offset = (page - 1) * limit;
 
    try {
@@ -208,7 +208,7 @@ exports.remove = async (ctx) => {
       if (!post) return; // 권한이 없거나 포스트가 없으면 함수 종료
 
       await post.destroy();
-      ctx.status = 204; // No Content
+      ctx.body = id;
    } catch (error) {
       ctx.throw(500, error);
    }

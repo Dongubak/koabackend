@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PostList from '../../components/posts/PostList';
 import { listPosts } from '../../modules/posts';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { initSubject } from '../../modules/write';
 
 const PostListContainer = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const PostListContainer = () => {
 
   const page = searchParams.get('page') || 1;
   const subject = searchParams.get('subject') || '';
+
   const posts = useSelector((state) => state.posts.posts);
   const error = useSelector((state) => state.posts.error);
   const loading = useSelector((state) => state.loading['posts/LIST_POSTS']);
@@ -20,8 +22,9 @@ const PostListContainer = () => {
 
 
   const onGoWritePage = useCallback(() => {
-   navigator('/write');
-  }, [navigator]);
+    dispatch(initSubject(subject));
+    navigator('/write');
+  }, [navigator, subject, dispatch]);
 
   useEffect(() => {
     dispatch(listPosts({ username, page, subject }));

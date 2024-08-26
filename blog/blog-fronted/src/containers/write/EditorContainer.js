@@ -14,7 +14,6 @@ const EditorContainer = () => {
   const subject = useSelector((state) => state.write.subject);
 
   const invalidField = useSelector((state) => state.write.invalidField);
-
   
   const onChangeField = useCallback(payload => dispatch(changeField(payload)), [
     dispatch,

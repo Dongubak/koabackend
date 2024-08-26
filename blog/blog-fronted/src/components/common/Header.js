@@ -8,6 +8,9 @@ import Sidebar from './Sidebar';
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
 
 const HeaderBlock = styled.div`
+  @media (max-width: 768px) {
+      font-size: 0.8rem;
+  }
   position: fixed;
   width: 100%;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
@@ -20,30 +23,60 @@ const LogoWrapper = styled.div`
   justify-content: center;
 
   ._link {
-    margin: 1rem;
+    @media (max-width: 1024px) {
+      font-size: 1rem; 
+    }
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+      padding: 0 0.2rem;
+    }
+    margin: 0rem;
+    background: white;
   }
 
   .search_icon {
     margin-right: 0.5rem;
-    font-size: 1.5rem; 
+    @media (max-width: 1024px) {
+      font-size: 1rem; 
+    }
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+    
     cursor: pointer;
     margin: 10px; 
   }
 `;
 
 const Wrapper = styled(Responsive)`
+  
   height: 4rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   .logo {
-    font-size: 1.125rem;
+    @media (max-width: 1024px) {
+      font-size: 1.125rem;
+    }
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+    }
+    
     font-weight: 800;
     letter-spacing: 2px;
   }
   .right {
     display: flex;
     align-items: center;
+  }
+
+  .button_logout {
+    @media (max-width: 1024px) {
+      font-size: 1rem; 
+    }
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+    }
   }
 `;
 
@@ -87,9 +120,9 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location, 
     setTimeout(() => setSidebarOpen(state => state), 0); // 강제 리렌더링 유도
   };
 
-  if(location.pathname === '/') {
-    console.log(location.pathname);
-  }
+  // if(location.pathname === '/') {
+  //   console.log(location.pathname);
+  // }
   
   const closeSidebar = () => {
     setSidebarOpen(false);
@@ -108,7 +141,7 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location, 
             {
               location.pathname === '/' ? <>
                 <Button className="_link" grey={true} onClick={navigators.viewAll}>전체</Button>
-                <Button className='_link' grey={true} onClick={navigators.viewCommunity}>커뮤니티</Button>
+                <Button className='_link' grey={true} onClick={navigators.viewCommunity}>커뮤</Button>
                 <Button className='_link' grey={true} onClick={navigators.viewKnowledge}>지식</Button>
                 <Button className='_link' grey={true} onClick={navigators.viewQna}>질문</Button>
                 <Button className='_link' grey={true} onClick={navigators.viewAnnouncement}>공지</Button>
@@ -133,7 +166,7 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location, 
                 </div>
               </Wrap>
               <UserInfo>{user.user.username}</UserInfo>
-              <Button onClick={onLogout}>로그아웃</Button>
+              <Button className="button_logout" onClick={onLogout}>로그아웃</Button>
             </div>
           ) : (
             <div className="right">
