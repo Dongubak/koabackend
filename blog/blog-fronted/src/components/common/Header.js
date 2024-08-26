@@ -119,13 +119,10 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location, 
     setSidebarOpen(!isSidebarOpen);
     setTimeout(() => setSidebarOpen(state => state), 0);
   }
-  // if(location.pathname === '/') {
-  //   console.log(location.pathname);
-  // }
   
   const closeSidebar = () => {
     setSidebarOpen(false);
-    setTimeout(() => setSidebarOpen(state => state), 0); // 강제 리렌더링 유도
+    setTimeout(() => setSidebarOpen(state => state), 0);
   };
 
   return (
