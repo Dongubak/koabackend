@@ -11,9 +11,16 @@ const [
   LIST_POSTS_FAILURE,
 ] = createRequestActionTypes('posts/LIST_POSTS');
 
+const LIST_POSTS_WITHOUT_REMOVED_ONE = 'posts/LIST_POSTS_WITHOUT_REMOVED_ONE';
+
 export const listPosts = createAction(
   LIST_POSTS,
   ({ username, page, subject }) => ({ username, page, subject }),
+);
+
+export const listPostsWithoutRemovedOne = createAction(
+  LIST_POSTS_WITHOUT_REMOVED_ONE,
+  (id) => id
 );
 
 const listPostsSaga = createRequestSaga(LIST_POSTS, postsAPI.listPosts);
@@ -37,6 +44,16 @@ const posts = handleActions(
       ...state,
       error,
     }),
+    [LIST_POSTS_WITHOUT_REMOVED_ONE]: (state, {payload: id}) => {
+      const updatedPosts = state.posts.posts.filter(post => post.id !== id);
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          posts: updatedPosts
+        }
+      }
+    }
   },
   initialState,
 );

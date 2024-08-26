@@ -54,7 +54,10 @@ const shake = keyframes`
 
 const EditorBlock = styled(Responsive)`
   padding-top: 5rem;
-  padding-bottom: 5rem;
+  padding-bottom: 2rem;
+  .ql-container.ql-snow {
+    border: none;
+  }
 `;
 
 const TitleInput = styled.input`
@@ -70,33 +73,30 @@ const TitleInput = styled.input`
     css`
       animation: ${shake} 0.3s ease;
     `}
+
+  
 `;
 
 const QuillWrapper = styled.div`
-.ql-snow .ql-editor pre.ql-syntax {
-  /* background: #666A73; */
-  /* background: #B0B183; */
-  background: #23241f;
-  font-weight: 600;
+  .ql-snow .ql-editor pre.ql-syntax {
+    /* background: #666A73; */
+    /* background: #B0B183; */
+    background: #23241f;
+    font-weight: 600;
 
-}
-.ql-snow .ql-editor pre.ql-syntax {
-  .hljs-comment {
-    color: #5C6339;
+  }
+  .ql-snow .ql-editor pre.ql-syntax {
+    .hljs-comment {
+      color: #5C6339;
+    }
   }
 
-}
-hljs-comment
-  .ql-container.ql-snow {
-    border: none;
-  }
   .ql-editor {
     padding: 0px;
     padding-top: 1rem;
     min-height: 320px;
     font-size: 1.125rem;
     line-height: 1.5;
-    border: none;
     ${(props) =>
       props.invalid &&
       css`

@@ -14,7 +14,7 @@ const WriteCommentContainer = () => {
    const user = useSelector((state) => state.user.user);
    const post = useSelector((state) => state.post);
    const loading = useSelector((state) => state.loading['post/READ_POST']);
-   console.log(user);
+   // console.log(user);
    // useState(() => {
    //    console.log(error, loading, user);
    // }, [])

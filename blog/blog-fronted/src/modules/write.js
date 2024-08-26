@@ -4,12 +4,13 @@ import createRequestSaga, {
 } from '../lib/createRequestSaga';
 import * as postsAPI from '../lib/api/posts';
 import { put, takeLatest, call } from 'redux-saga/effects';
-import { listPosts } from './posts';
+import { listPosts, listPostsWithoutRemovedOne } from './posts';
 
 const INITIALIZE = 'write/INITIALIZE'; // 모든 내용 초기화
 const CHANGE_FIELD = 'write/CHANGE_FIELD'; // 특정 key 값 바꾸기
 const SET_ORIGINAL_POST = 'write/SET_ORIGINAL_POST';
 const SET_INVALID_FIELD = 'write/SET_INVALID_FIELD';
+const INIT_SUBJECT = 'write/INIT_SUBJECT';
 
 const [
   WRITE_POST,
@@ -55,15 +56,16 @@ export const setOriginalPost = createAction(SET_ORIGINAL_POST, post => post);
 
 export const setInvalidField = createAction(SET_INVALID_FIELD, fieldList => fieldList);
 
+export const initSubject = createAction(INIT_SUBJECT, (subject) => subject);
+
 const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
 const updatePostSaga = createRequestSaga(UPDATE_POST, postsAPI.updatePost);
 const removePostSaga = createRequestSaga(REMOVE_POST, postsAPI.removePost);
 
-function* handleRemovePostSuccess(action) {
+function* handleRemovePostSuccess({payload : id}) {
   try {
     // 여기에 포스트 삭제 이후 수행할 작업을 추가합니다.
-    yield put(listPosts({username: ''})); // 포스트 목록 다시 불러오기
-    console.log(action.payload);
+    yield put(listPostsWithoutRemovedOne(id));
   } catch (e) {
     console.error(e);
   }
@@ -125,16 +127,24 @@ const write = handleActions(
       ...state,
       postError,
     }),
-    [REMOVE_POST_SUCCESS]: (state, { payload: post }) => ({
-      ...state,
-      post,
-      removeError: null,
-    }),
+    [REMOVE_POST_SUCCESS]: (state, { payload: id }) => {
+      return {
+        ...state,
+        removeError: null,
+      }
+    },
     [REMOVE_POST_FAILURE]: (state, { payload: removeError }) => ({
       ...state,
       removeError,
     }),
-  },
+    [INIT_SUBJECT]: (state, {payload: subject}) => {
+      console.log(subject);
+      return {
+        ...state,
+        subject,
+      }
+    }
+   },
   initialState,
 );
 

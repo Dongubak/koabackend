@@ -15,7 +15,7 @@ export const listPosts = ({page, username, subject}) => {
 
 export const updatePost = ({id, title, body}) => {
   const {token} = JSON.parse(localStorage.getItem('user')).user; // localStorage에서 토큰 가져오기
-  console.log(token);
+  // console.log(token);
   return client.patch(`${apiURL}/api/posts/${id}`, 
     { title, body },
     {
@@ -28,8 +28,8 @@ export const updatePost = ({id, title, body}) => {
 
 export const removePost = ({id, navigate}) => {
   const {token} = JSON.parse(localStorage.getItem('user')).user; // localStorage에서 토큰 가져오기
-  console.log('remove post');
-  console.log(id);
+  // console.log('remove post');
+  // console.log(id);
   return client.delete(`${apiURL}/api/posts/${id}`,
     {
       headers: {
