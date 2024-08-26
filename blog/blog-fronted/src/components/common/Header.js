@@ -118,7 +118,7 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location, 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
     setTimeout(() => setSidebarOpen(state => state), 0);
-
+  }
   // if(location.pathname === '/') {
   //   console.log(location.pathname);
   // }
