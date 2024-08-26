@@ -15,36 +15,11 @@ const UNLOAD_POST = 'post/UNLOAD_POST'; // 포스트 페이지에서 벗어날 �
 export const readPost = createAction(READ_POST, id => id);
 export const unloadPost = createAction(UNLOAD_POST);
 
-const decodeHtml = (html) => {
-  const text = document.createElement('textarea');
-  text.innerHTML = html;
-  return text.value;
-};
-
-const transformBody = (body) => {
-  return decodeHtml(body)
-    .replace(/<div class="ql-code-block-container"[^>]*>/g, '<pre><code>')
-    .replace(/<\/div><div class="ql-code-block">/g, '\n')
-    .replace(/<div class="ql-code-block">/g, '')
-    .replace(/<\/div><\/div>/g, '</code></pre>')
-    .replace(/<pre class="ql-syntax"[^>]*>/g, '<pre><code>')
-    .replace(/<\/pre>/g, '</code></pre>');
-};
-
-function* handleReadPostSuccess(action) {
-  const decoded = yield transformBody(action.payload.body);
-  yield console.log({
-    decoded
-  });
-}
-
 
 const readPostSaga = createRequestSaga(READ_POST, postsAPI.readPost);
 export function* postSaga() {
   yield takeLatest(READ_POST, readPostSaga);
-  yield takeLatest(READ_POST_SUCCESS, handleReadPostSuccess);
 }
-
 
 
 const initialState = {
