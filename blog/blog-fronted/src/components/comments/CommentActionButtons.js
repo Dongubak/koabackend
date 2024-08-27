@@ -6,8 +6,6 @@ import AskRemoveModal from './AskRemoveModal';
 const CommentActionButtonsBlock = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 2rem;
-  margin-top: -1.5rem;
 `;
 
 const ActionButton = styled.button`

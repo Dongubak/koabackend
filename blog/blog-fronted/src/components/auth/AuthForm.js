@@ -14,6 +14,7 @@ const AuthFormBlock = styled.div`
     color: ${palette.gray[8]};
     margin-bottom: 1rem;
   }
+  
 `;
 
 /**
@@ -73,7 +74,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
   const text = textMap[type];
   return (
     <AuthFormBlock>
-      <h3>{text}</h3>
+      <h3 className='logo'>{text}</h3>
       <form onSubmit={onSubmit}>
         <StyledInput
           autoComplete="username"

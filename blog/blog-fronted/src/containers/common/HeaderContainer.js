@@ -33,6 +33,10 @@ const HeaderContainer = () => {
     viewCommunity: () => navigate('?subject=community')
   }
 
+  useEffect(() => {
+
+  }, [dispatch])
+
   // const viewAll = 
   // const viewCommunity = () => navigate('/?subject=community');
   // const viewQna = () => navigate('/?subject=qna');
