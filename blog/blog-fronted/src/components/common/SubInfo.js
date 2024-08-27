@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 import { ko } from 'date-fns/locale';
 import {formatDistanceToNow} from 'date-fns';
+import { FaRegCommentDots } from "react-icons/fa";
 
 const SubInfoBlock = styled.div`
   ${props =>
@@ -27,7 +28,7 @@ const options = {
   qna: '질문',
   announcement: '공지',
 };
-const SubInfo = ({ username, publishedDate, hasMarginTop, subject }) => {
+const SubInfo = ({ username, publishedDate, hasMarginTop, subject, comment_count }) => {
   return (
     <SubInfoBlock hasMarginTop={hasMarginTop}>
       <span>
@@ -40,6 +41,10 @@ const SubInfo = ({ username, publishedDate, hasMarginTop, subject }) => {
         subject ? <span>{options[subject]}</span> : null
       }
       <span>{formatDistanceToNow(new Date(publishedDate), { addSuffix: true, locale: ko })}</span>
+      {
+        comment_count !== undefined ? <span><FaRegCommentDots /> {comment_count} </span> : null
+      }
+      
     </SubInfoBlock>
   );
 };

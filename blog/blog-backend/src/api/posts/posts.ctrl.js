@@ -1,6 +1,7 @@
-const { Post, User } = require('../../../models');
+const { Post, User, Comment } = require('../../../models');
 const sanitizeHtml = require('sanitize-html');
 const Joi = require('joi');
+const { Sequelize } = require('sequelize');
 
 
 const checkOwnership = async (ctx, postId) => {
@@ -32,8 +33,7 @@ const removehtmlAndShorten = body => {
 const sanitizeOption = {
    allowedTags: [
       'h1', 'h2', 'b', 'i', 'u', 's', 'p', 'ul', 'ol', 'li', 'blockquote', 'a', 'img',
-      'pre', 'code', 'br', 'div', 'span', 'html', 'body', 'script',
-      'button', 
+      'pre', 'code', 'br', 'div', 'span'
    ],
    allowedAttributes: {
       a: ['href', 'name', 'target'],
@@ -42,9 +42,6 @@ const sanitizeOption = {
       pre: ['class', 'spellcheck'], // Quill's code block uses <pre> with 'class' and 'spellcheck' attributes
       div: ['class'], // Quill wraps content in <div> elements with classes like 'ql-editor'
       span: ['class'], // Quill uses <span> for various inline styles, so class attribute is necessary
-      html: ['lang', 'class'], // html 태그의 속성 (예: lang 속성)
-      body: ['class', 'style'], // body 태그의 속성 (예: class, style 속성)
-      script: ['src', 'type'], // script 태그의 속성 (예: src, type 속성)
    },
    allowedSchemes: ['data', 'http'],
 };
@@ -96,15 +93,28 @@ exports.list = async (ctx) => {
 
        // 페이지네이션과 조인을 적용하여 레코드를 조회합니다.
        const posts = await Post.findAll({
-           include: [{
-               model: User,
-               where: userWhere, // username이 주어진 경우 필터링
-               attributes: ['username'] // 결과에 포함할 User 테이블의 컬럼들
-           }],
+           include: [
+               {
+                   model: User,
+                   where: userWhere, // username이 주어진 경우 필터링
+                   attributes: ['username'] // 결과에 포함할 User 테이블의 컬럼들
+               },
+               {
+                   model: Comment,
+                   attributes: [], // Comment 모델의 필드는 제외하고 COUNT만 사용
+               }
+           ],
            where: postWhere, // subject가 주어진 경우 필터링
            order: [['created_date', 'DESC']], // 날짜 순으로
            limit, // 페이지당 레코드 수
-           offset // 시작점
+           offset, // 시작점
+           attributes: {
+               include: [
+                   [Sequelize.fn('COUNT', Sequelize.col('Comments.id')), 'comment_count'] // 댓글 수를 계산하여 comment_count 필드로 포함
+               ]
+           },
+           group: ['Post.id', 'User.id'], // Post와 User의 id를 기준으로 그룹화
+           subQuery: false // 서브쿼리 비활성화
        });
 
        // 전체 레코드 수를 조회하여 총 페이지 수를 계산합니다.
@@ -125,7 +135,8 @@ exports.list = async (ctx) => {
            user_id: post.user_id,
            created_date: post.created_date,
            username: post.User.username, // User 객체에서 username 추출
-           subject: post.subject
+           subject: post.subject,
+           comment_count: post.dataValues.comment_count // 댓글 수 추가
        }));
 
        ctx.body = {
@@ -146,11 +157,24 @@ exports.read = async (ctx) => {
    try {
        const post = await Post.findOne({
            where: { id },
-           include: [{
-               model: User,
-               attributes: ['username'] // 결과에 포함할 User 테이블의 컬럼들
-           }]
+           include: [
+               {
+                   model: User,
+                   attributes: ['username'], // 결과에 포함할 User 테이블의 컬럼들
+               },
+               {
+                   model: Comment,
+                   attributes: [], // Comment 모델의 필드는 제외하고 COUNT만 사용
+               }
+           ],
+           attributes: {
+               include: [
+                   [Sequelize.fn('COUNT', Sequelize.col('Comments.id')), 'comment_count'] // 댓글 수를 계산하여 comment_count 필드로 포함
+               ]
+           },
+           group: ['Post.id', 'User.id'] // Post와 User의 id를 기준으로 그룹화
        });
+       
        if (!post) {
            ctx.status = 404;
            return;
@@ -164,7 +188,8 @@ exports.read = async (ctx) => {
            user_id: post.user_id,
            created_date: post.created_date,
            subject: post.subject,
-           username: post.User.username // User 객체에서 username 추출
+           username: post.User.username, // User 객체에서 username 추출
+           comment_count: post.dataValues.comment_count // 댓글 수 추가
        };
 
        ctx.body = response;

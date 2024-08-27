@@ -31,7 +31,7 @@ const LogoWrapper = styled.div`
       padding: 0 0.2rem;
     }
     margin: 0rem;
-    background: white;
+    background: transparent;
   }
 
   .search_icon {
@@ -61,9 +61,11 @@ const Wrapper = styled(Responsive)`
     @media (max-width: 768px) {
       font-size: 0.8rem;
     }
-    
+    font-family: "Orbitron", sans-serif;
+    font-optical-sizing: auto;
     font-weight: 800;
-    letter-spacing: 2px;
+    font-style: normal;
+    padding-right: 0.2rem;
   }
   .right {
     display: flex;
@@ -94,6 +96,11 @@ const Spacer = styled.div`
 const UserInfo = styled.div`
   font-weight: 800;
   margin-right: 1rem;
+  font-size: 1.07rem;
+  font-family: "Podkova", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 `;
 
 const SidebarWrapper = styled.div`

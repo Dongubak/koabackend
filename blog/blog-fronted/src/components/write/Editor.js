@@ -61,6 +61,9 @@ const EditorBlock = styled(Responsive)`
 `;
 
 const TitleInput = styled.input`
+  font-family: "Song Myung", serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 3rem;
   outline: none;
   padding-bottom: 0.5rem;
@@ -99,9 +102,12 @@ const QuillWrapper = styled.div`
     line-height: 1.5;
     ${(props) =>
       props.invalid &&
-      css`
+      css`  
         animation: ${shake} 0.3s ease;
       `}
+    font-family: "Gowun Dodum", sans-serif;
+    font-weight: 400;
+    font-style: normal;
   }
   .ql-editor.ql-blank::before {
     left: 0px;
