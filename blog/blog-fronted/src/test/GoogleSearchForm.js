@@ -7,7 +7,21 @@ import Responsive from '../components/common/Responsive';
 const SearchForm = styled.form`
   display: flex;
   align-items: center;
-  width: 100%;
+  
+  /* width: 100%; */
+  @media (min-width: 1024px) {
+   width:100%;
+    }
+  @media (max-width: 1024px) {
+   width:100%;
+    }
+    @media (max-width: 768px) {
+      width:100%;
+    }
+    @media (max-width: 578px) {
+      min-width: 220px;
+    }
+  max-width: 100%;
   margin: 0 auto;
   padding: 0.2rem 0.3rem;
   border-radius: 50px;
@@ -18,8 +32,23 @@ const SearchForm = styled.form`
 const SearchInput = styled.input`
   flex: 1;
   border: none;
-  padding-left: 0.3rem;
+  padding-left: 0.8rem;
   margin: 0;
+  font-family: "Gowun Dodum", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  @media (min-width: 1024px) {
+   width:100%;
+    }
+  @media (max-width: 1024px) {
+   width:100%;
+    }
+    @media (max-width: 768px) {
+      width:100%;
+    }
+    @media (max-width: 578px) {
+      min-width: 100px;
+    }
   border-radius: 2rem;
   outline: none;
   background-color: transparent;
@@ -87,27 +116,35 @@ const SaveButton = styled.button`
   }
 `;
 
-const GoogleSearchForm = () => {
+const GoogleSearchForm = (
+   {
+      value, 
+      onChange, 
+      placeholder, 
+      onKeyPress,
+      onSearch,
+      onSave
+   }
+) => {
   return (
-      <Responsive>
-         <SearchForm action="https://www.google.com/search" method="get">
+      <SearchForm>
          <SearchInput 
          type="text" 
-         name="q" 
-         placeholder="Search Google" 
-         required 
+         placeholder={placeholder} 
+         value={value}
+         onChange={onChange}
+         onKeyPress={onKeyPress}
          />
          <ButtonGroup>
-         <SearchButton type="submit">
+         <SearchButton onClick={onSearch}>
             <FaSearch />
          </SearchButton>
          <Space></Space>
-         <SaveButton type="button">
+         <SaveButton onClick={onSave}>
             <MdSaveAlt />
          </SaveButton>
          </ButtonGroup>
       </SearchForm>
-      </Responsive>
     
   );
 };

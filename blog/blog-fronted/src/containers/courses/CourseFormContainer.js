@@ -19,8 +19,10 @@ const CourseFormContainer = () => {
    };
 
    const handleKeyPress = (e) => {
+   
    if (e.key === 'Enter') {
-      onSearch();
+      e.preventDefault();
+      onSearch(e);
    }
    };
 
@@ -35,7 +37,8 @@ const CourseFormContainer = () => {
       setKeyword(e.target.value);
    }
 
-   const onSearch = () => {
+   const onSearch = (e) => {
+      e.preventDefault();
       // console.log(keyword);
       setSearchParams({page: 1});
       dispatch(listCourses({
