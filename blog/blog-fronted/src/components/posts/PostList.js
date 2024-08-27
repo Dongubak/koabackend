@@ -19,6 +19,7 @@ const WritePostButtonWrapper = styled.div`
 const PostItemBlock = styled.div`
   padding-top: 3rem;
   padding-bottom: 3rem;
+  
   /* 맨 위 포스트는 padding-top 없음 */
   &:first-child {
     padding-top: 0;
@@ -41,7 +42,7 @@ const PostItemBlock = styled.div`
 `;
 
 const PostItem = ({ post }) => {
-  const { created_date, title, body, id, subject, username } = post;
+  const { created_date, title, body, id, subject, username, comment_count } = post;
   return (
     <PostItemBlock>
       <h2>
@@ -51,6 +52,7 @@ const PostItem = ({ post }) => {
         username={username}
         publishedDate={new Date(created_date)}
         subject={subject}
+        comment_count={comment_count}
       />
       <p>{body}</p>
     </PostItemBlock>

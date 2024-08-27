@@ -5,6 +5,7 @@ import palette from '../../lib/styles/palette';
 
 const CourseListBlock = styled(Responsive)`
   margin-top: 3rem;
+  
 `;
 
 const CourseItemBlock = styled.div`

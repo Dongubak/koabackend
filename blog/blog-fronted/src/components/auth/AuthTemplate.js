@@ -20,6 +20,12 @@ const AuthTemplateBlock = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  .logo {
+    font-family: "Orbitron", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+  }
 `;
 
 /* 흰색 박스 */
@@ -43,7 +49,7 @@ const AuthTemplate = ({ children }) => {
     <AuthTemplateBlock>
       <WhiteBox>
         <div className="logo-area">
-          <Link to="/">KTC</Link>
+          <Link to="/" className='logo'>KTC</Link>
         </div>
         {children}
       </WhiteBox>

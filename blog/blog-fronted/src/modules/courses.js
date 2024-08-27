@@ -35,6 +35,7 @@ const courses = handleActions(
     [LIST_COURSES_SUCCESS]: (state, { payload: courses }) => ({
       ...state,
       courses,
+      error: null,
     }),
     [LIST_COURSES_FAILURE]: (state, { payload: error }) => ({
       ...state,

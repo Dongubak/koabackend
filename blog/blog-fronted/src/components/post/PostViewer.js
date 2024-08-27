@@ -26,6 +26,9 @@ const PostHead = styled.div`
 const PostContent = styled.div`
   font-size: 1.3125rem;
   color: ${palette.gray[8]};
+  font-family: "Gowun Dodum", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   pre {
     padding: 1rem;
     border-radius: 5px;
@@ -44,7 +47,7 @@ const PostContent = styled.div`
     @media (max-width: 768px) {
       font-size: 0.8rem;
     }
-    font-weight: 600;
+    font-weight: 500;
     .hljs-comment {
       color: #5C6339;
     }
@@ -96,7 +99,7 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
     return null;
   }
 
-  const { title, body, username, created_date, subject } = post;
+  const { title, body, username, created_date, subject, comment_count } = post;
 
   return (
     <PostViewerBlock>
@@ -109,6 +112,7 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
           username={username}
           publishedDate={created_date}
           subject={subject}
+          comment_count={comment_count}
           hasMarginTop
         />
       </PostHead>

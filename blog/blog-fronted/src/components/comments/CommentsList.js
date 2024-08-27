@@ -31,7 +31,7 @@ const CommentItemBlock = styled.div`
     margin-top: 2rem;
   }
 
-  textarea {
+  .comment_text {
     width: 100%;
     height: 100px;
     margin-top: 1rem;
@@ -47,6 +47,23 @@ const CommentItemBlock = styled.div`
     justify-content: flex-end;
     gap: 0.5rem;
   }
+`;
+
+const TextWrapper = styled.div`
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  background-color: ${palette.gray[1]};
+  border: none;
+  border-radius: 4px;
+  white-space: pre-wrap; /* 텍스트 줄바꿈을 유지 */
+  word-wrap: break-word; /* 긴 단어가 있으면 자동으로 줄바꿈 */
+  min-height: 1rem; /* 최소 높이 설정 */
+  /* font-family: "Orbit", sans-serif;
+  font-weight: 400;
+  font-style: normal; */
 `;
 
 const CommentItem = ({ comment, onRemove, onEdit, user }) => {
@@ -84,6 +101,7 @@ const CommentItem = ({ comment, onRemove, onEdit, user }) => {
             <textarea 
               value={editedText} 
               onChange={(e) => setEditedText(e.target.value)}
+              className="comment_text"
             />
             <div className="button-group">
               <Button onClick={onSaveComment} cyan>저장</Button>
@@ -91,12 +109,12 @@ const CommentItem = ({ comment, onRemove, onEdit, user }) => {
             </div>
           </>
         ) : (
-          <p>{text}</p>
+          <TextWrapper>{text}</TextWrapper>
         )
       }
       {
         (user && user.user.id === user_id) && !isEditing && (
-          <CommentActionButtons 
+          <CommentActionButtons
             onEditComment={onEditComment} 
             onRemoveComment={onRemoveComment}
           />

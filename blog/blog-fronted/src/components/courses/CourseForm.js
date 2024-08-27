@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import Button from '../common/Button';
+import GoogleSearchForm from '../../test/GoogleSearchForm';
 
 const Wrapper = styled(Responsive)`
   display: flex;
@@ -59,7 +60,7 @@ const StyledButton = styled(Button)`
 const ToggleWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 1rem;
+  min-width: 110px;
 `;
 
 const ToggleLabel = styled.label`
@@ -102,15 +103,23 @@ const CourseForm = ({ keyword, onChange, onSearch,
           <ToggleThumb isActive={searchByCourse} />
         </ToggleSwitch>
       </ToggleWrapper>
-      <Input
+      {/* <Input
         type='text'
         value={keyword}
         onChange={onChange}
         placeholder={searchByCourse ? "강의명을 입력하시오..." : "교수명을 입력하시오..."}
         onKeyPress={handleKeyPress}
-      />
-      <StyledButton onClick={onSearch}>검색</StyledButton>
-      <StyledButton onClick={onSave}>저장</StyledButton>
+      /> */}
+      <GoogleSearchForm
+        value={keyword}
+        onChange={onChange}
+        placeholder={searchByCourse ? "강의명을 입력하시오..." : "교수명을 입력하시오..."}
+        onKeyPress={handleKeyPress}
+        onSearch={onSearch}
+        onSave={onSave}
+      ></GoogleSearchForm>
+      {/* <StyledButton onClick={onSearch}>검색</StyledButton>
+      <StyledButton onClick={onSave}>저장</StyledButton> */}
     </Wrapper>
   );
 };
