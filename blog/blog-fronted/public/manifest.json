@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "KTC",
+  "name": "군산대학교 KTC동아리 커뮤니티 애플리케이션",
   "icons": [
     {
       "src": "favicon.ico",

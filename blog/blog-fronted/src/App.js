@@ -8,6 +8,7 @@ import PostPage from './pages/PostPage';
 import { Helmet } from 'react-helmet-async';
 import CourseRegPage from './pages/CourseRegPage';
 import GoogleSearchForm from './test/GoogleSearchForm';
+import Footer from './components/common/footer';
 
 const App = () => {
   // const {user} = useSelector(({user}) => user.user);
@@ -29,6 +30,7 @@ const App = () => {
         <Route path='/course' element={<CourseRegPage />}></Route>
         <Route path='/test' element={<GoogleSearchForm></GoogleSearchForm>}></Route>
       </Routes>
+      <Footer></Footer>
     </>
   )
 }
