@@ -36,13 +36,14 @@ exports.list = async (ctx) => {
 };
 
 exports.save = async (ctx) => {
+   console.log(ctx.request.body);
    const { user_id, course_ids } = ctx.request.body; // Expecting an array of course IDs
 
    console.log(user_id, course_ids);
 
    const schema = Joi.object({
       user_id: Joi.number().integer().required(), // Required integer
-      course_ids: Joi.array().items(Joi.number().integer().required()).required(), // Array of required integers
+      course_ids: Joi.array().items(Joi.number().integer()).required(), // Allow empty arrays or arrays of integers
    });
 
    // Validate the input
@@ -54,6 +55,21 @@ exports.save = async (ctx) => {
    }
 
    try {
+      // If course_ids is an empty array, delete all courses for the user and return
+      if (course_ids.length === 0) {
+         // Remove any existing courses for this user
+         await UserCourses.destroy({
+            where: { user_id },
+         });
+
+         ctx.status = 200; // OK
+         ctx.body = {
+            message: 'All courses successfully removed for the user.',
+            data: [], // Return an empty array as there are no courses left
+         };
+         return;
+      }
+
       // First, remove any existing courses for this user
       await UserCourses.destroy({
          where: { user_id },
