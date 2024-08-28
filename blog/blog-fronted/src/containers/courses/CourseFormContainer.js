@@ -48,7 +48,8 @@ const CourseFormContainer = () => {
       }));
    }
 
-   const onSave = () => {
+   const onSave = (e) => {
+      e.preventDefault();
       if(user.user) {
          const {id: user_id} = user.user.user;
          const course_ids = cart.cart.map((e) => e.id);
