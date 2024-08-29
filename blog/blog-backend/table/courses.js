@@ -13,19 +13,7 @@ module.exports = class Courses extends Sequelize.Model {
                 type: Sequelize.STRING(10),
                 allowNull: true,
             },
-            university: {
-                type: Sequelize.STRING(255),
-                allowNull: true,
-            },
             department: {
-                type: Sequelize.STRING(255),
-                allowNull: true,
-            },
-            category: {
-                type: Sequelize.STRING(255),
-                allowNull: true,
-            },
-            major_area: {
                 type: Sequelize.STRING(255),
                 allowNull: true,
             },
@@ -43,40 +31,32 @@ module.exports = class Courses extends Sequelize.Model {
             },
             course_name: {
                 type: Sequelize.STRING(255),
-                allowNull: true,
-            },
-            section: {
-                type: Sequelize.STRING(10),
-                allowNull: true,
+                allowNull: false,
             },
             credits: {
                 type: Sequelize.INTEGER,
                 allowNull: true,
             },
-            theory_hours: {
-                type: Sequelize.INTEGER,
-                allowNull: true,
-            },
-            practice_hours: {
-                type: Sequelize.INTEGER,
-                allowNull: true,
-            },
             professor: {
                 type: Sequelize.STRING(255),
-                allowNull: true,
+                allowNull: false,
             },
             class_time: {
-                type: Sequelize.STRING(255),
-                allowNull: true,
-            },
-            class_location: {
                 type: Sequelize.STRING(255),
                 allowNull: true,
             },
             class_type: {
                 type: Sequelize.STRING(255),
                 allowNull: true,
-            }
+            },
+            location1: {
+                type: Sequelize.STRING(255),
+                allowNull: true,
+            },
+            location2: {
+                type: Sequelize.STRING(255),
+                allowNull: true,
+            },
         }, {
             sequelize,
             timestamps: false,

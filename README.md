@@ -4,22 +4,18 @@
 > **군산대학교 인공지능융합과 KTC 동아리**<br/>**개발기간: 2024.08.01~**
 
 ## 배포주소
-> **dev version** : <br />
-> **server** : <br />
+> http://203.234.57.86:48889/
 
 ## 소개
-|      김혁중       |                   |                |                                                                                                               
-| :------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | 
-|   이미지    |                      이미지    |                   이미지   |
-|   [@Dongubak](https://github.com/Dongubak)   |    [@user](https://github.com/user)  | [@user](https://github.com/user)  |
-| 군산대학교 인공지능융합과 3학년 | 군산대학교 인공지능융합과 3학년 | 군산대학교 인공지능융합과 3학년 |
+|      김혁중       |                                                                                                    
+| :------------------------------------------------------------------------------: | 
+|   이미지    |
+|   [@Dongubak](https://github.com/Dongubak)   |
+| 군산대학교 인공지능융합과 3학년 | 군산대학교 인공지능융합과 3학년 |
 
 ## 프로젝트 소개
 > kuna community app은 군산대학교 컴퓨터공학부 학생들이 시간표 등록 및 일정 조율등을 할 수 있으며, 커뮤니티 게시판을 통해 여러 질의와 응답을 할 수 있습니다.
 
-
-## 시작 가이드
-> dev version은 공개하지 않으며 완성시 서버에 호스팅할 예정입니다.
 
 ## Stack
 
@@ -54,141 +50,177 @@
 ### Arrange meeting
 > 다른 user의 학번을 통해 미팅 시간 조율 가능
 ### Community(CRUID)
-> 게시판 CRUID기능을 통해 다른 user와 커뮤니케이션 가능
+> 게시판 CRUID기능을 통해 다른 user와 커뮤니케이션 가능(게시물, 댓글: 작성, 수정, 삭제)
 
 
 ## 디렉토리 구조
 
 ### Frontend
 ```bash
-src                                      
-├─ components                            
-│  ├─ auth                               
-│  │  ├─ AuthForm.js                     
-│  │  └─ AuthTemplate.js                 
-│  ├─ common                             
-│  │  ├─ AskModal.js                     
-│  │  ├─ Button.js                       
-│  │  ├─ Header.js                       
-│  │  ├─ Responsive.js                   
-│  │  ├─ Sidebar.js                      
-│  │  └─ SubInfo.js                      
-│  ├─ course                             
-│  │  └─ Course.js                       
-│  ├─ courses                            
-│  │  ├─ CourseForm.js                   
-│  │  ├─ CourseList.js                   
-│  │  ├─ Pagination.js                   
-│  │  └─ TimeTable.js                    
-│  ├─ post                               
-│  │  ├─ AskRemoveModal.js               
-│  │  ├─ PostActionButtons.js            
-│  │  └─ PostViewer.js                   
-│  ├─ posts                              
-│  │  ├─ Pagination.js                   
-│  │  └─ PostList.js                     
-│  └─ write                              
-│     ├─ Editor.js                       
-│     └─ WriteActionButtons.js           
-├─ containers                            
-│  ├─ auth                               
-│  │  ├─ LoginForm.js                    
-│  │  └─ RegisterForm.js                 
-│  ├─ common                             
-│  │  └─ HeaderContainer.js              
-│  ├─ courses                            
-│  │  ├─ CourseFormContainer.js          
-│  │  ├─ CourseListContainer.js          
-│  │  ├─ PagenationContainer.js          
-│  │  └─ TimeTableContainer.js           
-│  ├─ post                               
-│  │  └─ PostViewerContainer.js          
-│  ├─ posts                              
-│  │  ├─ PaginationContainer.js          
-│  │  └─ PostListContainer.js            
-│  └─ write                              
-│     ├─ EditorContainer.js              
-│     └─ WriteActionButtonsContainer.js  
-├─ lib                                   
-│  ├─ api                                
-│  │  ├─ auth.js                         
-│  │  ├─ cart.js                         
-│  │  ├─ client.js                       
-│  │  ├─ courses.js                      
-│  │  └─ posts.js                        
-│  ├─ styles                             
-│  │  └─ palette.js                      
-│  └─ createRequestSaga.js               
-├─ modules                               
-│  ├─ auth.js                            
-│  ├─ blog-fronted.code-workspace        
-│  ├─ cart.js                            
-│  ├─ courses.js                         
-│  ├─ index.js                           
-│  ├─ loading.js                         
-│  ├─ post.js                            
-│  ├─ posts.js                           
-│  ├─ user.js                            
-│  └─ write.js                           
-├─ pages                                 
-│  ├─ CourseRegPage.js                   
-│  ├─ LoginPage.js                       
-│  ├─ PostListPage.js                    
-│  ├─ PostPage.js                        
-│  ├─ RegisterPage.js                    
-│  └─ WritePage.js                       
-├─ App.css                               
-├─ App.js                                
-├─ App.test.js                           
-├─ index.css                             
-├─ index.js                              
-├─ logo.svg                              
-├─ reportWebVitals.js                    
-└─ setupTests.js   
+koa-backend
+├── blog-fronted
+│   ├── README.md
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.js
+│   │   ├── App.test.js
+│   │   ├── components
+│   │   │   ├── auth
+│   │   │   │   ├── AuthForm.js
+│   │   │   │   └── AuthTemplate.js
+│   │   │   ├── comment
+│   │   │   │   └── Comment.js
+│   │   │   ├── comments
+│   │   │   │   ├── AskRemoveModal.js
+│   │   │   │   ├── CommentActionButtons.js
+│   │   │   │   ├── CommentsList.js
+│   │   │   │   ├── Pagination.js
+│   │   │   │   ├── WriteComment.js
+│   │   │   │   └── WriteCommentActionButtons.js
+│   │   │   ├── common
+│   │   │   │   ├── AskModal.js
+│   │   │   │   ├── Button.js
+│   │   │   │   ├── Header.js
+│   │   │   │   ├── Responsive.js
+│   │   │   │   ├── Sidebar.js
+│   │   │   │   ├── SubInfo.js
+│   │   │   │   └── footer.js
+│   │   │   ├── course
+│   │   │   │   └── Course.js
+│   │   │   ├── courses
+│   │   │   │   ├── CourseForm.js
+│   │   │   │   ├── CourseList.js
+│   │   │   │   ├── Pagination.js
+│   │   │   │   └── TimeTable.js
+│   │   │   ├── post
+│   │   │   │   ├── AskRemoveModal.js
+│   │   │   │   ├── PostActionButtons.js
+│   │   │   │   └── PostViewer.js
+│   │   │   ├── posts
+│   │   │   │   ├── Pagination.js
+│   │   │   │   └── PostList.js
+│   │   │   └── write
+│   │   │       ├── DropDownComponent.js
+│   │   │       ├── Editor.js
+│   │   │       └── WriteActionButtons.js
+│   │   ├── containers
+│   │   │   ├── Comment
+│   │   │   │   └── CommentContainer.js
+│   │   │   ├── auth
+│   │   │   │   ├── LoginForm.js
+│   │   │   │   └── RegisterForm.js
+│   │   │   ├── comments
+│   │   │   │   ├── CommentsListContainer.js
+│   │   │   │   ├── PaginationContainer.js
+│   │   │   │   └── WriteCommentContainer.js
+│   │   │   ├── common
+│   │   │   │   └── HeaderContainer.js
+│   │   │   ├── courses
+│   │   │   │   ├── CourseFormContainer.js
+│   │   │   │   ├── CourseListContainer.js
+│   │   │   │   ├── PagenationContainer.js
+│   │   │   │   └── TimeTableContainer.js
+│   │   │   ├── post
+│   │   │   │   └── PostViewerContainer.js
+│   │   │   ├── posts
+│   │   │   │   ├── PaginationContainer.js
+│   │   │   │   └── PostListContainer.js
+│   │   │   └── write
+│   │   │       ├── EditorContainer.js
+│   │   │       └── WriteActionButtonsContainer.js
+│   │   ├── history.js
+│   │   ├── index.css
+│   │   ├── index.js
+│   │   ├── lib
+│   │   │   ├── api
+│   │   │   │   ├── auth.js
+│   │   │   │   ├── cart.js
+│   │   │   │   ├── client.js
+│   │   │   │   ├── comments.js
+│   │   │   │   ├── courses.js
+│   │   │   │   └── posts.js
+│   │   │   ├── createRequestSaga.js
+│   │   │   ├── styles
+│   │   │   │   └── palette.js
+│   │   │   └── util
+│   │   │       └── history.js
+│   │   ├── logo.svg
+│   │   ├── modules
+│   │   │   ├── auth.js
+│   │   │   ├── blog-fronted.code-workspace
+│   │   │   ├── cart.js
+│   │   │   ├── comments.js
+│   │   │   ├── courses.js
+│   │   │   ├── index.js
+│   │   │   ├── loading.js
+│   │   │   ├── post.js
+│   │   │   ├── posts.js
+│   │   │   ├── user.js
+│   │   │   └── write.js
+│   │   ├── pages
+│   │   │   ├── CourseRegPage.js
+│   │   │   ├── LoginPage.js
+│   │   │   ├── PostListPage.js
+│   │   │   ├── PostPage.js
+│   │   │   ├── RegisterPage.js
+│   │   │   └── WritePage.js
+│   │   ├── reportWebVitals.js
+│   │   ├── setupTests.js
+│   │   └── test
+│   │       └── GoogleSearchForm.js
+│   └── yarn.lock
 ```
 
 ### Backend               
 ```bash
-backend
-├── data                           
-│   ├── major.json                  
-│   ├── updated_major_circled.csv   
-│   └── updated_major_circled.json  
-│
-├── models       
-│   └── index.js  
-│
-├── src                       
-│   ├── api                    
-│   │   ├── auths               
-│   │   │   ├── auths.ctrl.js    
-│   │   │   └── index.js         
-│   │   ├── cart                
-│   │   │   ├── cart.ctrl.js     
-│   │   │   └── index.js         
-│   │   ├── courses             
-│   │   │   ├── courses.ctrl.js  
-│   │   │   └── index.js         
-│   │   ├── posts               
-│   │   │   ├── index.js         
-│   │   │   └── posts.ctrl.js    
-│   │   └── index.js            
-│   │
-│   ├── lib                    
-│   │   └── jwtMiddleware.js    
-│   │
-│   ├── generateFakeData.js    
-│   ├── index.js               
-│   ├── main.js                
-│   └── nonasync.js            
-│
-└── table               
-    ├── comments.js      
-    ├── courses.js       
-    ├── posts.js         
-    ├── user_courses.js  
-    └── users.js         
-
+koa-backend
+├── blog-backend
+│   ├── combined_data.csv
+│   ├── combined_data.json
+│   ├── data
+│   │   ├── major.json
+│   │   ├── updated_major_circled.csv
+│   │   └── updated_major_circled.json
+│   ├── eslint.config.mjs
+│   ├── migrations
+│   ├── models
+│   │   └── index.js
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── seeders
+│   ├── src
+│   │   ├── api
+│   │   │   ├── auths
+│   │   │   │   ├── auths.ctrl.js
+│   │   │   │   └── index.js
+│   │   │   ├── cart
+│   │   │   │   ├── cart.ctrl.js
+│   │   │   │   └── index.js
+│   │   │   ├── comments
+│   │   │   │   ├── comments.ctrl.js
+│   │   │   │   └── index.js
+│   │   │   ├── courses
+│   │   │   │   ├── courses.ctrl.js
+│   │   │   │   └── index.js
+│   │   │   ├── index.js
+│   │   │   └── posts
+│   │   │       ├── index.js
+│   │   │       └── posts.ctrl.js
+│   │   ├── generateFakeData.js
+│   │   ├── index.js
+│   │   ├── lib
+│   │   │   └── jwtMiddleware.js
+│   │   ├── main.js
+│   │   └── nonasync.js
+│   ├── table
+│   │   ├── comments.js
+│   │   ├── courses.js
+│   │   ├── posts.js
+│   │   ├── user_courses.js
+│   │   └── users.js
+└── └── yarn.lock
 ```
 <br />
 
@@ -297,6 +329,13 @@ const schema = Joi.object({
       title: Joi.string().required(), // 필수 문자열
       body: Joi.string().required(), // 필수 문자열
       user_id: Joi.number().integer().required(), // 필수 정수
+});
+
+
+//// 사용자가 수강 데이터를 모두 삭제한 경우 joi에서 데이터 검증시 오류 발생부분 해결 empty array도 허용함
+const schema = Joi.object({
+    user_id: Joi.number().integer().required(), // Required integer
+    course_ids: Joi.array().items(Joi.number().integer()).required(), // Allow empty arrays or arrays of integers
 });
 ```
 
