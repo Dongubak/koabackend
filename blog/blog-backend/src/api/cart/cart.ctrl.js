@@ -12,7 +12,7 @@ exports.list = async (ctx) => {
             {
                model: Courses,
                as: 'course',
-               attributes: ['id', 'course_name', 'professor', 'class_time', 'class_location'], // 필요한 강의 필드만 포함
+               attributes: ['id', 'course_name', 'professor', 'class_time', 'class_location1'], // 필요한 강의 필드만 포함
             },
          ],
       });
@@ -91,7 +91,7 @@ exports.save = async (ctx) => {
             {
                model: Courses,
                as: 'course',
-               attributes: ['id', 'course_name', 'professor', 'class_time', 'class_location'], // Select relevant fields
+               attributes: ['id', 'course_name', 'professor', 'class_time', 'class_location1', 'class_location2'], // Select relevant fields
             },
          ],
       });

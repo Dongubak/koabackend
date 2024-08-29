@@ -45,15 +45,19 @@ module.exports = class Courses extends Sequelize.Model {
                 type: Sequelize.STRING(255),
                 allowNull: true,
             },
+            class_time2: {
+                type: Sequelize.STRING(255),
+                allowNull: true,
+            },
             class_type: {
                 type: Sequelize.STRING(255),
                 allowNull: true,
             },
-            location1: {
+            class_location1: {
                 type: Sequelize.STRING(255),
                 allowNull: true,
             },
-            location2: {
+            class_location2: {
                 type: Sequelize.STRING(255),
                 allowNull: true,
             },
