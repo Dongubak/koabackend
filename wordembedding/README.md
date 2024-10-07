@@ -68,3 +68,9 @@ https://velog.io/@dadodo/API-%EB%AA%85%EC%84%B8%EC%84%9C%EC%99%80-%EA%B5%AC%ED%9
 - 배달 어플 리뷰 수집 크롤링
 - 전처리
 - cos 유사도 개발
+
+
+# 4rd commit
+요구사항 정의서<br>
+IA <br>
+작성
