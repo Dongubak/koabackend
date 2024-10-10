@@ -1,5 +1,6 @@
 import argparse
 
+import os
 import re
 import time
 import pickle
@@ -35,7 +36,7 @@ def scroll_bottom():
 
 
 # 1. 해당 카테고리 음식점 리스트 리턴
-def get_restaurant_list(lat, lng, items=100):
+def get_restaurant_list(lat, lng, items=500):
     """
     >>> get_restaurant_list(37.56, 126.93, 20)
     'Request api for 20 restaurants 
@@ -60,11 +61,13 @@ def get_restaurant_list(lat, lng, items=100):
         "search": "",
     }
     host = "https://www.yogiyo.co.kr"
-    path = "/api/v1/restaurants-geo/"
-    url = host + path
+    path = "/api/v2/restaurants"
+    
+    url = host+path
+    # url = f"https://www.yogiyo.co.kr/api/v2/restaurants?items=60&lat=35.981742&lng=126.71587056&order=rank&page=0&search=&serving_type=vd"
 
     response = requests.get(url, headers=headers, params=params)
-
+    print(response.json())
     count = 0
     for item in response.json()["restaurants"]:
         restaurant_list.append(item["id"])
@@ -87,55 +90,45 @@ def go_to_restaurant(id):
 # 3-1. 해당 음식점의 정보 페이지로 넘어가기
 def go_to_info():
     print("정보 페이지 로드중...")
-    driver.find_element_by_xpath('//*[@id="content"]/div[2]/div[1]/ul/li[3]/a').click()
+    driver.find_element(By.XPATH,'//*[@id="content"]/div[2]/div[1]/ul/li[3]/a').click()
     time.sleep(2)
     print("정보 페이지 로드 완료!")
 
 
 # 3-2. 정보 더보기 클릭하기
 def get_info():
-    op_time = driver.find_element_by_xpath('//*[@id="info"]/div[2]/p[1]/span').text
-    addr = driver.find_element_by_xpath('//*[@id="info"]/div[2]/p[3]/span').text
+    op_time = driver.find_element(By.XPATH,'//*[@id="info"]/div[2]/p[1]/span').text
+    addr = driver.find_element(By.XPATH,'//*[@id="info"]/div[2]/p[3]/span').text
     
-    # 카테고리, 거리, 가격 정보를 가져오기
-    try:
-        category = driver.find_element_by_xpath('//*[@id="info"]/div[2]/p[2]/span').text
-    except Exception as e:
-        category = "정보 없음"
         
     try:
-        distance = driver.find_element_by_xpath('//*[@id="info"]/div[2]/p[4]/span').text
+        number = driver.find_element(By.XPATH,'//*[@id="info"]/div[2]/p[2]/span').text
     except Exception as e:
-        distance = "정보 없음"
-        
-    try:
-        price_range = driver.find_element_by_xpath('//*[@id="info"]/div[2]/p[5]/span').text
-    except Exception as e:
-        price_range = "정보 없음"
+        number = "정보 없음"
     
-    print(f"영업시간: {op_time}, 주소: {addr}, 카테고리: {category}, 거리: {distance}, 가격대: {price_range}")
+    print(f"영업시간: {op_time}, 주소: {addr}, 번호: {number}")
     
-    return op_time, addr, category, distance, price_range
+    return op_time, addr, number
 
 
 # 4-1. 해당 음식점의 리뷰 페이지로 넘어가기
 def go_to_review():
     print("리뷰 페이지 로드중...")
-    driver.find_element_by_xpath('//*[@id="content"]/div[2]/div[1]/ul/li[2]/a').click()
+    driver.find_element(By.XPATH,'//*[@id="content"]/div[2]/div[1]/ul/li[2]/a').click()
     time.sleep(2)
     print("리뷰 페이지 로드 완료!")
 
 
 # 4-2. 리뷰 더보기 클릭하기
 def click_more_review():
-    driver.find_element_by_class_name("btn-more").click()
+    driver.find_element(By.CLASS_NAME, "btn-more").click()
     time.sleep(2)
 
 
 # 5. 리뷰 페이지 모두 펼치기
 def stretch_review_page():
     review_count = int(
-        driver.find_element_by_xpath('//*[@id="content"]/div[2]/div[1]/ul/li[2]/a/span').text
+        driver.find_element(By.XPATH,'//*[@id="content"]/div[2]/div[1]/ul/li[2]/a/span').text
     )
     click_count = int((review_count / 10))
     print("모든 리뷰 불러오기 시작...")
@@ -151,7 +144,7 @@ def stretch_review_page():
 
 # 6. 해당 음식점의 모든 리뷰 객체 리턴
 def get_all_review_elements():
-    reviews = driver.find_elements_by_css_selector(
+    reviews = driver.find_elements(By.CSS_SELECTOR,
         "#review > li.list-group-item.star-point.ng-scope"
     )
     return reviews
@@ -167,8 +160,13 @@ def go_back_page():
 
 # 8. 크롤링과 결과 데이터를 pickle 파일과 csv파일로 저장
 def save_pickle_csv(location, yogiyo_df):
-    yogiyo_df.to_csv("./data/{}_{}_df.csv".format(location[0], location[1]))
-    pickle.dump(yogiyo_df, open("./data/{}_{}_df.pkl".format(location[0], location[1]), "wb"))
+    # 'data' 디렉토리가 없으면 생성
+    if not os.path.exists('data'):
+        os.makedirs('data')
+        
+    yogiyo_df.to_csv("./data/위도{}_경도{}_df.csv".format(location[0], location[1]))
+    yogiyo_df.to_excel("./data/위도{}_경도{}_df.xlsx".format(location[0], location[1]))
+    pickle.dump(yogiyo_df, open("./data/위도{}_경도{}_df.pkl".format(location[0], location[1]), "wb"))
     print("{} {} pikcle save complete!".format(location[0], location[1]))
 
 
@@ -177,7 +175,7 @@ def yogiyo_crawling(location):
     df = pd.DataFrame(
         columns=[
             "Restaurant", "UserID", "Menu", "Review", "Total", "Taste",
-            "Quantity", "Delivery", "Date", "OperationTime", "Address", "Category", "Distance", "PriceRange"
+            "Quantity", "Delivery", "Date", "OperationTime", "Address","Number"
         ]
     )
 
@@ -191,7 +189,7 @@ def yogiyo_crawling(location):
                 go_to_restaurant(restaurant_id)
                 go_to_info()
                 
-                op_time, addr, category, distance, price_range = get_info()
+                op_time, addr, number = get_info()
                 
                 go_to_review()
                 stretch_review_page()
@@ -199,20 +197,18 @@ def yogiyo_crawling(location):
                 for review in tqdm(get_all_review_elements()):
                     try:
                         df.loc[len(df)] = {
-                            "Restaurant": driver.find_element_by_class_name("restaurant-name").text,
-                            "UserID": review.find_element_by_css_selector("span.review-id.ng-binding").text,
-                            "Menu": review.find_element_by_css_selector("div.order-items.default.ng-binding").text,
-                            "Review": review.find_element_by_css_selector("p").text,
-                            "Total": str(len(review.find_elements_by_css_selector("div > span.total > span.full.ng-scope"))),
-                            "Taste": review.find_element_by_css_selector("div:nth-child(2) > div > span.category > span:nth-child(3)").text,
-                            "Quantity": review.find_element_by_css_selector("div:nth-child(2) > div > span.category > span:nth-child(6)").text,
-                            "Delivery": review.find_element_by_css_selector("div:nth-child(2) > div > span.category > span:nth-child(9)").text,
-                            "Date": review.find_element_by_css_selector("div:nth-child(1) > span.review-time.ng-binding").text,
+                            "Restaurant": driver.find_element(By.CLASS_NAME,"restaurant-name").text,
+                            "UserID": review.find_element(By.CSS_SELECTOR,"span.review-id.ng-binding").text,
+                            "Menu": review.find_element(By.CSS_SELECTOR,"div.order-items.default.ng-binding").text,
+                            "Review": review.find_element(By.CSS_SELECTOR,"p").text,
+                            "Total": str(len(review.find_elements(By.CSS_SELECTOR,"div > span.total > span.full.ng-scope"))),
+                            "Taste": review.find_element(By.CSS_SELECTOR,"div:nth-child(2) > div > span.category > span:nth-child(3)").text,
+                            "Quantity": review.find_element(By.CSS_SELECTOR,"div:nth-child(2) > div > span.category > span:nth-child(6)").text,
+                            "Delivery": review.find_element(By.CSS_SELECTOR,"div:nth-child(2) > div > span.category > span:nth-child(9)").text,
+                            "Date": review.find_element(By.CSS_SELECTOR,"div:nth-child(1) > span.review-time.ng-binding").text,
                             "OperationTime": op_time,
                             "Address": addr,
-                            "Category": category,
-                            "Distance": distance,
-                            "PriceRange": price_range
+                            "Number" : number
                         }
                     except Exception as e:
                         print("리뷰 페이지 에러")
@@ -261,9 +257,9 @@ parser.add_argument(
     help="option for restaurant list order / choose one \
     -> [rank, review_avg, review_count, min_order_value, distance, estimated_delivery_time]",
 )
-parser.add_argument("--num", required=False, default=100, help="option for restaurant number")
-parser.add_argument("--lat", required=False, default=37.560873, help="latitude for search")
-parser.add_argument("--lon", required=False, default=126.9353833, help="longitude for search")
+parser.add_argument("--num", required=False, default=500, help="option for restaurant number")
+parser.add_argument("--lat", required=False, default=35.9470221, help="latitude for search")
+parser.add_argument("--lon", required=False, default=126.6815184, help="longitude for search")
 args = parser.parse_args()
 
 ORDER_OPTION = args.order
@@ -274,6 +270,7 @@ LON = float(args.lon)
 # 크롬 드라이버 경로 설정 (절대경로로 설정하는 것이 좋음)
 chromedriver = "C:\\Users\\Multi 03\\Documents\\chromedriver-win64\\chromedriver.exe"
 chrome_options = Options()
+chrome_options.add_argument('--disable-deprecated-web-platform-features')
 service = Service(executable_path=chromedriver)
 driver = webdriver.Chrome(service=service, options=chrome_options)
 # driver = webdriver.Chrome(chromedriver)
