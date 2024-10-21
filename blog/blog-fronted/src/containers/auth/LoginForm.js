@@ -30,6 +30,10 @@ const LoginForm = ({ history }) => {
   const onSubmit = e => {
     e.preventDefault();
     const { username, password } = form;
+    if([username, password].includes('')) {
+      setError('빈 칸을 모두 입력하세요.');
+      return ;
+    }
     dispatch(login({ username, password }));
   };
 
@@ -41,8 +45,10 @@ const LoginForm = ({ history }) => {
   useEffect(() => {
     if (authError) {
       console.log(authError.response.status);
-      if(authError.response.status === 401) {
-        setError('존재하지 않는 아이디 또는 비밀번호가 틀렸습니다');
+      if(authError.response.status === 402) {
+        setError('비밀번호가 틀렸습니다');
+      } else if(authError.response.status === 401) {
+        setError('아이디가 틀렸습니다');
       }
       return;
     }

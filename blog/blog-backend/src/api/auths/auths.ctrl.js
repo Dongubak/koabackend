@@ -70,15 +70,15 @@ exports.login = async (ctx) => {
 
         if (!user) {
             ctx.status = 401; // Unauthorized
-            ctx.body = { message: 'Invalid username or password' };
+            ctx.body = { message: 'Invalid username' };
             return;
         }
         
         // 비밀번호 검증
         const validPassword = await User.comparePassword(password, user.password);
         if (!validPassword) {
-            ctx.status = 401; // Unauthorized
-            ctx.body = { message: 'Invalid username or password' };
+            ctx.status = 402; // invalid password
+            ctx.body = { message: 'Invalid password' };
             return;
         }
 
