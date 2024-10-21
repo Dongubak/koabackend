@@ -64,14 +64,10 @@ const RegisterForm = ({ history }) => {
         setError('이미 존재하는 계정명입니다.');
         return;
       }
-      // 기타 이유
-      setError('회원가입 실패');
       return;
     }
 
     if (auth) {
-      // console.log('회원가입 성공');
-      // console.log(auth);
       dispatch(check());
     }
   }, [auth, authError, dispatch]);
