@@ -3,7 +3,9 @@ const User = require('../table/users');
 const Post = require('../table/posts');
 const Comment = require('../table/comments');
 const Courses = require('../table/courses');
-const UserCourses = require('../table/user_courses'); // user_courses 모델 추가
+const UserCourses = require('../table/user_courses');
+const MtgrTable = require('../table/mtgrtable'); // mtgrtable 모델 추가
+const GcrTable = require('../table/gcrtable'); // gcrtable 모델 추가
 
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
@@ -19,18 +21,26 @@ db.User = User;
 db.Post = Post;
 db.Comment = Comment;
 db.Courses = Courses;
-db.UserCourses = UserCourses; // user_courses 모델 추가
+db.UserCourses = UserCourses;
+db.GcrTable = GcrTable; // gcrtable 모델 추가
+db.MtgrTable = MtgrTable; // mtgrtable 모델 추가
 
 User.init(sequelize);
 Post.init(sequelize);
 Comment.init(sequelize);
 Courses.init(sequelize);
-UserCourses.init(sequelize); // user_courses 초기화
+UserCourses.init(sequelize);
+GcrTable.init(sequelize); // gcrtable 초기화
+MtgrTable.init(sequelize); // mtgrtable 초기화
+
 
 User.associate(db);
 Post.associate(db);
 Comment.associate(db);
 Courses.associate(db);
-UserCourses.associate(db); // user_courses 관계 설정
+UserCourses.associate(db);
+GcrTable.associate(db); // gcrtable 관계 설정
+MtgrTable.associate(db); // mtgrtable 관계 설정
+
 
 module.exports = db;

@@ -54,11 +54,16 @@ const HeaderContainer = () => {
     navigate('/course');
   }, [navigate]);
 
+  const onGoMeeting = useCallback(() => {
+    navigate('/meeting');
+  }, [navigate]);
+
   return <Header user={user} 
   onLogout={onLogout} 
   goLogin={goLogin}
   onGoHome={onGoHome}
   onGoCourse={onGoCourse}
+  onGoMeeting={onGoMeeting}
   tip={tip[location.pathname]}
   location={location}
   navigators={navigators}

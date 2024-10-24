@@ -10,6 +10,7 @@ import CourseRegPage from './pages/CourseRegPage';
 import GoogleSearchForm from './test/GoogleSearchForm';
 import Footer from './components/common/footer';
 import styled from 'styled-components';
+import MeetingPage from './pages/MeetingPage';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -39,6 +40,7 @@ const App = () => {
           </Route>
           <Route path='/course' element={<CourseRegPage />}></Route>
           <Route path='/test' element={<GoogleSearchForm></GoogleSearchForm>}></Route>
+          <Route path='/meeting' element={<MeetingPage />} />
         </Routes>
       </ContentWrapper>
       <Footer />
