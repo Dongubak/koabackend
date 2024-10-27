@@ -26,7 +26,12 @@ export const initMeetings = createAction(
 
 export const listGroupTimeTable = createAction(
   LIST_GROUP_TIMETABLES,
-  (group_id) => group_id,
+  ({group_id, user_id}) => {
+    console.log(`redux : ${user_id}`);
+    return {
+      group_id, user_id
+    }
+  },
 )
 
 export const unloadMeetings = createAction(UNLOAD_MEETINGS);
@@ -45,6 +50,7 @@ const initialState = {
   errorMsg: '',
   groups: [],
   groupsTimetable: [],
+  isOwner: false,
 };
 
 const meetings = handleActions(
@@ -67,6 +73,11 @@ const meetings = handleActions(
       error: false,
       errorMsg: '',
       ...response
+      /**
+       * message : 성공여부
+       * isOwner: 오너 여부
+       * groupsTimetable: [{user_id, username, courses: []}, {...}]
+       */
     }),
     [LIST_GROUP_TIMETABLES_FAILURE]: (state, { payload: error }) => ({
       ...state,

@@ -48,8 +48,24 @@ exports.init = async (ctx) => {
 
 exports.listGroupTimeTable = async (ctx) => {
    try {
-       // 쿼리 파라미터에서 group_id 가져오기
-       const { group_id } = ctx.query;
+       // 쿼리 파라미터에서 group_id와 user_id 가져오기
+       const { group_id, user_id } = ctx.query;
+
+       // 해당 group_id의 소유자가 현재 user_id와 같은지 확인
+       const group = await GcrTable.findOne({
+           where: { group_id },
+           attributes: ['user_id'],
+       });
+
+       // 그룹이 존재하지 않으면 에러 반환
+       if (!group) {
+           ctx.status = 404;
+           ctx.body = { message: "Group not found" };
+           return;
+       }
+
+       // isOwner 여부 확인
+       const isOwner = group.user_id === parseInt(user_id);
 
        // 그룹에 속한 유저들의 정보 가져오기
        const usersInGroup = await MtgrTable.findAll({
@@ -68,6 +84,7 @@ exports.listGroupTimeTable = async (ctx) => {
            ctx.body = {
                message: "success",
                groupMembers: [],
+               isOwner,
            };
            ctx.status = 200;
            return;
@@ -76,11 +93,11 @@ exports.listGroupTimeTable = async (ctx) => {
        // 각 유저에 대해 저장된 강의 정보 가져오기
        const userCoursesPromises = usersInGroup.map(async (member) => {
            const userCourses = await UserCourses.findAll({
-               where: { user_id: member.User.id }, // 수정된 코드: 별칭에 맞게 수정
+               where: { user_id: member.User.id },
                include: [
                    {
                        model: Courses,
-                       as: 'Course', // associate에서 설정한 별칭 'Course' 사용
+                       as: 'Course',
                        attributes: ['course_name', 'professor', 'credits', 'class_time'],
                    },
                ],
@@ -102,6 +119,7 @@ exports.listGroupTimeTable = async (ctx) => {
        // 응답 설정
        ctx.body = {
            message: "success",
+           isOwner, // isOwner 추가
            groupsTimetable,
        };
 
