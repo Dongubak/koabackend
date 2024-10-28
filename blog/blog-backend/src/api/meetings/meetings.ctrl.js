@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { MtgrTable, GcrTable, User, UserCourses, Courses } = require('../../../models'); // 모델 가져오기
 
 exports.init = async (ctx) => {
@@ -132,3 +133,61 @@ exports.listGroupTimeTable = async (ctx) => {
        };
    }
 };
+
+exports.searchUsername = async (ctx) => {
+    try {
+        const { keyword } = ctx.query;
+        console.log(keyword);
+
+        // `User` 테이블에서 `username`이 keyword를 포함하는 사용자 검색
+        const users = await User.findAll({
+            where: {
+                username: {
+                    [Op.like]: `%${keyword}%`
+                }
+            },
+            attributes: ['id', 'username'],
+            include: [
+                {
+                    model: UserCourses,
+                    as: 'UserCourses', // User와 UserCourses 간의 별칭
+                    include: [
+                        {
+                            model: Courses,
+                            as: 'Course', // UserCourses와 Courses 간의 별칭
+                            attributes: ['course_name', 'professor', 'credits', 'class_time']
+                        }
+                    ]
+                }
+            ]
+        });
+
+        // 검색된 사용자와 그 사용자가 저장한 강의 정보를 배열로 변환
+        const userList = users.map(user => {
+            const courses = user.UserCourses.map(userCourse => userCourse.Course);
+            return {
+                username: user.username,
+                id: user.id,
+                courses
+            };
+        });
+
+        // 응답 설정
+        ctx.body = {
+            userDatas: userList
+        };
+        ctx.status = 200;
+
+    } catch (error) {
+        console.error(error);
+        ctx.status = 500;
+        ctx.body = {
+            error: error.message,
+        };
+    }
+};
+
+
+
+
+// `${apiURL}/api/meeting/searchUsername`,

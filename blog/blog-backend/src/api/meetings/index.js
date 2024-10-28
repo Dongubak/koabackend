@@ -12,6 +12,7 @@ const meetings = new Router();
 // };
 meetings.get('/', meetingsCtrl.init);
 meetings.get('/listGroupTimeTable', meetingsCtrl.listGroupTimeTable);
+meetings.get('/searchUsername', meetingsCtrl.searchUsername);
 
 // posts.get('/', postsCtrl.list);
 // // http://localhost:4000/api/posts/

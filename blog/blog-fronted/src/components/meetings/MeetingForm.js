@@ -32,7 +32,9 @@ const Button = ({ blur, content, onClick }) => {
    );
 }
 
-const MeetingForm = ({ onSubmit = () => {}, groups = [], onClick, blur }) => {
+const MeetingForm = ({ onSubmit = () => {}, groups = [], onClick, blur,
+   onGoCreatePage
+}) => {
    if(groups) {
       groups.forEach((e) => {
          console.log(e);
@@ -44,7 +46,7 @@ const MeetingForm = ({ onSubmit = () => {}, groups = [], onClick, blur }) => {
          <h2>Developing Meeting Form</h2>
          <div>
             {/* <MeetingsList meetings={meetings}></MeetingsList> */}
-            <Button content="create" onClick={() => onSubmit('create')} />
+            <Button content="create" onClick={onGoCreatePage} />
             <GroupList groups={groups} onClick={onClick} />
             <div>
                <Button content="edit" blur={blur} onClick={() => onSubmit('edit')} />

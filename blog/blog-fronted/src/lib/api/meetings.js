@@ -28,3 +28,17 @@ export const listGroupTimeTable = ({group_id, user_id}) => {
       }
       );
 }
+
+export const searchUsername = (keyword) => {
+   console.log(keyword);
+   return client.get(
+      `${apiURL}/api/meeting/searchUsername`,
+      {
+         params: {
+            keyword
+         }
+      }
+   )
+}
+
+// meetingsAPI.searchUsername

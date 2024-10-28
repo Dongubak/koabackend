@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { initMeetings, listGroupTimeTable, unloadGroupTimeTable } from '../../modules/meetings';
 import MeetingForm from '../../components/meetings/MeetingForm';
+import { useNavigate } from 'react-router';
 
 const MeetingFormContainer = () => {
    const dispatch = useDispatch();
+   const navigator = useNavigate();
    
    const [meetings, setMeetings] = useState([]);
    const [blur, setBlur] = useState(true);
@@ -29,9 +31,15 @@ const MeetingFormContainer = () => {
       dispatch(listGroupTimeTable({group_id, user_id: user.user.user.id}));
    }
 
+   const onGoCreatePage = () => {
+      navigator('/meeting/create');
+   }
+
    return (
       <>
-         <MeetingForm groups={groups} blur={blur} onClick={onClick}></MeetingForm>
+         <MeetingForm groups={groups} blur={blur} onClick={onClick}
+         onGoCreatePage={onGoCreatePage}
+         ></MeetingForm>
          {isOwner ? "owner" : "not owner"}
       </>
       

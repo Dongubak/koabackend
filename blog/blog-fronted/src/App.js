@@ -11,6 +11,8 @@ import GoogleSearchForm from './test/GoogleSearchForm';
 import Footer from './components/common/footer';
 import styled from 'styled-components';
 import MeetingPage from './pages/MeetingPage';
+import ArrangeMeetingContainer from './containers/meeting/ArrangeMeetingContainer.js';
+import ArrangeMeetingPage from './pages/ArrangeMeetingPage.js';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -40,7 +42,10 @@ const App = () => {
           </Route>
           <Route path='/course' element={<CourseRegPage />}></Route>
           <Route path='/test' element={<GoogleSearchForm></GoogleSearchForm>}></Route>
-          <Route path='/meeting' element={<MeetingPage />} />
+          <Route path='/meeting'>
+            <Route index element={<MeetingPage />} />
+            <Route path='create' element={<ArrangeMeetingPage />} />
+          </Route>
         </Routes>
       </ContentWrapper>
       <Footer />
