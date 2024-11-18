@@ -41,4 +41,28 @@ export const searchUsername = (keyword) => {
    )
 }
 
-// meetingsAPI.searchUsername
+export const uploadMeetingGroup = (data) => {
+   console.log(data);
+   return client.post(
+      `${apiURL}/api/meeting/addMeetingGroup`,
+      data
+   )
+}
+
+export const deleteMeetingGroup = (group_id) => {
+   console.log(group_id);
+   return client.delete(
+      `${apiURL}/api/meeting/deleteMeetingGroup`, {
+         params: { group_id }
+      }
+   )
+}
+
+
+export const updateMeetingGroup = (data) => {
+   console.log(data);
+   return client.put(
+      `${apiURL}/api/meeting/updateMeetingGroup`,
+      data // 전체 데이터를 포함해야 함
+   );
+};

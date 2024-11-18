@@ -20,12 +20,14 @@ const CustomButton = ({
    content, callBack = () => {}
 }) => {
    return(
-      <Button onClick={callBack}>{content}</Button>
+      <Button onClick={() => {
+         callBack();
+      }}>{content}</Button>
    )
 }
 
 const ArrangeMeeting = ({
-   onGoBack
+   onGoBack, onCreate, onChange, groupName
 }) => {
    return (
       <Wrapper>
@@ -33,8 +35,11 @@ const ArrangeMeeting = ({
             ArrangeMeeting
          </h2>
          <div>
+            <input onChange={onChange} value={groupName}></input>
+         </div>
+         <div>
             <CustomButton content="취소" callBack={onGoBack}></CustomButton>
-            <CustomButton content="확인"></CustomButton>
+            <CustomButton content="확인" callBack={onCreate}></CustomButton>
          </div>
       </Wrapper>
    )

@@ -11,11 +11,25 @@ const Wrapper = styled(Responsive)`
   border: 1px solid black;
 `;
 
-const ArrangeMeetingTimeTable = () => {
+const Wrapper2 = styled.div`
+   display: flex;
+`
 
+const NameBox = styled.div`
+   padding: 0.5rem;
+`
+
+const ArrangeMeetingTimeTable = ({cart, onDelete}) => {
    return (
       <Wrapper>
          <h2>ArrangeMeetingTimeTable</h2>
+         <Wrapper2>
+            {
+               cart.map((userData) => (<NameBox onClick={() => {
+                  onDelete(userData.username);
+               }}>{userData.username}</NameBox>))
+            }
+         </Wrapper2>
       </Wrapper>
    )
 }

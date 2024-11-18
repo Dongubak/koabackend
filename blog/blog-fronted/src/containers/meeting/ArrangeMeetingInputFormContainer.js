@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ArrangeMeetingInputForm from '../../components/meetings/ArrangeMeetingInputForm';
 import { useDispatch } from 'react-redux';
-import { searchUsername } from '../../modules/meetings';
+import { searchUsername, unloadSearchUsername } from '../../modules/meetings';
 
 const ArrangeMeetingFormContainer = () => {
    const [keyword, setKeyword] = useState('');
@@ -19,11 +19,20 @@ const ArrangeMeetingFormContainer = () => {
       setKeyword('');
    }
 
+   useEffect(() => {
+
+      return () => {
+         dispatch(unloadSearchUsername());
+      }
+   }, []);
+
    return (
-      <ArrangeMeetingInputForm 
-         keyword={keyword} onChange={onChange} 
-         onSubmit={onSubmit}
-      />
+      <>
+         <ArrangeMeetingInputForm 
+            keyword={keyword} onChange={onChange} 
+            onSubmit={onSubmit}
+         />
+      </>
    )
 }
 

@@ -13,7 +13,9 @@ const meetings = new Router();
 meetings.get('/', meetingsCtrl.init);
 meetings.get('/listGroupTimeTable', meetingsCtrl.listGroupTimeTable);
 meetings.get('/searchUsername', meetingsCtrl.searchUsername);
-
+meetings.post('/addMeetingGroup', meetingsCtrl.addMeetingGroup);
+meetings.delete('/deleteMeetingGroup', meetingsCtrl.deleteMeetingGroup);
+meetings.put('/updateMeetingGroup', meetingsCtrl.updateMeetingGroup);
 // posts.get('/', postsCtrl.list);
 // // http://localhost:4000/api/posts/
 // posts.post('/', postsCtrl.write);
@@ -26,5 +28,5 @@ meetings.get('/searchUsername', meetingsCtrl.searchUsername);
 // // http://localhost:4000/api/posts/12
 // posts.patch('/:id', postsCtrl.update);
 // // http://localhost:4000/api/posts/12
-
+ 
 module.exports = meetings;

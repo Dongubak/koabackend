@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
 const { MtgrTable, GcrTable, User, UserCourses, Courses } = require('../../../models'); // 모델 가져오기
+const { v4: uuidv4 } = require('uuid'); // UUID 생성 모듈
 
 exports.init = async (ctx) => {
     try {
@@ -187,7 +188,134 @@ exports.searchUsername = async (ctx) => {
     }
 };
 
+exports.addMeetingGroup = async (ctx) => {
+    try {
+        // POST 요청의 body에서 uid, groupName, cart를 가져옴
+        const { uid, groupName, cart } = ctx.request.body;
 
+        // 1. 고유한 group_id 생성
+        const groupId = uuidv4(); // UUID로 고유한 group_id 생성
 
+        // 2. GcrTable에 그룹장 정보와 그룹 이름 추가
+        const group = await GcrTable.create({
+            group_id: groupId,
+            user_id: uid,
+            group_name: groupName,
+        });
 
-// `${apiURL}/api/meeting/searchUsername`,
+        // 3. MtgrTable에 포함된 유저들의 id 추가
+        const memberPromises = cart.map(async (member) => {
+            return await MtgrTable.create({
+                group_id: groupId,
+                user_id: member.id,
+            });
+        });
+
+        // 모든 사용자 삽입이 완료될 때까지 기다림
+        await Promise.all(memberPromises);
+
+        // 응답 설정
+        ctx.body = {
+            message: "Group and members added successfully",
+            group_id: groupId,
+            group_name: groupName,
+            members: cart,
+        };
+        ctx.status = 201;
+    } catch (error) {
+        console.error(error);
+        ctx.status = 500;
+        ctx.body = {
+            error: error.message,
+        };
+    }
+};
+
+exports.deleteMeetingGroup = async (ctx) => {
+    try {
+        // 쿼리 파라미터에서 group_id 가져오기
+        const { group_id } = ctx.query;
+
+        // 1. MtgrTable에서 해당 group_id와 관련된 모든 데이터를 삭제
+        await MtgrTable.destroy({
+            where: {
+                group_id,
+            },
+        });
+
+        // 2. GcrTable에서 해당 group_id의 그룹 정보 삭제
+        const deletedGroupCount = await GcrTable.destroy({
+            where: {
+                group_id,
+            },
+        });
+
+        // 삭제할 그룹이 없는 경우
+        if (deletedGroupCount === 0) {
+            ctx.status = 404;
+            ctx.body = {
+                message: "Group not found",
+            };
+            return;
+        }
+
+        // 응답 설정
+        ctx.body = {
+            message: "Group and related members deleted successfully",
+        };
+        ctx.status = 200;
+    } catch (error) {
+        console.error(error);
+        ctx.status = 500;
+        ctx.body = {
+            error: error.message,
+        };
+    }
+};
+
+exports.updateMeetingGroup = async (ctx) => {
+    try {
+        const { group_id, groupName, cart } = ctx.request.body;
+
+        // group_id와 cart 데이터 확인
+        if (!group_id || !cart) {
+            ctx.status = 400;
+            ctx.body = { message: "group_id and cart are required" };
+            return;
+        }
+
+        // 그룹 이름 업데이트
+        await GcrTable.update(
+            { group_name: groupName },
+            { where: { group_id } }
+        );
+
+        // 기존 멤버 삭제
+        await MtgrTable.destroy({ where: { group_id } });
+
+        // 새 멤버 추가
+        const memberPromises = cart.map((member) => {
+            if (!member.user_id) {
+                console.log("Invalid member data:", member);
+                throw new Error("Each member must have a user_id.");
+            }
+            return MtgrTable.create({
+                group_id,
+                user_id: member.user_id, // cart에서 user_id를 사용
+            });
+        });
+        await Promise.all(memberPromises);
+
+        ctx.body = {
+            message: "Group updated successfully",
+            group_id,
+            group_name: groupName,
+            members: cart,
+        };
+        ctx.status = 200;
+    } catch (error) {
+        console.error(error);
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
+};

@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
-import MeetingsList from './MeetingsList';
 import GroupList from '../../components/meetings/GroupList';
 
 const Wrapper = styled(Responsive)`
@@ -33,28 +32,24 @@ const Button = ({ blur, content, onClick }) => {
 }
 
 const MeetingForm = ({ onSubmit = () => {}, groups = [], onClick, blur,
-   onGoCreatePage
+   onGoCreatePage, createBlur, selectedGroupId, setSelectedGroupId, onDelete, onEdit,
+   selectedGroupName, setSelectedGroupName,
 }) => {
-   if(groups) {
-      groups.forEach((e) => {
-         console.log(e);
-      });
-   }
 
    return (
       <Wrapper>
          <h2>Developing Meeting Form</h2>
          <div>
-            {/* <MeetingsList meetings={meetings}></MeetingsList> */}
-            <Button content="create" onClick={onGoCreatePage} />
-            <GroupList groups={groups} onClick={onClick} />
+            <Button content="create" blur={createBlur} onClick={onGoCreatePage} />
+            <GroupList groups={groups} onClick={onClick} selectedGroupId={selectedGroupId} setSelectedGroupId={setSelectedGroupId} 
+               selectedGroupName={selectedGroupName} setSelectedGroupName={setSelectedGroupName}
+            />
             <div>
-               <Button content="edit" blur={blur} onClick={() => onSubmit('edit')} />
-               <Button content="delete" blur={blur} onClick={() => onSubmit('delete')} />
-               <Button content="save" blur={blur} onClick={() => onSubmit('save')} />
+               <Button content="edit" blur={blur} onClick={onEdit} />
+               <Button content="delete" blur={blur} onClick={onDelete} />
             </div>
-         </div>         
-      </Wrapper>      
+         </div>
+      </Wrapper>
    );
 }
 

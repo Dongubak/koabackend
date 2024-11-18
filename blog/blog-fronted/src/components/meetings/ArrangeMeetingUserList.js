@@ -11,19 +11,24 @@ const Wrapper = styled(Responsive)`
   border: 1px solid black;
 `;
 
-const ArrangeMeetingUserListItem = ({userData}) => {
+const ArrangeMeetingUserListItem = ({userData, onClick}) => {
    return(
-      <div>{userData.username}</div>
+      <div onClick={() => {
+         onClick(userData);
+         console.log(userData);
+      }}>{userData.username}</div>
    )
 }
 
-const ArrangeMeetingUserList = ({userDatas}) => {
+const ArrangeMeetingUserList = ({userDatas, onClick}) => {
    console.log(userDatas);
+
    return (
       <Wrapper>
          {
             userDatas.map((userData) =>                
-                  (<ArrangeMeetingUserListItem userData={userData} />)
+                  (<ArrangeMeetingUserListItem userData={userData} 
+                     onClick={onClick}/>)
             )  
          }
       </Wrapper>
