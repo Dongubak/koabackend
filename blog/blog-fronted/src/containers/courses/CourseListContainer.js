@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CourseList from '../../components/courses/CourseList';
 import { insertCourse } from '../../modules/cart';
@@ -11,12 +11,11 @@ const CourseListContainer = () => {
   const error = useSelector(state => state.courses.error);
   const loading = useSelector(state => state.loading['courses/LIST_COURSES']);
 
-  // if(!loading && courses) {
-  //     console.log(courses);
-  // }
 
   const onInsertCourse = (course) => {
-   dispatch(insertCourse(course));
+    if(!loading) {
+      dispatch(insertCourse(course));
+    }
   }
 
   const onDeleteCourse = (course) => {

@@ -5,6 +5,8 @@ import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/createRequestSaga';
 import { initializeForm } from './auth';
+import { unloadGroupTimeTable, unloadMeetings } from './meetings';
+import { unloadCourses } from './courses';
 
 const TEMP_SET_USER = 'user/TEMP_SET_USER'; // 새로고침 이후 임시 로그인 처리
 // 회원 정보 확인
@@ -33,6 +35,9 @@ function* logoutSaga() {
     yield call(authAPI.logout); // logout API 호출
     localStorage.removeItem('user'); // localStorage 에서 user 제거
     yield put(initializeForm('login'));
+    yield put(unloadGroupTimeTable());
+    yield put(unloadCourses());
+    yield put(unloadMeetings());
   } catch (e) {
     console.log(e);
   }

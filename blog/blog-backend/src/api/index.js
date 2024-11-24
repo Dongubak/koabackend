@@ -4,6 +4,7 @@ const auths = require('./auths');
 const courses = require('./courses');
 const cart = require('./cart');
 const comments = require('./comments');
+const meetings = require('./meetings');
 
 const api = new Router();
 
@@ -16,6 +17,7 @@ api.use('/auths', auths.routes());
 api.use('/courses', courses.routes());
 api.use('/cart', cart.routes());
 api.use('/comments',  comments.routes());
+api.use('/meeting', meetings.routes());
 
 module.exports = api;
 

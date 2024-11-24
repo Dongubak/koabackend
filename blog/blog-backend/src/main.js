@@ -50,6 +50,6 @@ app.use(async ctx => {
 // });
 
 ///외부 접속 차단 경우
-app.listen(4000, () => {
-   console.log('Listening to port 4000');
+app.listen(4001, () => {
+   console.log('Listening to port 4001');
 });

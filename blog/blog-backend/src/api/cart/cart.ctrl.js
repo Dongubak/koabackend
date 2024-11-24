@@ -11,14 +11,14 @@ exports.list = async (ctx) => {
          include: [
             {
                model: Courses,
-               as: 'course',
+               as: 'Course',
                attributes: ['id', 'course_name', 'professor', 'class_time', 'class_location1'], // 필요한 강의 필드만 포함
             },
          ],
       });
 
       // 강의 정보만 추출하여 배열로 변환
-      const courses = userCourses.map(uc => uc.course);
+      const courses = userCourses.map(uc => uc.Course);
 
       ctx.status = 200; // OK
       ctx.body = {
@@ -90,14 +90,14 @@ exports.save = async (ctx) => {
          include: [
             {
                model: Courses,
-               as: 'course',
+               as: 'Course',
                attributes: ['id', 'course_name', 'professor', 'class_time', 'class_location1', 'class_location2'], // Select relevant fields
             },
          ],
       });
 
       // Map the results to return the course information
-      const courses = userCourses.map((uc) => uc.course);
+      const courses = userCourses.map((uc) => uc.Course);
 
       ctx.status = 201; // Created
       ctx.body = {
