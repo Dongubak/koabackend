@@ -33,7 +33,8 @@ function parseClassTimeToDict(classTime) {
 }
 
 const TimeTableContainer = () => {
-   const { cart } = useSelector(({ cart }) => (cart));
+   const {cart} = useSelector((state) => state.cart);
+
    const dispatch = useDispatch();
 
    const [schedule, setSchedule] = useState({
@@ -51,6 +52,7 @@ const TimeTableContainer = () => {
 
     useEffect(() => {
         const nextSchedule = JSON.parse(JSON.stringify(initialSchedule)); // 깊은 복사로 새로운 객체 생성
+        console.log(cart);
         cart.forEach((e) => {
             Object.entries(parseClassTimeToDict(e.class_time)).forEach(([key, value]) => {
                 value.forEach((h) => {

@@ -16,7 +16,7 @@ module.exports = class UserCourses extends Sequelize.Model {
                     model: 'users', // 외래 키가 참조하는 테이블
                     key: 'id', // 참조되는 테이블의 키
                 },
-                onDelete: 'CASCADE', // 사용자가 삭제되면 관련된 user_courses row도 삭제
+                onDelete: 'CASCADE',
             },
             course_id: {
                 type: Sequelize.INTEGER,
@@ -25,7 +25,7 @@ module.exports = class UserCourses extends Sequelize.Model {
                     model: 'courses', // 외래 키가 참조하는 테이블
                     key: 'id', // 참조되는 테이블의 키
                 },
-                onDelete: 'CASCADE', // 강의가 삭제되면 관련된 user_courses row도 삭제
+                onDelete: 'CASCADE',
             },
         }, {
             sequelize,
@@ -40,7 +40,7 @@ module.exports = class UserCourses extends Sequelize.Model {
     }
 
     static associate(db) {
-      db.UserCourses.belongsTo(db.User, { foreignKey: 'user_id', targetKey: 'id', as: 'user' });
-      db.UserCourses.belongsTo(db.Courses, { foreignKey: 'course_id', targetKey: 'id', as: 'course' }); // 별칭 'course' 추가
-  }
+        db.UserCourses.belongsTo(db.User, { foreignKey: 'user_id', targetKey: 'id', as: 'User' });
+        db.UserCourses.belongsTo(db.Courses, { foreignKey: 'course_id', targetKey: 'id', as: 'Course' }); // 'Course' 별칭 추가
+    }
 };

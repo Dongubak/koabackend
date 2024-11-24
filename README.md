@@ -1,4 +1,4 @@
-# 군산대학교 컴퓨터공학부 커뮤니티앱개발 프로젝트
+****# 군산대학교 컴퓨터공학부 커뮤니티앱개발 프로젝트
 
 # kuna community app v1.0
 > **군산대학교 인공지능융합과 KTC 동아리**<br/>**개발기간: 2024.08.01~**
@@ -501,3 +501,23 @@ response : {
 }
 
 
+## 3306 port를 사용하는 지 확인하는 방법
+```bash
+sudo lsof -i :3306
+```
+
+## PID 를 이용하여 프로세스 닫기
+```bash
+sudo kill -9 ${PID}
+```
+
+## 비밀번호 재설정 방법
+```bash
+mysqld --skip-grant
+```
+
+## mysql 서버가 실행중인가를 확인해야함
+
+<!-- ```bash
+sudo mysql.server status
+``` -->
