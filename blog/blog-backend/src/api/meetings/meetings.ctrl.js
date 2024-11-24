@@ -261,6 +261,7 @@ exports.deleteMeetingGroup = async (ctx) => {
 
         // 응답 설정
         ctx.body = {
+            group_id,
             message: "Group and related members deleted successfully",
         };
         ctx.status = 200;

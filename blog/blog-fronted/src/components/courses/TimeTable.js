@@ -46,6 +46,7 @@ const TimeCell = styled(Cell)`
 
 const Timetable = ({ schedule, onDeleteCourseFromCart }) => {
   /// 내부 디자인에 관한 로직이므로 상태관리를 한다고 해서 container에 분리하지 않았음
+  console.log(schedule);
   const [hoveredCourse, setHoveredCourse] = useState(null); // hover된 course_name을 저장하는 상태
 
   const handleMouseEnter = (courseName) => {

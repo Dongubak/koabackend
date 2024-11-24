@@ -59,7 +59,7 @@ const PostItem = ({ post }) => {
   );
 };
 
-const PostList = ({ posts, loading, error, showWriteButton, onGoWritePage }) => {
+const PostList = ({ posts, listPostLoading, error, showWriteButton, onGoWritePage }) => {
    // 에러 발생 시
    if (error) {
       return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
@@ -75,7 +75,7 @@ const PostList = ({ posts, loading, error, showWriteButton, onGoWritePage }) => 
         )}
       </WritePostButtonWrapper>
       {/*  로딩 중 아니고, 포스트 배열이 존재할 때만 보여줌 */}
-      {!loading && posts && (
+      {!listPostLoading && posts && (
         <div>
           {posts.posts.map(post => (
             <PostItem post={post} key={post.id} />

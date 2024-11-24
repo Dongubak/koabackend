@@ -232,9 +232,15 @@ const meetings = handleActions(
       ...state,
       cart: [...state.cart].filter((item) => item.username !== username)
     }),
-    [DELETE_MEETING_GROUP_SUCCESS]: (state) => ({
-      ...state,
-    }),
+    [DELETE_MEETING_GROUP_SUCCESS]: (state, { payload }) => {
+      console.log(payload);
+      return ({
+        ...state,
+        groups: [...state.groups].filter((group) => (
+          group.group_id !== payload.group_id
+        ))
+      })
+    },
     [DELETE_MEETING_GROUP_FAILURE]: (state) => ({
       ...state,
     }),

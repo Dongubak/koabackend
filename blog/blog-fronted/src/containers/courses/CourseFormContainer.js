@@ -13,6 +13,9 @@ const CourseFormContainer = () => {
    const navigator = useNavigate();
    const [searchParams, setSearchParams] = useSearchParams();
    const [searchByCourse, setSearchByCourse] = useState(false);
+   const saveLoading = useSelector((state) => state.loading['cart/SAVE_CART']);
+   const loadLoading = useSelector((state) => state.loading['cart/LOAD_CART']);
+   const listLoading = useSelector((state) => state.loading['cart/LIST_COURSES']);
 
    const handleToggle = () => {
       setSearchByCourse(!searchByCourse);
@@ -38,14 +41,16 @@ const CourseFormContainer = () => {
    }
 
    const onSearch = (e) => {
-      e.preventDefault();
-      // console.log(keyword);
-      setSearchParams({page: 1});
-      dispatch(listCourses({
-         professor: keyword,
-         course_name: '',
-         page
-      }));
+      if(!listLoading) {
+         e.preventDefault();
+         // console.log(keyword);
+         setSearchParams({page: 1});
+         dispatch(listCourses({
+            professor: !handleToggle ? keyword : '',
+            course_name: handleToggle ? keyword: '',
+            page
+         }));
+      }
    }
 
    const onSave = (e) => {
@@ -79,15 +84,12 @@ const CourseFormContainer = () => {
       // dispatch(loadCart());
       if(!user.user) {
          dispatch(unloadCart());
-      } else {
+      } else if(!loadLoading){
          const {id} = user.user.user;
          dispatch(loadCart({user_id : id}));   
       }
-      return () => {
-         dispatch(unloadCourses());
-         dispatch(unloadCart());
-      }
    }, [dispatch, user]);
+
 
    return(
       <CourseForm 

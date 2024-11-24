@@ -17,7 +17,9 @@ const PostListContainer = () => {
 
   const posts = useSelector((state) => state.posts.posts);
   const error = useSelector((state) => state.posts.error);
-  const loading = useSelector((state) => state.loading['posts/LIST_POSTS']);
+  const listPostLoading = useSelector((state) => state.loading['posts/LIST_POSTS']);
+  const removePostLoading = useSelector((state) => state.loading['write/REMOVE_POST']);
+  
   const user = useSelector((state) => state.user.user);
 
 
@@ -27,12 +29,14 @@ const PostListContainer = () => {
   }, [navigator, subject, dispatch]);
 
   useEffect(() => {
-    dispatch(listPosts({ username, page, subject }));
+    if(!listPostLoading && !removePostLoading) {
+      dispatch(listPosts({ username, page, subject }));
+    }
   }, [dispatch, username, page, searchParams, subject]);
 
   return (
     <PostList
-      loading={loading}
+    listPostLoading={listPostLoading}
       error={error}
       posts={posts}
       showWriteButton={user}
