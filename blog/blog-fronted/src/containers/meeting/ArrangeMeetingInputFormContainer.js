@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import ArrangeMeetingInputForm from '../../components/meetings/ArrangeMeetingInputForm';
-import { useDispatch } from 'react-redux';
-import { searchUsername, unloadSearchUsername } from '../../modules/meetings';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCartItem, searchUsername, unloadSearchUsername } from '../../modules/meetings';
 
 const ArrangeMeetingFormContainer = () => {
    const [keyword, setKeyword] = useState('');
    const dispatch = useDispatch();
+
+   const { cart } = useSelector((state) => state.meetings);
+
+   const onDelete = (username) => {
+      dispatch(deleteCartItem(username));
+   }
 
    const onChange = (e) => {
       setKeyword(e.target.value);
@@ -30,7 +36,7 @@ const ArrangeMeetingFormContainer = () => {
       <>
          <ArrangeMeetingInputForm 
             keyword={keyword} onChange={onChange} 
-            onSubmit={onSubmit}
+            onSubmit={onSubmit} cart={cart} onDelete={onDelete}
          />
       </>
    )

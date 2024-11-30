@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteMeetingGroup, initCart, initMeetings, listGroupTimeTable, unloadGroupTimeTable } from '../../modules/meetings';
 import MeetingForm from '../../components/meetings/MeetingForm';
 import { useNavigate } from 'react-router';
+import MeetingTimeTableContainer2 from './MeetingTimeTableContainer2';
 
 const MeetingFormContainer = () => {
    const dispatch = useDispatch();
@@ -87,6 +88,7 @@ const MeetingFormContainer = () => {
 
    return (
       <>
+         <MeetingTimeTableContainer2></MeetingTimeTableContainer2>
          {deleteLoading || initLoading ? (
             <p>Loading...</p>
          ) : (

@@ -72,7 +72,26 @@ const Button = styled.button`
   }
 `;
 
-const ArrangeMeetingInputForm = ({ keyword, onChange = () => {}, onSubmit = () => {} }) => {
+const NameBox = styled.div`
+   padding: 0 0.5rem;
+
+   &:hover {
+    color: red;
+   }
+`
+
+
+const Wrapper2 = styled.div`
+  display: flex;
+  margin: 0.5rem 0 0 0;
+  padding: 0.5rem; /* 패딩 */
+  background-color: #f5f5f5; /* 밝은 회색 배경 */
+  border: 1px solid #d3d3d3; /* 연한 회색 테두리 */
+  border-radius: 5px; /* 테두리를 약간 둥글게 */
+  gap: 0.5rem; /* 아이템 간의 간격 */
+`;
+
+const ArrangeMeetingInputForm = ({ keyword, onChange = () => {}, onSubmit = () => {}, cart, onDelete }) => {
   return (
     <Wrapper>
       <Title>사용자 검색</Title>
@@ -85,6 +104,13 @@ const ArrangeMeetingInputForm = ({ keyword, onChange = () => {}, onSubmit = () =
         />
         <Button type="submit">검색</Button>
       </Form>
+      
+      {
+        cart.length !== 0 ? <Wrapper2>{
+          cart.map((userData) => (<NameBox onClick={() => {
+            onDelete(userData.username);
+         }}>{userData.username}</NameBox>))}</Wrapper2> : null
+      }
     </Wrapper>
   );
 };
