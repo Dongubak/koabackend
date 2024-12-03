@@ -89,23 +89,6 @@ def a():
     # 응답 반환
     return f"Received word: {word}"
 
-@app.route('/test', methods=['GET'])
-def rick():
-    # 쿼리 파라미터 받기
-    word = request.args.get('word')
-    
-    # 디버깅 및 확인용 출력
-    print(f"rickrolling")
-    
-    # 이미지 파일 경로 설정 (여기에 이미지 파일 경로를 넣으세요)
-    image_path = r'C:\Users\Multi 03\Desktop\code\rickrolling.gif'  # 실제 경로로 변경
-    
-    # 이미지 반환
-    try:
-        return send_file(image_path, mimetype='image/jpeg')
-    except FileNotFoundError:
-        return f"Image not found at {image_path}", 404
-
 
 # 애플리케이션 실행
 if __name__ == '__main__':
