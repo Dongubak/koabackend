@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import MeetingPage from './pages/MeetingPage';
 import ArrangeMeetingContainer from './containers/meeting/ArrangeMeetingContainer.js';
 import ArrangeMeetingPage from './pages/ArrangeMeetingPage.js';
+import SearchFoodPage from './pages/SearchFoodPage.js';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -45,6 +46,9 @@ const App = () => {
           <Route path='/meeting'>
             <Route index element={<MeetingPage />} />
             <Route path='create' element={<ArrangeMeetingPage />} />
+          </Route>
+          <Route path='/searchFood'>
+            <Route index element={<SearchFoodPage></SearchFoodPage>} />
           </Route>
         </Routes>
       </ContentWrapper>

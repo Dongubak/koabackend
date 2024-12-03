@@ -35,14 +35,14 @@ const LinkItem = styled.div`
   }
 `;
 
-const Sidebar = ({onGoHome, onGoCourse, onGoMeeting}) => {
+const Sidebar = ({onGoHome, onGoCourse, onGoMeeting, onGoSearchFood}) => {
   return (
     <Responsive style={{ display: 'flex' }}>
       <SidebarWrapper>
         <LinkItem onClick={onGoHome}>홈</LinkItem>
         <LinkItem onClick={onGoCourse}>시간표</LinkItem>
         <LinkItem onClick={onGoMeeting}>미팅</LinkItem>
-        <LinkItem>개발 예정</LinkItem>
+        <LinkItem onClick={onGoSearchFood}>개발 예정</LinkItem>
       </SidebarWrapper>
       {/* 여기에 다른 콘텐츠를 추가할 수 있습니다 */}
     </Responsive>

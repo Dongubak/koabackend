@@ -126,7 +126,9 @@ const Overlay = styled.div`
   display: ${props => (props.$isOpen ? 'block' : 'none')};
 `;
 
-const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location, navigators, onGoMeeting }) => {
+const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location, navigators, onGoMeeting,
+  onGoSearchFood
+ }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -184,7 +186,9 @@ const Header = ({ user, onLogout, goLogin, onGoHome, onGoCourse, tip, location, 
       <Spacer />
       <Overlay $isOpen={isSidebarOpen} onClick={closeSidebar} />
       <SidebarWrapper $isOpen={isSidebarOpen}>
-        <Sidebar onGoHome={onGoHome} onGoCourse={onGoCourse} onGoMeeting={onGoMeeting} />
+        <Sidebar onGoHome={onGoHome} onGoCourse={onGoCourse} onGoMeeting={onGoMeeting}
+          onGoSearchFood={onGoSearchFood}
+        />
       </SidebarWrapper>
     </>
   );
