@@ -13,22 +13,14 @@ const [
 
 export const searchFood = createAction(SEARCH_FOOD, (keyword) => keyword);
 
-// Saga에서 응답 처리
-function* searchFoodSaga(action) {
-  try {
-    const response = yield call(foodAPI.searchFood, action.payload);
-    yield put({ type: SEARCH_FOOD_SUCCESS, payload: response });
-  } catch (error) {
-    yield put({ type: SEARCH_FOOD_FAILURE, payload: error.message });
-  }
-}
+const searchFoodSaga = createRequestSaga(SEARCH_FOOD, foodAPI.searchFood);
 
 export function* FoodSaga() {
   yield takeLatest(SEARCH_FOOD, searchFoodSaga);
 }
 
 const initialState = {
-  data: '',
+  data: [],
   error: false,
   errorMSG: '',
 };

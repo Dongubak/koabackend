@@ -14,6 +14,8 @@ import MeetingPage from './pages/MeetingPage';
 import ArrangeMeetingContainer from './containers/meeting/ArrangeMeetingContainer.js';
 import ArrangeMeetingPage from './pages/ArrangeMeetingPage.js';
 import SearchFoodPage from './pages/SearchFoodPage.js';
+import NewsPage from './pages/NewsPage.js';
+import MealPage from './pages/MealPage.js';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -49,6 +51,12 @@ const App = () => {
           </Route>
           <Route path='/searchFood'>
             <Route index element={<SearchFoodPage></SearchFoodPage>} />
+          </Route>
+          <Route path='/news'>
+            <Route index element={<NewsPage></NewsPage>}></Route>
+          </Route>
+          <Route path='/meal'>
+            <Route index element={<MealPage></MealPage>}></Route>
           </Route>
         </Routes>
       </ContentWrapper>

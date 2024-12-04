@@ -62,6 +62,14 @@ const HeaderContainer = () => {
     navigate('/searchFood');
   }, [navigate]);
 
+  const onGoNews = useCallback(() => {
+    navigate('/news');
+  }, [navigate]);
+
+  const onGoMeal = useCallback(() => {
+    navigate('/meal');
+  })
+
   return <Header user={user} 
   onLogout={onLogout} 
   goLogin={goLogin}
@@ -69,6 +77,8 @@ const HeaderContainer = () => {
   onGoCourse={onGoCourse}
   onGoMeeting={onGoMeeting}
   onGoSearchFood={onGoSearchFood}
+  onGoNews={onGoNews}
+  onGoMeal={onGoMeal}
   tip={tip[location.pathname]}
   location={location}
   navigators={navigators}

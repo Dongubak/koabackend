@@ -90,7 +90,7 @@ const Food = ({ keyword, onChange, onSearch, data, loading }) => {
 
   return (
     <Wrapper>
-      <h2>뭐 먹으실?</h2>
+      <h2>오늘 뭐 먹지?</h2>
       <StyledForm onSubmit={handleSubmit}>
         <StyledInput 
           type="text" 
