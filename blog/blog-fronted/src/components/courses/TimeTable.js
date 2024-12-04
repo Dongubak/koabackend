@@ -82,7 +82,7 @@ const Timetable = ({ schedule, onDeleteCourseFromCart }) => {
                 e.target.textContent && onDeleteCourseFromCart(schedule[day][periodIndex])
               }}
             >
-              {schedule[day] && schedule[day][periodIndex] ? schedule[day][periodIndex] : ''}
+              {schedule[day] && schedule[day][periodIndex] ? schedule[day][periodIndex] : 'O'}
             </Cell>
           ))}
         </React.Fragment>

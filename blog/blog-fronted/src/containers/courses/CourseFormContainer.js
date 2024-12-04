@@ -18,15 +18,14 @@ const CourseFormContainer = () => {
    const listLoading = useSelector((state) => state.loading['cart/LIST_COURSES']);
 
    const handleToggle = () => {
-      setSearchByCourse(!searchByCourse);
+      setSearchByCourse((state) => !state);
    };
 
    const handleKeyPress = (e) => {
-   
-   if (e.key === 'Enter') {
-      e.preventDefault();
-      onSearch(e);
-   }
+      if (e.key === 'Enter') {
+         e.preventDefault();
+         onSearch(e);
+      }
    };
 
    const isFirstRun = useRef(true);  // 마운트 시 최초 실행을 막기 위한 useRef
@@ -46,8 +45,8 @@ const CourseFormContainer = () => {
          // console.log(keyword);
          setSearchParams({page: 1});
          dispatch(listCourses({
-            professor: !handleToggle ? keyword : '',
-            course_name: handleToggle ? keyword: '',
+            professor: !searchByCourse ? keyword : '',
+            course_name: searchByCourse ? keyword: '',
             page
          }));
       }
@@ -92,7 +91,7 @@ const CourseFormContainer = () => {
 
 
    return(
-      <CourseForm 
+      <CourseForm
       keyword={keyword} 
       onChange={onChange}
       onSearch={onSearch}
