@@ -19,6 +19,7 @@
     "koa-static": "^5.0.0",
     "lru-cache": "5",
     "mysql2": "2",
+    "newsapi": "^2.4.1",
     "sanitize-html": "^2.13.0",
     "sequelize": "^6.37.3",
     "sequelize-cli": "^6.6.2",
