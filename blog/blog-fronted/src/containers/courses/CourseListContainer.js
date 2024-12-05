@@ -11,7 +11,6 @@ const CourseListContainer = () => {
   const error = useSelector(state => state.courses.error);
   const loading = useSelector(state => state.loading['courses/LIST_COURSES']);
 
-
   const onInsertCourse = (course) => {
     if(!loading) {
       dispatch(insertCourse(course));

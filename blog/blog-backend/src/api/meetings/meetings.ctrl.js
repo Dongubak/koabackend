@@ -32,6 +32,8 @@ exports.init = async (ctx) => {
             group_name: group.group_name
         }));
 
+        console.log(groups)
+
         // 응답 설정
         ctx.body = {
             message: "success",
@@ -168,7 +170,7 @@ exports.searchUsername = async (ctx) => {
             const courses = user.UserCourses.map(userCourse => userCourse.Course);
             return {
                 username: user.username,
-                id: user.id,
+                user_id: user.id,
                 courses
             };
         });
@@ -207,7 +209,7 @@ exports.addMeetingGroup = async (ctx) => {
         const memberPromises = cart.map(async (member) => {
             return await MtgrTable.create({
                 group_id: groupId,
-                user_id: member.id,
+                user_id: member.user_id,
             });
         });
 
@@ -297,6 +299,7 @@ exports.updateMeetingGroup = async (ctx) => {
         // 새 멤버 추가
         const memberPromises = cart.map((member) => {
             if (!member.user_id) {
+                console.log(member + 'asdf');
                 console.log("Invalid member data:", member);
                 throw new Error("Each member must have a user_id.");
             }

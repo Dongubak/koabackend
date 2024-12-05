@@ -204,7 +204,7 @@ const meetings = handleActions(
     [INSERT_USERNAME_TO_CART]: (state, { payload: cart }) => ({
       ...state,
       error: false,
-      cart: state.cart.find((item) => item.id === cart.id) 
+      cart: state.cart.find((item) => item.user_id === cart.user_id) 
         ? state.cart
         : [...state.cart, cart],
     }),
